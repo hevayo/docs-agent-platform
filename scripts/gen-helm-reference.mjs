@@ -1,12 +1,17 @@
 #!/usr/bin/env node
 /**
- * Generate docs/reference/helm-charts/*.mdx from each chart's values.schema.json.
+ * Generate agent-manager/docs/reference/helm-charts/*.mdx from each chart's
+ * values.schema.json, as WSO2 Docs pages (title, description, type and
+ * sidebar_position front matter; the title is the page's H1).
  *
  * The schema is the single source of truth: `deployments/helm-charts/tools/`
  * generates it from values.yaml, and this script renders it as documentation.
  *
- *   node scripts/gen-helm-reference.mjs           # write pages
- *   node scripts/gen-helm-reference.mjs --check   # non-zero exit if stale
+ *   node scripts/gen-helm-reference.mjs --tag amp/v1.0.0 --out agent-manager/docs/reference/helm-charts          # write pages
+ *   node scripts/gen-helm-reference.mjs --tag amp/v1.0.0 --out agent-manager/docs/reference/helm-charts --check  # non-zero exit if stale
+ *
+ * On a release branch (agent-manager/release/<version>) use that version's tag.
+ * On the main line the pages track the charts on main: --tag main.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -29,10 +34,9 @@ const CHARTS_BASE =
   process.env.HELM_CHARTS_BASE_URL ||
   `https://raw.githubusercontent.com/wso2/agent-manager/${TAG}/deployments/helm-charts`;
 
-// --out is explicit because this writes into a *versioned snapshot* during a
-// release cut, not into the Next docs. Generating into Next from a release tag
-// would rewrite Next backwards to that release's charts, losing everything
-// merged since. Next tracks main and is refreshed separately.
+// --out is explicit: a release branch's pages document that release's charts,
+// and generating the main line from a release tag would rewrite it backwards to
+// that release, losing everything merged since.
 const OUT = (() => {
   const i = process.argv.indexOf("--out");
   if (i === -1 || !process.argv[i + 1]) {
@@ -69,6 +73,12 @@ const TITLES = {
   "wso2-amp-platform-resources-extension": "Platform Resources Extension",
 };
 
+// A description fits the front matter's 160 characters.
+const shortDescription = (s, fallback) => {
+  const t = (s || fallback).replace(/\s+/g, " ").trim();
+  return JSON.stringify(t.length <= 160 ? t : `${t.slice(0, 157).replace(/\s+\S*$/, "")}…`);
+};
+
 // MDX parses <foo> as JSX and {foo} as an expression, and | breaks table cells.
 const cell = (s = "") =>
   String(s).replace(/</g, "&lt;").replace(/>/g, "&gt;")
@@ -99,6 +109,7 @@ const chartDescription = (txt) =>
 let stale = [];
 const index = [];
 
+let position = 0;
 for (const name of Object.keys(TITLES)) {
   const schemaText = await fetchChartFile(name, "values.schema.json");
   if (schemaText === null) continue;
@@ -118,8 +129,9 @@ for (const name of Object.keys(TITLES)) {
   }
 
   const body = [
-    "---", `title: ${TITLES[name]}`, "---", "",
-    `# ${TITLES[name]}`, "",
+    "---", `title: ${TITLES[name]}`,
+    `description: ${shortDescription(chartDescription(chartYaml), `Values reference for the ${TITLES[name]} Helm chart.`)}`,
+    "type: reference", `sidebar_position: ${++position}`, "---", "",
     chartDescription(chartYaml), "",
     "```bash",
     `helm install ${name.replace("wso2-", "")} oci://${CHART_REGISTRY}/${name} \\`,
@@ -148,8 +160,9 @@ for (const name of Object.keys(TITLES)) {
 }
 
 const idx = [
-  "---", "title: Helm Charts", "---", "",
-  "# Helm Charts", "",
+  "---", "title: Helm Charts",
+  "description: The values reference for each Helm chart WSO2 Agent Manager installs, generated from the charts' values.schema.json.",
+  "type: reference", "sidebar_position: 0", "---", "",
   "WSO2 Agent Manager is installed as a set of Helm charts: one core chart plus five",
   "extension charts that add gateway, identity, evaluation, observability, and platform",
   "resources on top of OpenChoreo. Each page below is the values reference for one chart,",
@@ -160,7 +173,7 @@ const idx = [
   "Because the pages are generated from the schema, `helm lint` and this reference cannot",
   "disagree: a value the schema rejects is a value documented here as the wrong type.", "",
   "For installation walkthroughs rather than value tables, see the",
-  "[Installation guides](../../guides/on-k3d.mdx).", "",
+  "[Installation guides](../../guides/installation/on-k3d.mdx).", "",
 ].join("\n");
 const idxPath = path.join(OUT, "index.mdx");
 if (CHECK) {
@@ -170,7 +183,7 @@ if (CHECK) {
 }
 
 if (CHECK && stale.length) {
-  console.error(`\nOut of date: ${stale.join(", ")}\nRun: node scripts/gen-helm-reference.mjs`);
+  console.error(`\nOut of date: ${stale.join(", ")}\nRun: node scripts/gen-helm-reference.mjs --tag <tag> --out <dir>`);
   process.exit(1);
 }
 console.log(CHECK ? "\nAll helm reference pages are up to date." : "\nWrote helm chart reference pages.");

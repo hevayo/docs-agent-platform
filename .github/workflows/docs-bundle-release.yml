@@ -1,0 +1,198 @@
+# Release docs as a Docs bundle: copied from the Platform's
+# templates/content-repo/ (spec/releases-and-deployments.md, Docs bundles).
+#   a push to main that touches a Doc space with a Cloud Edition
+#                                   -> Cloud: [<doc space>/]cloud-<YYYY.MM.DD>.<n>
+#   run by hand on a branch: the main line (or the branch a Cloud Edition
+#   names), or [<doc space>/]release/<version>
+#                                   -> that Edition's next tag
+# Other branches (a dev branch, feature branches) never release: merge into
+# the main line when the docs are ready.
+#
+# Each release runs `wso2-docs release-bundle` at the Platform version the
+# Platform repo's site branch pins (platform.json): it packs the bundle, runs
+# the release build's blocking checks on it unpacked alone, tags the commit
+# and publishes the GitHub Release with the bundle and its release.json.
+# Then it starts the Platform's release pipeline (a hint: the pipeline reads
+# the releases itself).
+#
+# Needs: immutable releases on (Settings > General > Releases); the WSO2 Docs
+# Release App, installed on the Platform repo with Contents: read and Actions:
+# read and write (it reads the site branch and the Platform, and starts the
+# pipeline; it can never push code), its ID in the variable
+# DOCS_RELEASE_APP_ID and its private key in the secret DOCS_RELEASE_APP_KEY.
+# DOCS_PLATFORM_REPO (owner/name) names the Platform repo; DOCS_PLATFORM_REF,
+# for testing only, runs a Platform ref other than the pin.
+name: Release a Docs bundle
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['README.md', 'CODEOWNERS', 'AGENTS.md', 'CLAUDE.md', '.github/**', '.vscode/**']
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: The branch to release, e.g. release/1.0.0 (or the main line)
+        type: string
+        required: true
+      doc-space:
+        description: The Doc space, only if several release from this branch
+        type: string
+        required: false
+permissions:
+  contents: write
+env:
+  PLATFORM_REPO: ${{ vars.DOCS_PLATFORM_REPO || 'wso2/docs-platform' }}
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      releases: ${{ steps.plan.outputs.releases }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch || github.ref }}
+          fetch-depth: 0
+          path: content
+          persist-credentials: false
+      - id: platform
+        name: Name the Platform repo for the App token
+        run: |
+          echo "owner=${PLATFORM_REPO%%/*}" >> "$GITHUB_OUTPUT"
+          echo "name=${PLATFORM_REPO#*/}" >> "$GITHUB_OUTPUT"
+      - id: app
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.DOCS_RELEASE_APP_ID }}
+          private-key: ${{ secrets.DOCS_RELEASE_APP_KEY }}
+          owner: ${{ steps.platform.outputs.owner }}
+          repositories: ${{ steps.platform.outputs.name }}
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.PLATFORM_REPO }}
+          ref: site
+          token: ${{ steps.app.outputs.token }}
+          path: site
+          sparse-checkout: platform.json
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+      - id: pin
+        name: The pinned Platform ref
+        env:
+          OVERRIDE: ${{ vars.DOCS_PLATFORM_REF }}
+        run: |
+          ref="$OVERRIDE"
+          [ -n "$ref" ] || ref="v$(jq -r .version site/platform.json)"
+          echo "ref=$ref" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.PLATFORM_REPO }}
+          ref: ${{ steps.pin.outputs.ref }}
+          token: ${{ steps.app.outputs.token }}
+          path: platform
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --ignore-scripts
+        working-directory: platform
+      - id: plan
+        name: Work out the Docs releases to make
+        env:
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          BRANCH: ${{ inputs.branch }}
+          DOC_SPACE: ${{ inputs.doc-space }}
+        run: |
+          if [ "$EVENT" = push ]; then
+            # The Cloud releases the push makes (a Cloud part's change releases its platform's Cloud).
+            node platform/bin/wso2-docs.mjs spaces content --push --base "$BEFORE" > spaces.json
+            releases=$(jq -c '[.releases[] | {branch: .ref, docSpace: .slug}]' spaces.json)
+          else
+            releases=$(jq -nc --arg b "$BRANCH" --arg d "$DOC_SPACE" '[{branch: $b, docSpace: $d}]')
+          fi
+          echo "releases=$releases" >> "$GITHUB_OUTPUT"
+
+  release:
+    needs: plan
+    if: needs.plan.outputs.releases != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        release: ${{ fromJSON(needs.plan.outputs.releases) }}
+    concurrency:
+      group: docs-bundle-release-${{ matrix.release.docSpace }}-${{ matrix.release.branch }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.release.branch }}
+          fetch-depth: 0
+          path: content
+          persist-credentials: false
+      - id: platform
+        name: Name the Platform repo for the App token
+        run: |
+          echo "owner=${PLATFORM_REPO%%/*}" >> "$GITHUB_OUTPUT"
+          echo "name=${PLATFORM_REPO#*/}" >> "$GITHUB_OUTPUT"
+      - id: app
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.DOCS_RELEASE_APP_ID }}
+          private-key: ${{ secrets.DOCS_RELEASE_APP_KEY }}
+          owner: ${{ steps.platform.outputs.owner }}
+          repositories: ${{ steps.platform.outputs.name }}
+      # The site branch: its navigation, chrome and platform.json, a few small files.
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.PLATFORM_REPO }}
+          ref: site
+          token: ${{ steps.app.outputs.token }}
+          path: site
+          sparse-checkout: |
+            navigation
+            chrome
+            live
+            platform.json
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+      - id: pin
+        name: The pinned Platform ref
+        env:
+          OVERRIDE: ${{ vars.DOCS_PLATFORM_REF }}
+        run: |
+          ref="$OVERRIDE"
+          [ -n "$ref" ] || ref="v$(jq -r .version site/platform.json)"
+          echo "ref=$ref" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.PLATFORM_REPO }}
+          ref: ${{ steps.pin.outputs.ref }}
+          token: ${{ steps.app.outputs.token }}
+          path: platform
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --ignore-scripts
+        working-directory: platform
+      - id: release
+        name: Release the Docs bundle
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          BRANCH: ${{ matrix.release.branch }}
+          DOC_SPACE: ${{ matrix.release.docSpace }}
+          OVERRIDE: ${{ vars.DOCS_PLATFORM_REF }}
+        run: |
+          extra=()
+          [ -z "$OVERRIDE" ] || extra=(--platform platform)
+          node platform/bin/wso2-docs.mjs release-bundle content --site site --branch "$BRANCH" --doc-space "$DOC_SPACE" \
+            --out dist --github-output "$GITHUB_OUTPUT" "${extra[@]}" > release.json
+          echo "Released $(jq -r .tag release.json) ($(jq -r .docSpace release.json) $(jq -r .edition release.json))" >> "$GITHUB_STEP_SUMMARY"
+      - name: Start the Platform's release pipeline
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+          TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          gh workflow run release-pipeline.yml --repo "$PLATFORM_REPO" --ref site -f "repo=$GITHUB_REPOSITORY" -f "tag=$TAG"
+          echo "Started the release pipeline on $PLATFORM_REPO for $TAG" >> "$GITHUB_STEP_SUMMARY"
