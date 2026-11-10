@@ -6,7 +6,7 @@ Not in scope: writing quality (`style.md`) and structure (`check.md`).
 
 ## Usage
 
-Read when the user asks to verify a page's technical accuracy, or before merging docs with new technical claims. Read `source.md` first: locate `AM_REPO` and choose the ref that matches the page's version (`docs/` → `main`, `versioned_docs/version-vX.Y.Z/` → tag `amp/vX.Y.Z`). If no path is given, ask which file.
+Read when the user asks to verify a page's technical accuracy, or before merging docs with new technical claims. Read `source.md` first: locate `AM_REPO` and choose the ref that matches the branch the page is on (`docs-v2`, the main line → `main`; `agent-manager/release/<v>` → tag `amp/v<v>`). If no path is given, ask which file.
 
 If the source repo cannot be reached, mark affected claims UNVERIFIED with that reason. Never mark them correct by assumption.
 
@@ -32,7 +32,7 @@ Path, method, and required permission from `agent-manager-service/api/*_routes.g
 
 ### 4. CLI commands
 
-Follow `cli-reference.md` → "Update or verify a page" for any `amctl` usage, even on pages outside `docs/reference/cli/`.
+Follow `cli-reference.md` → "Update or verify a page" for any `amctl` usage, even on pages outside `agent-manager/docs/reference/cli/`.
 
 ### 5. Configuration and Helm values
 
@@ -60,11 +60,15 @@ Prerequisites are complete; order matters where the page implies it does; each s
 
 ### 11. Cross-page consistency
 
-Search `docs/` (and the same version's `versioned_docs/` folder) for the same topic. If this page says X and another says not-X, that is CRITICAL; name both locations and which one source supports.
+Search `agent-manager/docs/` on the branch you are on for the same topic (to read another branch without checking it out: `git grep -n '<term>' <branch> -- agent-manager/docs`). If this page says X and another says not-X, that is CRITICAL; name both locations and which one source supports.
 
 ### 12. Internal consistency and diagrams
 
 No contradictions within the page (a field "optional" in one place and "required" in another). Mermaid diagrams use the same names, counts, and order as the prose.
+
+### 13. Edition scope
+
+On the main line, each claim must hold in every Edition it renders in. Content with no Edition marker shows in Cloud and the Self-hosted versions; check that Self-hosted-only behavior (installation, Helm values, upgrades, cluster access) is marked `only="self-hosted"` and Cloud-only behavior `only="cloud"`, and that `selfHostedFrom: next` content is not already in the latest release (`check.md` → Editions and versions). A claim shown in an Edition where it is false is HIGH; a release version written literally instead of `{edition.version}` is MEDIUM. Use `wso2-docs preview agent-manager --edition <id>` to see what each Edition shows.
 
 ## Step 3: Reading pass
 
@@ -81,7 +85,7 @@ Read end to end as a first-time reader following along. Would these steps produc
 ## Output format
 
 ```text
-Reviewing: docs/guides/register-mcp-proxy.mdx
+Reviewing: agent-manager/docs/guides/platform-administration/register-mcp-proxy.mdx
 Verified against: wso2/agent-manager @ main (a1b2c3d)
 Claims identified: 24
 

@@ -65,16 +65,29 @@ Ask both in one message if both apply.
 
 Do not add a diagram just because one could exist. If you think one would help and the user did not ask, ask first, naming the type (sequence, flowchart, architecture) and why. When drawing one, use a fenced ` ```mermaid ` block and no per-diagram color overrides, and make every label match the terms used in the prose.
 
-### Versions
+### Editions and versions
 
-After editing a page in `docs/`, check whether the same page exists in `versioned_docs/` and whether the change applies there:
+The main line (`docs-v2`) builds Cloud, and Self-hosted versions are cut from it. Before writing, decide which Editions the content applies to, using the source (`source.md` → Step 2), and mark anything that does not apply to both:
+
+- **A whole page**: front matter `editions: cloud` or `editions: self-hosted`; `selfHostedFrom: next` for a page new since the last Self-hosted release.
+- **A block or a phrase**: `<Edition only="cloud">…</Edition>` or `<Edition only="self-hosted">…</Edition>`.
+
+`wso2-docs components Edition` and `wso2-docs help write-a-page` have the exact syntax (folder markers, Edition-only images); check the result in `wso2-docs preview agent-manager`, which outlines the markers and switches Editions. Do not write "on Cloud" or "in self-hosted deployments" in prose where a marker would show the reader only what applies.
+
+Write release versions on the main line as `{edition.version}` (`v{edition.version}` for image tags and `amp/v…` refs), which each Edition fills in. Variables are not filled in a Markdown link address, so a version there stays `v0.0.0-dev`.
+
+### Released versions
+
+After editing a page on the main line, check whether the same page exists on a release branch and whether the change applies there:
 
 ```bash
-ls versioned_docs/*/{same-relative-path} 2>/dev/null
+for b in $(git branch -a --format='%(refname:short)' --list '*agent-manager/release/*'); do
+  git cat-file -e "$b:agent-manager/docs/{same-relative-path}" 2>/dev/null && echo "$b"
+done
 ```
 
-Released snapshots describe the product at their tag. Only carry a change into a snapshot when it fixes something that was also wrong at that release (verify against the tag, per `source.md`), and ask before editing any snapshot.
+(If no release branches are listed, `git fetch origin` first; it does not touch the working tree.) Each release branch describes the product at its tag. Only carry a change to a release branch when it fixes something that was also wrong at that release (verify against the tag, per `source.md`), and ask before editing one. The fix is a separate change on that branch, which may touch only files under `agent-manager/`.
 
 ## Step 5: Report
 
-List what you wrote, the evidence behind each claim, any open questions or placeholders left, and whether versioned copies need the same change. Suggest `review.md` before the PR.
+List what you wrote, the evidence behind each claim, the Edition markers you added, any open questions or placeholders left, and whether release branches need the same change. Suggest `review.md` before the PR.

@@ -8,25 +8,17 @@ Read when the user asks to review, polish, or fix the writing or tone of a page,
 
 **Scope on existing pages**: many older pages predate these rules. When reviewing a diff, apply the rules to changed lines only (see `review.md` → Diff mode). When reviewing a whole page, report pre-existing issues but group them under "Pre-existing (not blocking)".
 
-**Vale**: a pull request's added lines also get Vale suggestions in CI (`.github/workflows/vale.yml`, rules in `.github/styles/AgentManager/`). Vale covers a lenient subset of this file, such as registry-project wording, a few terms, condescending words, and sentences over 40 words, so this review still applies in full. If `vale` is installed, run `vale <path>` and include its findings. When a rule here can be matched by a pattern without many false positives, add it as a Vale rule at `suggestion` level.
+**Vale and cspell**: `wso2-docs check agent-manager` runs the WSO2 Vale style and cspell on changed lines, as warnings that don't block. They cover a lenient subset of this file, so this review still applies in full; include their findings. To run Vale on one file, `wso2-docs check --vale-config` prints the path of a Vale config to pass to `vale --config <path> <file>`. The Vale rules are the Platform's (`standards/style-rules.yaml` and `terminology.yaml` in the Platform), not this repo's: when a rule here could be matched by a pattern without many false positives, suggest it to the user as a Platform change rather than adding a rule here.
 
 ## Step 1: Identify the page type
 
-This site has no `docType` field. Infer the type from the folder, then confirm it from structure:
+The type is the page's `type:` front matter, one of the Platform's page types (`wso2-docs help write-a-page` gives each one's purpose and structure). It usually matches the folder: `concepts/` → `concept`, `guides/` → `how-to`, `tutorials/` → `tutorial`, `reference/` → `reference`, `get-started/` → `quick-start`.
 
-| Folder | Type | Shape |
-|---|---|---|
-| `docs/concepts/` | concept | Explains what something is and how it relates to other concepts. No step instructions. |
-| `docs/guides/` | guide | A task: prerequisites, then `## Step N:` sections with numbered actions. |
-| `docs/tutorials/` | tutorial | End-to-end path, often on a sample agent. |
-| `docs/reference/` | reference | Tables and exact facts. No narrative. |
-| `docs/get-started/` | get-started | Overview or quick start. Treat quick starts as guides. |
-
-State the type before running checks. If the content does not match its folder (a concept page full of click-by-click steps), flag it.
+State the type before running checks. If the content does not match its type (a concept page full of click-by-click steps), flag it.
 
 ## Step 2: Calibrate against sibling pages
 
-Read two or three pages of the same type, preferably from the same sidebar category, and compare sentence rhythm, how sections open, how steps are phrased, and density of tables and admonitions. Flag concrete deviations by quoting the target next to a sibling phrase. "The tone feels off" is not a finding.
+Read two or three pages of the same type, preferably from the same folder, and compare sentence rhythm, how sections open, how steps are phrased, and density of tables and admonitions. Flag concrete deviations by quoting the target next to a sibling phrase. "The tone feels off" is not a finding.
 
 ## Step 3: Universal checks
 
@@ -71,6 +63,7 @@ Define an acronym at first use on each page unless it is universal for the audie
 - Numbers: spell out one to nine in prose; numerals for 10+, versions, ports, sizes, durations, and counts of things the reader configures ("3 replicas", "port 8080", "8 GB").
 - US spelling (organization, color, license, canceled).
 - No contractions in new text ("do not", "it is"). Do not flag untouched lines on older pages.
+- Headings and `title` in sentence case, as the Platform requires (`wso2-docs check` warns on changed headings). Older pages use Title Case; do not flag untouched headings, and recase a whole page only when the user asks.
 
 ### Punctuation
 
@@ -131,15 +124,7 @@ Ask both in one message. If the user confirms the current structure, mark it pas
 
 ### Admonitions
 
-Use by meaning, not for variety:
-
-| Type | When |
-|---|---|
-| `:::note` | Supplementary, non-blocking information |
-| `:::tip` | A shortcut or best practice |
-| `:::info` | Background framing, links to deeper material |
-| `:::warning` / `:::caution` | Risk of misconfiguration or a confusing failure |
-| `:::danger` | Destructive, irreversible, or security-critical (for example, default credentials in production) |
+Use the Platform's five types by meaning, not for variety; the types, their meanings, and the limit on admonitions in a row are the Platform's (`standards/admonitions.yaml`, checked by `wso2-docs check`). In this repo, `:::danger` also covers security-critical cases such as default credentials in production.
 
 Flag an admonition that repeats the paragraph above it.
 
@@ -157,27 +142,27 @@ allowlist/denylist (not whitelist/blacklist); primary/replica (not master/slave)
 
 ## Step 4: Page-type checks
 
-These override Step 3 where they conflict.
+These override Step 3 where they conflict. Each page type's required structure is the Platform's (`wso2-docs help write-a-page` and the template from `wso2-docs new <type>`); new pages follow it, and the points below are this repo's additions. Older pages may end with sibling-consistent sections that differ from the template (`## Relationship to Other Concepts`, `## Next Steps`); do not flag those on untouched lines.
 
 ### Concept
 
 - Opens by defining the thing and its scope, not with a task.
 - No imperative instructions ("Click X", "Run Y"); link to the guide instead.
-- Ends with how it relates to other concepts (`## Relationship to Other Concepts` or a related-concepts list), matching siblings.
+- Ends with how it relates to other concepts and the how-to and reference pages (the template's `## Related`).
 
-### Guide
+### How-to (and quick start)
 
 - Intro states the task and outcome in one or two sentences. ❌ "This guide walks you through MCP proxies." → ✅ "Register an MCP Proxy to expose an upstream MCP server to your agents through the AI Gateway."
 - `## Prerequisites` comes before the first step and lists required role, installed components, and any upstream credentials.
-- Step headings are `## Step N: <Imperative Verb Phrase>`.
-- Ends with `## Next Steps`, `## Related`, `## Troubleshooting`, or a verification section; not "Go Further" or "What's Next?" with a question mark.
+- Step sections are named with an imperative verb phrase. Existing guides number them (`## Step N: <Imperative verb phrase>`); keep that on a page that already does.
+- Has a verify section with an observable result and ends with the template's closing sections (`wso2-docs new how-to`); not "Go Further" or "What's Next?" with a question mark.
 - A full parameter table belongs on a reference page; link to it instead of embedding it.
 
 ### Tutorial
 
 - States what the reader will build and what they need before starting.
 - Every step produces a visible result the reader can check.
-- Ends with `## What's Next` or `## See Also`.
+- Ends with the template's closing sections (`wso2-docs new tutorial`).
 
 ### Reference
 
@@ -200,9 +185,9 @@ Every other finding should be fixed before merge but does not fail the review.
 Group findings by category and omit categories with no findings. Per finding: line number, quote, what is wrong in one line, and a rewrite (or `[needs writer input]`).
 
 ```text
-Reviewing: docs/guides/register-mcp-proxy.mdx
-Page type: guide
-Siblings read: register-llm-service-provider.mdx, configure-agent-mcp-proxies.mdx
+Reviewing: agent-manager/docs/guides/platform-administration/register-mcp-proxy.mdx
+Page type: how-to
+Siblings read: register-llm-service-provider.mdx, environment-management.mdx
 
 TERMINOLOGY
   ❌  line 14: "the console" → "the Console"
@@ -213,7 +198,7 @@ VOICE
 AI VOCABULARY
   ❌  line 9: "seamlessly" → cut
 
-GUIDE: INTRO
+HOW-TO: INTRO
   ✅  states task and outcome
 
 PRE-EXISTING (NOT BLOCKING)

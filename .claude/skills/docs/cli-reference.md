@@ -1,10 +1,10 @@
 # `amctl` CLI Reference Pages
 
-Create, update, or verify pages under `docs/reference/cli/` against the `amctl` source in `wso2/agent-manager`. The CLI is the source of truth: every command, argument, flag, type, default, and description on these pages must match it.
+Create, update, or verify pages under `agent-manager/docs/reference/cli/` against the `amctl` source in `wso2/agent-manager`. The CLI is the source of truth: every command, argument, flag, type, default, and description on these pages must match it.
 
 ## Usage
 
-Read for any request touching `docs/reference/cli/**`: documenting a new command or flag, updating a page after a CLI change, or verifying a page. Read `source.md` first to locate `AM_REPO` and pick the ref.
+Read for any request touching `agent-manager/docs/reference/cli/**`: documenting a new command or flag, updating a page after a CLI change, or verifying a page. Read `source.md` first to locate `AM_REPO` and pick the ref.
 
 ## Where the CLI lives
 
@@ -30,11 +30,11 @@ This needs no server or sign-in. If Go or the module cache is unavailable, read 
 
 | Page | Documents |
 |---|---|
-| `overview.mdx` | Installation pointer, global flags, command list (the CLI category landing page) |
+| `index.mdx` | Installation pointer, global flags, command list (the CLI folder's landing page) |
 | `login.mdx`, `version.mdx` | Top-level commands |
 | `context.mdx`, `project.mdx`, `agent.mdx`, `llm-provider.mdx`, `gateway.mdx`, `skills.mdx`, `api.mdx` | One page per command group, every subcommand on it |
 
-A new command group gets a new page and a new entry in the `CLI` category of `sidebars.ts` (ordered as a user meets them: login, context, project, agent, ...). A new subcommand goes on its group's page. Installation steps belong in `docs/guides/cli-installation.mdx`, not here.
+A new command group gets a new page in `agent-manager/docs/reference/cli/` (`type: reference`), with a `sidebar_position` that keeps the folder in the order a user meets the commands (login, context, project, agent, ...; renumber the siblings after it if needed). A new subcommand goes on its group's page. Installation steps belong in `agent-manager/docs/guides/installation/cli-installation.mdx`, not here.
 
 ## Update or verify a page
 
@@ -48,7 +48,7 @@ A new command group gets a new page and a new entry in the `CLI` category of `si
     - Every flag: name, shorthand, type, default, required, and description. Defaults must be the literal default in the flag definition; `""`, `0`, `false`, and `nil` are shown as `(none)` or `` `false` `` matching the page's existing convention.
     - Inherited flags (`--org`, `--project`, `--json`) listed under "Options inherited from parent commands" only when that command actually uses them (`ResolveScope` with `needsOrg` / `needsProject`).
     - Behavior the page states (confirmation prompts, fallback to the linked project, JSON envelope shape) matches the command's `runX` function.
-5. **Examples**: every example must parse against the current flags. Do not invent output; if you show output, take it from the command's render code or ask the user for a real run.
+5. **Examples**: every example must parse against the current flags. Do not invent output; if you show output, take it from the command's render code or ask the user for a real run. On the main line, a release version in an example or its output is `{edition.version}` (as on `version.mdx`), not a literal version.
 
 Report each difference with the source location (`cli/pkg/cmd/agent/deploy.go:219 @ main`).
 
@@ -90,4 +90,4 @@ Drop the `Short` column when no flag in the section has a shorthand, as existing
 
 ## After editing
 
-Run `npm run build` (anchors in the Subcommands table are checked), then `check.md` on the page. Style rules for reference pages (`style.md` → Reference) apply: no second person, tables over prose.
+Run `wso2-docs check agent-manager` (its preview build checks the anchors in the Subcommands table), then `check.md` on the page. Style rules for reference pages (`style.md` → Reference) apply: no second person, tables over prose.

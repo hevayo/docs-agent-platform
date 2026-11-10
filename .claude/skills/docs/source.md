@@ -23,13 +23,14 @@ If none work and the user declines a clone, you may read single files over HTTPS
 
 ## Step 2: Pick the right ref
 
-The docs are versioned, and each version must be verified against the matching source:
+Each Edition's pages live on their own branch of this repo, at the same `agent-manager/docs/` path, and must be verified against the matching source. Find the branch with `git rev-parse --abbrev-ref HEAD`:
 
-| Docs location | Version | Verify against |
+| Docs branch | Edition | Verify against |
 |---|---|---|
-| `docs/` | Next (unreleased) | `main` of `wso2/agent-manager` |
-| `versioned_docs/version-vX.Y.Z/` | Released snapshot | tag `amp/vX.Y.Z` |
-| `versioned_docs/version-cloud/` | Cloud (hand-maintained) | Ask the user which ref the cloud deployment runs |
+| `docs-v2` (the main line), or a branch from it | Cloud, and the next Self-hosted version | `main` of `wso2/agent-manager` |
+| `agent-manager/release/<v>` (now `2026.11.0`, `1.0.0`), or a branch from it | Self-hosted version `<v>` | tag `amp/v<v>` |
+
+Content marked `<Edition only="cloud">` or `editions: cloud` describes the Cloud deployment, which may not run `main`: if a claim depends on that difference, ask the user which ref Cloud runs. Content marked `selfHostedFrom: next` is not in any release yet, so `main` is the only ref for it.
 
 Before reading source, check where the local checkout sits and whether it is current:
 
@@ -92,7 +93,7 @@ When the request is "document PR #N" or "update the docs for feature X":
 
 1. Find the change: `gh pr view <N> --repo wso2/agent-manager --json title,body,files` and `gh pr diff <N> --repo wso2/agent-manager`, or `git -C "$AM_REPO" log --oneline -- <path>`.
 2. Read the linked design proposal or issue if the PR body points to one (GitHub Discussions, "Design Proposals" category). Treat it like a user-supplied draft (see `edit.md` Step 2): useful for intent, but the merged code wins where they disagree.
-3. List every user-visible surface the change touches (Console, CLI, API, Helm values, config) and search `docs/` for pages that already mention each one. Update those pages before creating a new one.
+3. List every user-visible surface the change touches (Console, CLI, API, Helm values, config) and search `agent-manager/docs/` for pages that already mention each one. Update those pages before creating a new one.
 
 ## Citing sources
 
@@ -104,6 +105,6 @@ Some pages are generated from the source repo and must not be hand-edited:
 
 | Page | Generated from | How to change |
 |---|---|---|
-| `docs/reference/helm-charts/*.mdx` | `deployments/helm-charts/<chart>/values.schema.json` | Fix the description in the chart upstream, then regenerate with `node scripts/gen-helm-reference.mjs --tag <amp/vX.Y.Z>` (or wait for the upstream release pipeline, which pushes these pages). `--check` reports stale pages. |
+| `agent-manager/docs/reference/helm-charts/*.mdx` | `deployments/helm-charts/<chart>/values.schema.json` (fetched over HTTPS at the tag) | Fix the description in the chart upstream, then regenerate: `node scripts/gen-helm-reference.mjs --tag <ref> --out agent-manager/docs/reference/helm-charts`, where `<ref>` is `main` on the main line and `amp/v<v>` on `agent-manager/release/<v>`. Add `--check` to report stale pages (non-zero exit) without writing. |
 
 If you find a wrong value on a generated page, report where the upstream fix belongs instead of patching the `.mdx`.
