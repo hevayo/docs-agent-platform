@@ -2,10 +2,8 @@
 title: Run Agent Manager on a VM with Docker
 description: Both installation paths on this page Simple and Advanced are intended for evaluation, demos, and proof-of-concept use only.  # generated from the first paragraph; a writer should improve it
 type: how-to
-sidebar_position: 4
+sidebar_position: 3
 hide_table_of_contents: true
-editions: self-hosted
-selfHostedFrom: next
 ---
 
 import Tabs from '@theme/Tabs';
@@ -72,10 +70,10 @@ SSH into the VM and run the one-command installer with `sudo`. It downloads a si
 
 ```bash
 # on the VM (Docker, k3d, kubectl, helm already installed)
-curl -fsSL https://github.com/wso2/agent-manager/releases/download/amp/v{edition.version}/bootstrap.sh \
+curl -fsSL https://github.com/wso2/agent-manager/releases/download/amp/v1.0.0/bootstrap.sh \
   | sudo bash -s -- simple \
       --host <VM_PUBLIC_IP> \
-      --version {edition.version} \
+      --version 1.0.0 \
       --email you@example.com
 ```
 

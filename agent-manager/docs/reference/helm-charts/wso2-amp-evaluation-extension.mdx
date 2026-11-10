@@ -3,13 +3,12 @@ title: Evaluation Extension
 description: A Helm chart to add Evaluation functionality for the Agent Management Platform, by Deploying and Configuring Monitor evaluation workflows.  # generated from the first paragraph; a writer should improve it
 type: reference
 sidebar_position: 4
-editions: self-hosted
 ---
 
 A Helm chart to add Evaluation functionality for the Agent Management Platform, by Deploying and Configuring Monitor evaluation workflows.
 
 ```bash
-helm install amp-evaluation-extension oci://ghcr.io/wso2/wso2-amp-evaluation-extension \
+helm install amp-evaluation-extension oci://ghcr.io/wso2/helm-charts/wso2-amp-evaluation-extension \
   --namespace <namespace> --create-namespace \
   --values my-values.yaml
 ```
@@ -22,11 +21,9 @@ helm install amp-evaluation-extension oci://ghcr.io/wso2/wso2-amp-evaluation-ext
 | `ampEvaluation.workflowNamespace` | Namespace OpenChoreo runs this environment's Argo workflows in. The evaluation job namespace is derived from it as "workflows-&lt;value&gt;". | string | `"default"` |
 | `ampEvaluation.image` | Docker image configuration for monitor evaluation | object |  |
 | `ampEvaluation.image.repository` | Image repository For local development: will be pushed to local registry For production: ghcr.io/wso2/amp-evaluation-monitor | string | `"ghcr.io/wso2/amp-evaluation-monitor"` |
-| `ampEvaluation.image.tag` | Image tag IMPORTANT: For production, this should match the amp-evaluation SDK version used in dbMigration.evaluatorGenerator.image.tag in the wso2-agent-manager chart. Example: If using amp-evaluation==0.1.5, set this to "0.1.5" | string | `"{edition.version}"` |
+| `ampEvaluation.image.tag` | Image tag IMPORTANT: For production, this should match the amp-evaluation SDK version used in dbMigration.evaluatorGenerator.image.tag in the wso2-agent-manager chart. Example: If using amp-evaluation==0.1.5, set this to "0.1.5" | string | `"1.0.0"` |
 | `ampEvaluation.image.pullPolicy` | Image pull policy | string | `"IfNotPresent"` |
 | `ampEvaluation.useLocalRegistry` | Whether to use local registry or external image When true, image will be prefixed with registry endpoint When false, uses repository:tag directly (for k3d imported images or external registries) | boolean | `false` |
-| `ampEvaluation.activeDeadlineSeconds` | Wall-clock budget for a single evaluation workflow, in seconds. Bounds a run whose pod can never start (for example a secret it mounts that never syncs), which would otherwise hold a pod slot indefinitely because neither ttlStrategy nor the Workflow's ttlAfterCompletion collects a workflow that never completes. | integer | `1800` |
-| `ampEvaluation.ttlSecondsAfterFailure` | How long a failed workflow is kept before Argo deletes it, in seconds. Shorter than the success TTL because a failure's ExternalSecrets keep polling the secret provider at their refresh interval for as long as the workflow survives. | integer | `600` |
 | `ampEvaluation.tracesApiEndpoint` | In-cluster URL for the observer API | string | `"http://amp-observer.openchoreo-observability-plane.svc.cluster.local:9098"` |
 | `ampEvaluation.publisher` | Publisher settings (for publishing evaluation scores to agent-manager) | object |  |
 | `ampEvaluation.publisher.endpoint` | In-cluster URL for the agent-manager API | string | `"http://amp-api.wso2-amp.svc.cluster.local:9000"` |
@@ -38,9 +35,7 @@ helm install amp-evaluation-extension oci://ghcr.io/wso2/wso2-amp-evaluation-ext
 | Parameter | Description | Type | Default |
 |---|---|---|---|
 | `global` | Global configuration (inherited from parent chart) | object |  |
-| `global.ampImageRegistry` | Registry and organization that replaces the registry portion of the first-party AMP image repository, keeping the image name. Ignored when ampEvaluation.useLocalRegistry is true, which prefixes the in-cluster build registry instead. Deliberately not named global.imageRegistry, which Bitnami subcharts consume. | string | `""` |
 | `global.baseDomain` | Base domain for external access | string | `""` |
-| `global.imagePullSecrets` | Names of existing docker-registry secrets used to pull the evaluation image. The secrets must exist in the workflow namespace (workflows-&lt;environment&gt;), not this chart's release namespace, because that is where the evaluation job pod runs. | array | `[]` |
 | `global.registry` | Container registry configuration | object |  |
 | `global.registry.endpoint` | Registry endpoint for pushing and pulling images For local registry: "host.k3d.internal:10082" For external registry with baseDomain: automatically uses "registry.&lt;baseDomain&gt;" | string | `"host.k3d.internal:10082"` |
 

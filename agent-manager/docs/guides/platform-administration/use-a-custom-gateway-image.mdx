@@ -2,8 +2,7 @@
 title: Use a Custom Gateway Image
 description: A gateway's policy set is fixed when its image is built.  # generated from the first paragraph; a writer should improve it
 type: how-to
-sidebar_position: 9
-editions: self-hosted
+sidebar_position: 8
 ---
 
 A gateway's policy set is fixed when its image is built. To add your own policy, you build a gateway image that includes it, then point your Agent Manager deployment at that image.
@@ -45,18 +44,12 @@ Updating the operator alone therefore leaves existing environments untouched, an
 
 This sets the image used for environments created from now on, and for every later redeployment of the ones you already have.
 
-The operator is installed in `openchoreo-data-plane` and receives image references as `gateway.values.*`. Find the operator version you installed, so the upgrade changes only the image:
-
-```bash
-helm list -n openchoreo-data-plane -f '^gateway-operator$'
-```
-
-The `CHART` column reads `gateway-operator-<version>`. Upgrade to your repository and tag at that same version:
+The operator is installed in `openchoreo-data-plane` at version `0.11.0`, and receives image references as `gateway.values.*`. Upgrade it to your repository and tag at that same version, so only the image changes:
 
 ```bash
 helm upgrade gateway-operator \
   oci://ghcr.io/wso2/api-platform/helm-charts/gateway-operator \
-  --version <operator-version> \
+  --version 0.11.0 \
   --namespace openchoreo-data-plane \
   --reuse-values \
   --set gateway.values.gateway.controller.image.repository=<your-registry>/gateway-controller \
@@ -74,6 +67,8 @@ The tags use `--set-string` because `--set` turns a tag that looks like a number
 
 :::warning Setup scripts reset the image
 On a quick-start or k3d install, `deployments/setup/ensure-gateway-operator.sh` reinstalls the operator on every setup run with the stock values and without `--reuse-values`. The image tag comes from `GATEWAY_IMAGE_VERSION` in `deployments/setup/env.sh`, but the image repository is written into the script itself. Change both in your copy of the scripts, or re-run this step after every setup run.
+
+In this release the stock pins are operator `0.11.0`, gateway chart `1.2.2`, and image tag `1.2.1`, from `ghcr.io/wso2/api-platform/`.
 :::
 
 :::warning
@@ -129,22 +124,20 @@ helm list -n ${GATEWAY_NS}
 
 ```
 NAME                             NAMESPACE         REVISION  CHART
-api-platform-default-default     default-default   2         wso2-amp-api-platform-gateway-extension-{edition.version}
-api-platform-default-default-gw  default-default   1         gateway-2026.09.24
+api-platform-default-default     default-default   2         wso2-amp-api-platform-gateway-extension-1.0.0
+api-platform-default-default-gw  default-default   1         gateway-1.2.2
 ```
 
-The one you want is the release whose `CHART` column starts with `gateway-`. The other is the extension release, which does not run the pods. Note its chart version from the same column (`2026.09.24` above); the upgrade must use it.
+The one you want is the release whose `CHART` column starts with `gateway-`. The other is the extension release, which does not run the pods. Note its chart version from the same column (`1.2.2` above); the upgrade must use it.
 
 In `openchoreo-data-plane`, other platform releases such as `gateway-operator` are listed too. Match on the `-gw` name of the environment's extension release.
-
-The operator names the gateway release `<apigateway-name>-gw` only while that fits its length limit. Newer operator versions use a shorter limit and fall back to `gw-<hash>` for longer names, which is common for egress gateways. If no `-gw` release matches, take the release in the namespace whose `CHART` column starts with `gateway-`.
 
 ### Upgrade the Gateway Release
 
 ```bash
 helm upgrade <gateway-release> \
   oci://ghcr.io/wso2/api-platform/helm-charts/gateway \
-  --version <chart-version> \
+  --version 1.2.2 \
   --namespace ${GATEWAY_NS} \
   --reuse-values \
   --set-string gateway.controller.image.tag=<your-tag> \
@@ -163,7 +156,7 @@ kubectl rollout restart deployment -n ${GATEWAY_NS} \
 ```
 :::
 
-Keep `--version` the same as the chart version the operator installed, unless you are deliberately moving the gateway chart too. That version is pinned in the operator's `gateway.helm.chartVersion`.
+`--version 1.2.2` is the gateway chart this release installs, pinned in the operator's `gateway.helm.chartVersion`. Keep it unless you are deliberately moving the gateway chart too.
 
 Under a split gateway topology, each environment has a second pair of releases in the `<org>-<env>-egress` namespace. Repeat the discovery and upgrade there.
 
