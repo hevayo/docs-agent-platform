@@ -11,7 +11,7 @@ can't abuse, and monitors prove it behaves. Now it has to serve actual
 employees.
 
 :::info This chapter needs a platform-hosted agent
-Promotion, suspend, endpoint security, and isolation tiers are all things
+Promotion, suspend, <Edition only="cloud">and endpoint security</Edition><Edition only="self-hosted">endpoint security, and isolation tiers</Edition> are all things
 Agent Manager can only do for a workload it runs. If your agent is
 externally-hosted, follow along to understand the model. The actions
 themselves won't be available to you, and the deployment and endpoint
@@ -181,12 +181,16 @@ point.
 Run the seeded traffic against staging one more time. Confirm the monitors
 from Chapter 4 are green. Then promote staging to production.
 
+<Edition only="self-hosted">
+
 When you promote into an environment, the agent runs under that
 environment's configured **Isolation Tier**, the sandboxing strength you
 chose (or left at default) when you created it in Step 1. If you want
 production locked down tighter than the default, set that on the environment
 before promoting into it. See
 [Environment Management](../guides/platform-administration/environment-management.mdx) for how.
+
+</Edition>
 
 {/* SCREENSHOT: Promote dialog for staging to production, with the production configuration panel */}
 

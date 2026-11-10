@@ -35,7 +35,7 @@ problem the previous one leaves behind, so they're meant to be read in order.
 
 ## What You'll Need
 
-- Agent Manager installed and reachable. <Edition only="self-hosted">[Quickstart](../get-started/quick-start.mdx)</Edition><Edition only="cloud">Quickstart</Edition> is the fastest route.
+- <Edition only="cloud">An Agent Manager Cloud account. Sign up at [console.agent-manager.cloud.wso2.com](https://console.agent-manager.cloud.wso2.com/) if you don't have one yet.</Edition><Edition only="self-hosted">Agent Manager installed and reachable. [Quickstart](../get-started/quick-start.mdx) is the fastest route.</Edition>
 - An OpenAI API key.
 
 The agent itself is an [`it-helpdesk-agent`](https://github.com/wso2/agent-manager/tree/main/samples/it-helpdesk-agent).
@@ -61,6 +61,8 @@ where they appear.
 
 ## Step 1: Create the Agent
 
+<Edition only="self-hosted">
+
 Log in to the Agent Manager console using `admin` for both the username and password.
 
 Where you land next depends on whether your organization already has a project.
@@ -68,6 +70,19 @@ On a brand-new install with no projects yet, you'll land on the **Projects**
 view. That's the organization-wide screen listing every project across the org.
 If a project already exists (for example a `default` one created during setup),
 you're dropped straight into it instead.
+
+</Edition>
+
+<Edition only="cloud">
+
+Log in to the Agent Manager console at [console.agent-manager.cloud.wso2.com](https://console.agent-manager.cloud.wso2.com/). There's no separate Agent Manager username or password to create: sign in with your existing Google or GitHub account, and Agent Manager Cloud federates that login for you.
+
+If you don't belong to an organization yet, you'll be prompted to create one first. Give it a **Name** and a **Handle** (a short, URL-safe identifier for your organization), then continue.
+
+Every organization already has a **default** project, so you land directly
+inside it once you're logged in.
+
+</Edition>
 
 Either way, get to the right project before creating anything:
 

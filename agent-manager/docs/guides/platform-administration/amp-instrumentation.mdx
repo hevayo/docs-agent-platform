@@ -303,11 +303,21 @@ The canonical source for this table is [`.github/release-config.json`](https://g
 
 ### Why the Console may show more than this
 
+<Edition only="self-hosted">
+
 The version set a given install actually accepts is assembled at runtime from the bundled baseline above plus any extra entries the platform admin has added through the Helm chart. So when AMP publishes, say, `0.6.0` between AMP releases, an operator can make it selectable in the Console without upgrading the whole platform.
 
 If you're picking a version in the create-agent form and see something that isn't in the table above, your platform admin added it. The pinned `traceloop-sdk` and supported Python versions for those entries live in the operator's chart values.
 
-Operators: see <Edition only="self-hosted">[Instrumentation Catalog](./instrumentation-catalog.mdx)</Edition><Edition only="cloud">Instrumentation Catalog</Edition> for how to add a version, mirror images for air-gapped installs, and set the platform default.
+Operators: see [Instrumentation Catalog](./instrumentation-catalog.mdx) for how to add a version, mirror images for air-gapped installs, and set the platform default.
+
+</Edition>
+
+<Edition only="cloud">
+
+On Agent Manager Cloud the available instrumentation versions and the platform default are managed by WSO2.
+
+</Edition>
 
 ## Agent framework compatibility
 
