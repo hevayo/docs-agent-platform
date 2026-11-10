@@ -1,11 +1,12 @@
 ---
 title: Connect your agent to real tools
+description: Your agent already tries to avoid duplicate tickets.  # generated from the first paragraph; a writer should improve it
+type: tutorial
+sidebar_position: 3
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
-# Connect your agent to real tools
 
 Your agent already tries to avoid duplicate tickets. Before filing one, it
 checks system status and the employee's own open tickets. But that check has a
@@ -65,7 +66,7 @@ you check.
 Click **Add Endpoint**. Agent Manager will discover the server's tools automatically.
 
 Your PAT is now stored on the proxy, centrally, and the agent will never see it.
-Full field reference is at [Register an MCP Proxy](../guides/register-mcp-proxy.mdx).
+Full field reference is at [Register an MCP Proxy](../guides/platform-administration/register-mcp-proxy.mdx).
 
 :::note Environments you add later
 This MCP server covers only the environments that exist when you create it.
@@ -306,7 +307,7 @@ export AMP_AGENTID_SCOPES="<available scopes>"
 amp-instrument python main.py
 ```
 
-[OAuth (AgentID)-Secured Proxies](../guides/configure-agent-mcp-proxies.mdx#configuring-an-mcp-proxy-for-an-external-agent)
+[OAuth (AgentID)-Secured Proxies](../guides/agent-identity-and-access-management/configure-agent-mcp-proxies.mdx#configuring-an-mcp-proxy-for-an-external-agent)
 shows where each value appears.
 
 </TabItem>

@@ -1,8 +1,9 @@
 ---
-sidebar_position: 4
+title: Configure Trace Sampling
+description: At high request rates, exporting every trace becomes impractical — a single agent invocation produces a root span plus one span per LLM call, tool call, and…  # generated from the first paragraph; a writer should improve it
+type: how-to
+sidebar_position: 6
 ---
-
-# Configure Trace Sampling
 
 At high request rates, exporting every trace becomes impractical — a single agent invocation produces a root span plus one span per LLM call, tool call, and retrieval step.
 
@@ -16,7 +17,7 @@ AMP does not sample traces on the server side. Sampling is a **client-side, head
 No code change is required — the OpenTelemetry SDK that the Traceloop SDK builds on reads them at startup.
 
 :::note Python agents
-This page covers **Python** agents instrumented with `amp-instrumentation`. An agent that configures a sampler in code overrides these environment variables — the .NET setup in [AMP Instrumentation](./amp-instrumentation.mdx#instrumenting-net-agents) does exactly that with `.SetSampler(new AlwaysOnSampler())`, so change the sampler in code there instead.
+This page covers **Python** agents instrumented with `amp-instrumentation`. An agent that configures a sampler in code overrides these environment variables — the .NET setup in [AMP Instrumentation](../platform-administration/amp-instrumentation.mdx#instrumenting-net-agents) does exactly that with `.SetSampler(new AlwaysOnSampler())`, so change the sampler in code there instead.
 :::
 
 ## Supported Values
@@ -78,7 +79,7 @@ AMP already injects `AMP_OTEL_ENDPOINT` and `AMP_AGENT_API_KEY`, so you only add
 
 You can also set the same variables when first deploying the agent, from the **Environment Variables** section of the **Configure & Deploy** step.
 
-Environment variables apply to one environment at a time, so set them for each environment you want sampled; values for later environments are configured when you promote. See [Manage Environments and Deployment Pipelines](./environment-management.mdx) for how promotion works.
+Environment variables apply to one environment at a time, so set them for each environment you want sampled; values for later environments are configured when you promote. See [Manage Environments and Deployment Pipelines](../platform-administration/environment-management.mdx) for how promotion works.
 
 This works whether the agent uses auto-instrumentation or the manual `init_otel()` helper — both read the variables from the container environment at startup.
 
@@ -107,6 +108,6 @@ The same variables apply if you call `init_otel()` from your own code instead of
 
 ## Related
 
-- [Observability](../concepts/observability.mdx) — how tracing works in AMP
-- [AMP Instrumentation](./amp-instrumentation.mdx) — instrumentation setup and the manual span contract
+- [Observability](../../concepts/observability.mdx) — how tracing works in AMP
+- [AMP Instrumentation](../platform-administration/amp-instrumentation.mdx) — instrumentation setup and the manual span contract
 - [OpenTelemetry SDK configuration](https://opentelemetry.io/docs/languages/sdk-configuration/general/#otel_traces_sampler) — upstream reference for these variables

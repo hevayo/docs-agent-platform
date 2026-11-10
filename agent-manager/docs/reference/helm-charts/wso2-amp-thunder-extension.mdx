@@ -1,8 +1,9 @@
 ---
 title: Thunder Extension
+description: A Helm chart to add Thunder Identity Provider functionality for the Agent Management Platform.  # generated from the first paragraph; a writer should improve it
+type: reference
+sidebar_position: 3
 ---
-
-# Thunder Extension
 
 A Helm chart to add Thunder Identity Provider functionality for the Agent Management Platform.
 
@@ -438,4 +439,3 @@ helm install amp-thunder-extension oci://ghcr.io/wso2/wso2-amp-thunder-extension
 | `thunder.setup.resources.requests` | Resources reserved for the setup job at scheduling time. | object |  |
 | `thunder.setup.resources.requests.cpu` | CPU the container requests at scheduling time | string | `"250m"` |
 | `thunder.setup.resources.requests.memory` | Memory the container requests at scheduling time | string | `"128Mi"` |
-

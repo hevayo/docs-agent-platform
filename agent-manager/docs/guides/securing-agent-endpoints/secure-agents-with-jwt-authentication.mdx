@@ -1,8 +1,9 @@
 ---
-sidebar_position: 8
+title: Secure Agents with JWT Authentication
+description: JWT authentication protects platform-hosted API agent endpoints at the gateway.  # generated from the first paragraph; a writer should improve it
+type: how-to
+sidebar_position: 4
 ---
-
-# Secure Agents with JWT Authentication
 
 JWT authentication protects platform-hosted API agent endpoints at the gateway. When enabled,
 callers must send a valid JWT, by default in the `Authorization: Bearer <token>` header. The
@@ -56,7 +57,7 @@ ThunderID runs per environment and is already trusted by that environment's gate
 `ThunderKeyManager`, so you can issue tokens for your callers without adding a provider:
 
 1. Log in to the environment's ThunderID console. See
-   [Access the Environment ThunderID Console](./environment-management.mdx#access-the-environment-thunderid-console) for
+   [Access the Environment ThunderID Console](../platform-administration/environment-management.mdx#access-the-environment-thunderid-console) for
    the URL, the `admin` username, and the password generated when the environment was created.
 2. Create an OAuth application, following ThunderID's
    [Manage Applications](https://thunderid.dev/docs/v1.0.x/guides/applications/manage-applications/)

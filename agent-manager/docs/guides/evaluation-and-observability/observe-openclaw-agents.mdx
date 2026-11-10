@@ -1,8 +1,9 @@
 ---
-sidebar_position: 17
+title: Observe OpenClaw Agents
+description: OpenClaw agents can send traces to WSO2 Agent Manager through OpenClaw's diagnostics-otel plugin.  # generated from the first paragraph; a writer should improve it
+type: how-to
+sidebar_position: 7
 ---
-
-# Observe OpenClaw Agents
 
 [OpenClaw](https://docs.openclaw.ai) agents can send traces to WSO2 Agent Manager through OpenClaw's `diagnostics-otel` plugin. Register OpenClaw as an externally-hosted agent, then point the plugin at your agent's OpenTelemetry (OTel) endpoint.
 
@@ -38,7 +39,7 @@ Known limitations:
 
 The panel generates an API key automatically the first time it opens after registration, and shows it only once. If the key shows as `ey***`, select a **Token Duration** and click **Generate** to create a new one.
 
-For more on registration and API keys, see [Externally-Hosted Agents](../concepts/observability.mdx#externally-hosted-agents).
+For more on registration and API keys, see [Externally-Hosted Agents](../../concepts/observability.mdx#externally-hosted-agents).
 
 ## Step 2: Install the Diagnostics Plugin
 
@@ -133,5 +134,5 @@ openclaw gateway restart
 
 ## Related
 
-- [Observability](../concepts/observability.mdx)
-- [AMP Instrumentation](./amp-instrumentation.mdx)
+- [Observability](../../concepts/observability.mdx)
+- [AMP Instrumentation](../platform-administration/amp-instrumentation.mdx)

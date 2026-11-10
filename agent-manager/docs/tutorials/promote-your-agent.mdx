@@ -1,8 +1,10 @@
 ---
-title: Ship the agent to Production
+title: Ship It to Production
+description: The helpdesk agent works in development.  # generated from the first paragraph; a writer should improve it
+type: tutorial
+sidebar_label: Ship the agent to Production
+sidebar_position: 5
 ---
-
-# Ship It to Production
 
 The helpdesk agent works in development. It's governed, it has real tools it
 can't abuse, and monitors prove it behaves. Now it has to serve actual
@@ -27,7 +29,7 @@ Before you can promote anything, your project needs at least two environments
 in its deployment pipeline, and that pipeline has to be attached to the
 project. Without that, there's nowhere to promote to. If you haven't set this
 up yet, do it now: see
-[Environment Management](../guides/environment-management.mdx).
+[Environment Management](../guides/platform-administration/environment-management.mdx).
 
 An agent doesn't jump to production. It follows the
 [deployment pipeline](../concepts/deployment-pipeline.mdx) attached to the
@@ -85,7 +87,7 @@ production:
   Configurations**. You'll see a tab per environment. Attach `Shared OpenAI`
   on the **Staging** and **Production** tabs the same way you attached it for
   Development in Chapter 2. Full detail:
-  [Configure Agent LLM Configuration](../guides/configure-agent-llm-configuration.mdx).
+  [Configure Agent LLM Configuration](../guides/platform-administration/configure-agent-llm-configuration.mdx).
 - **MCP binding**: this one works differently. An MCP server covers only the
   environments that already existed when you created it, and it cannot be
   extended to environments added later. The `GitHub` MCP server from Chapter 3
@@ -107,7 +109,7 @@ production:
 
   Remove the old configuration before adding the new one, because both would
   inject the same variable names. Full detail:
-  [Configure Agent MCP Proxies](../guides/configure-agent-mcp-proxies.mdx).
+  [Configure Agent MCP Proxies](../guides/agent-identity-and-access-management/configure-agent-mcp-proxies.mdx).
 
 The LLM binding can also point each environment at a different target. Because
 each environment has its own tab under **LLM Configurations**, staging might use
@@ -150,16 +152,16 @@ Development was open because it was only you. Production is not.
 
 Pick an authentication approach for the agent's endpoint:
 
-- **[API keys](../guides/secure-agent-endpoints-with-api-keys.mdx)**:
+- **[API keys](../guides/securing-agent-endpoints/secure-agent-endpoints-with-api-keys.mdx)**:
   simplest. Good for server-to-server callers like an internal helpdesk
   portal.
-- **[JWT authentication](../guides/secure-agents-with-jwt-authentication.mdx)**:
+- **[JWT authentication](../guides/securing-agent-endpoints/secure-agents-with-jwt-authentication.mdx)**:
   use this when calls carry an end-user identity you want the agent to see.
 
 {/* SCREENSHOT: Agent endpoint security configuration with an authentication method selected */}
 
 If a browser app will call the agent directly, configure
-[CORS](../guides/configure-cors-for-agent-endpoints.mdx). Restrict it to your
+[CORS](../guides/securing-agent-endpoints/configure-cors-for-agent-endpoints.mdx). Restrict it to your
 actual origins, not `*`.
 
 :::info Platform-hosted only
@@ -184,7 +186,7 @@ environment's configured **Isolation Tier**, the sandboxing strength you
 chose (or left at default) when you created it in Step 1. If you want
 production locked down tighter than the default, set that on the environment
 before promoting into it. See
-[Environment Management](../guides/environment-management.mdx) for how.
+[Environment Management](../guides/platform-administration/environment-management.mdx) for how.
 
 {/* SCREENSHOT: Promote dialog for staging to production, with the production configuration panel */}
 
@@ -250,4 +252,4 @@ than wiring each one by hand.
 
 - [Agent Kind & Agent Catalog](../concepts/agent-kind-and-catalog.mdx): publish this agent as a reusable template so other teams can deploy their own.
 - [Authorization](../reference/authorization.mdx): the full scope catalog behind the permission split you just hit.
-- [CLI](../reference/cli/overview.mdx): do all of this from `amctl` instead of the console.
+- [CLI](../reference/cli/index.mdx): do all of this from `amctl` instead of the console.

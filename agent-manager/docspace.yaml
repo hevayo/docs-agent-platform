@@ -1,0 +1,25 @@
+# Doc space manifest (schemas/docspace.schema.json in wso2/docs-platform).
+schemaVersion: 1
+slug: agent-manager
+displayName: Agent Manager
+editionNames:
+  cloud: Agent Manager Cloud
+  selfHosted: Agent Manager {version}
+home: agent-platform
+owners:
+  team: agent-platform-docs
+repo: hevayo/docs-agent-platform
+editLinks: true
+issues:
+  repo: wso2/docs-agent-platform
+editions:
+  - id: cloud
+    branch: docs-v2
+  - id: 2026.11.0
+  - id: 1.0.0
+latest: 1.0.0
+notices:
+  - editions:
+      - 2026.11.0
+    level: info
+    text: Agent Manager 2026.11.0 is a short-term support (STS) release. For long-term support, use Agent Manager 1.0.0.

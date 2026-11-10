@@ -1,0 +1,7 @@
+# Per-Edition variables ({edition.*} in pages).
+cloud:
+  displayName: Agent Manager Cloud
+  productName: WSO2 Agent Manager
+self-hosted:
+  displayName: Agent Manager {version}
+  productName: WSO2 Agent Manager

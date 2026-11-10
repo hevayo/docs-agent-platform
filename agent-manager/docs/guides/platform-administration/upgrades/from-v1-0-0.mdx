@@ -1,7 +1,9 @@
 ---
-title: Upgrade from v1.0.0 to v0.0.0-dev
-sidebar_label: From v1.0.0
+title: Upgrade from v1.0.0 to v{edition.version}
 description: Migrate an existing Helm installation, including Agent Manager database and API Platform gateway changes.
+type: how-to
+sidebar_label: From v1.0.0
+sidebar_position: 1
 ---
 
 import Tabs from '@theme/Tabs';
@@ -33,7 +35,7 @@ The two distributions differ only in where the charts and images come from, the 
 
 - Helm 3.14 or later, for `--reset-then-reuse-values`. The target installer uses Helm 3.19.4.
 - `kubectl` access to every cluster that runs an Agent Manager component.
-- Access to the chart registry: `ghcr.io` for the community release, or `registry.wso2.com` with the [registry credentials](../install-with-a-wso2-subscription.mdx#get-your-registry-credentials) for a WSO2 subscription.
+- Access to the chart registry: `ghcr.io` for the community release, or `registry.wso2.com` with the [registry credentials](../../installation/install-with-a-wso2-subscription.mdx#get-your-registry-credentials) for a WSO2 subscription.
 - WSO2 Subscription only: every cluster node can pull from `registry.wso2.com`. Pull Secrets cover the namespaces this guide names, but not the namespaces OpenChoreo creates for agent workloads. Those pulls use the node's container runtime credentials. On k3d, the installer writes them to `/etc/rancher/k3s/registries.yaml` only when it creates the cluster, so a cluster created for the community release does not have them.
 - `sqlite3` on the machine where you run the commands.
 - A maintenance window. Each gateway is unavailable while its controller is stopped and redeployed.
@@ -46,7 +48,7 @@ Select your distribution and set its variables. The rest of the guide uses only 
 <TabItem value="community" label="Community" default>
 
 ```bash
-export VERSION="0.0.0-dev"
+export VERSION="{edition.version}"
 export REG="oci://ghcr.io/wso2"
 export GW_VERSION="2026.09.24"
 GW_REGISTRY_ARGS=()
@@ -72,7 +74,7 @@ GW_REGISTRY_ARGS=(
 AMP_IMAGE_ARGS=(--set-string global.ampImageRegistry="registry.wso2.com/$PROJECT/sts")
 ```
 
-Replace `<project>` with `wso2-agent-manager` for a subscription, or `wso2-agent-manager-evaluations` for an evaluation. Replace `<subscription-version>` with the release or update to install, for example `2026.11.0` or `2026.11.0-u2`. See [List the Published Versions](../install-with-a-wso2-subscription.mdx#list-the-published-versions). Replace `<gateway-version>` with the gateway version of that release, which is `2026.10.0` for the 2026.11.0 release. The gateway comes from the same registry and uses the same credentials.
+Replace `<project>` with `wso2-agent-manager` for a subscription, or `wso2-agent-manager-evaluations` for an evaluation. Replace `<subscription-version>` with the release or update to install, for example `2026.11.0` or `2026.11.0-u2`. See [List the Published Versions](../../installation/install-with-a-wso2-subscription.mdx#list-the-published-versions). Replace `<gateway-version>` with the gateway version of that release, which is `2026.10.0` for the 2026.11.0 release. The gateway comes from the same registry and uses the same credentials.
 
 </TabItem>
 </Tabs>

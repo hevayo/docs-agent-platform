@@ -1,4 +1,9 @@
-# WSO2 Agent Manager Instrumentation Package
+---
+title: WSO2 Agent Manager Instrumentation Package
+description: Zero-code OpenTelemetry instrumentation package for externally-hosted Python agents using the Traceloop SDK, with trace visibility in the WSO2 Agent Manager.  # generated from the first paragraph; a writer should improve it
+type: how-to
+sidebar_position: 7
+---
 
 Zero-code OpenTelemetry instrumentation package for externally-hosted Python agents using the Traceloop SDK, with trace visibility in the WSO2 Agent Manager.
 
@@ -29,7 +34,7 @@ Each release of `amp-instrumentation` pins a specific Traceloop SDK version, so 
 
 ### 1. Register Your Agent
 
-First, register your agent as an external agent in the [WSO2 Agent Manager](../tutorials/create-your-first-agent.mdx) to obtain your agent API key and configuration details.
+First, register your agent as an external agent in the [WSO2 Agent Manager](../../tutorials/create-your-first-agent.mdx) to obtain your agent API key and configuration details.
 
 ### 2. Set Required Environment Variables in terminal
 
@@ -188,7 +193,7 @@ A couple of kinds work as a *kind* but don't have their full data card extracted
 
 ### Making traces filterable
 
-Auto-instrumentation (platform-hosted agents and `amp-instrument`) already records what the [trace filters](../concepts/observability.mdx#filter-traces) need. If your agent emits its own spans, this is what each filter reads:
+Auto-instrumentation (platform-hosted agents and `amp-instrument`) already records what the [trace filters](../../concepts/observability.mdx#filter-traces) need. If your agent emits its own spans, this is what each filter reads:
 
 | Filter | What the observer reads |
 |---|---|
@@ -218,7 +223,7 @@ Prompt and completion content is captured by default. To suppress it, set `TRACE
 
 AMP's platform-injected auto-instrumentation covers Python (and Ballerina). A .NET agent joins AMP through the **external-agent path**: register it in the Console, then have it push spans to AMP's OTLP endpoint using the same transport and contract as above (`POST ${AMP_OTEL_ENDPOINT}/v1/traces`, header `x-amp-api-key`, `gen_ai.*` attributes). Nothing on the AMP side is .NET-specific — any process that emits contract-shaped spans to that endpoint renders in the Console and feeds evaluators.
 
-The runnable [`dotnet-agent`](https://github.com/wso2/agent-manager/tree/main/samples/dotnet-agent) sample is the worked example of everything below. [Sample Agents](../reference/sample-agents.mdx) lists the other six samples and which instrumentation path each one takes.
+The runnable [`dotnet-agent`](https://github.com/wso2/agent-manager/tree/main/samples/dotnet-agent) sample is the worked example of everything below. [Sample Agents](../../reference/sample-agents.mdx) lists the other six samples and which instrumentation path each one takes.
 
 ### Where the `gen_ai.*` spans come from
 
@@ -328,6 +333,6 @@ CrewAI 1.14.x requires `opentelemetry-api ~=1.34`, while the `traceloop-sdk` tha
 CrewAI 1.15 and later relax that requirement and install with every AMP instrumentation version. The matrix still tests only CrewAI 1.1.0, so spans from 1.15 are unverified. If you move to 1.15, use 1.15.21 or later: earlier 1.15 releases pin `opentelemetry-api` to 1.42.x, while the platform-hosted instrumentation images ship 1.43 or later.
 :::
 
-OpenClaw is not in the matrix. It exports traces through its own plugin and is partially supported. See [Observe OpenClaw Agents](./observe-openclaw-agents.mdx).
+OpenClaw is not in the matrix. It exports traces through its own plugin and is partially supported. See [Observe OpenClaw Agents](../evaluation-and-observability/observe-openclaw-agents.mdx).
 
 The canonical source for the verified-framework list is [`test/instrumentation-matrix/matrix.yaml`](https://github.com/wso2/agent-manager/blob/main/test/instrumentation-matrix/matrix.yaml); known limitations are tracked in [`FINDINGS.md`](https://github.com/wso2/agent-manager/blob/main/test/instrumentation-matrix/FINDINGS.md) alongside it.

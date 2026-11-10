@@ -1,9 +1,9 @@
 ---
-sidebar_position: 30
+title: Configure Event Alerts
 description: Send Agent Manager events to organization destinations and manage subscriptions across projects and agents.
+type: how-to
+sidebar_position: 3
 ---
-
-# Configure Event Alerts
 
 Send WSO2 Agent Manager events to a webhook, chat channel, email recipient, or incident service. Register a destination, subscribe to events, and inspect delivery results in the Console.
 
@@ -15,7 +15,7 @@ Event alerts require an Agent Manager build containing the Events and monitor-al
 
 - An installation with eventing enabled, as described below.
 - An organization role with `amp:events:manage` to create and test destinations. Viewing organization Events requires `amp:events:read`.
-- For project or agent subscriptions, the project update (`amp:project:update`) or agent update (`amp:agent:update`) permission, as described in the [authorization reference](../reference/authorization.mdx).
+- For project or agent subscriptions, the project update (`amp:project:update`) or agent update (`amp:agent:update`) permission, as described in the [authorization reference](../../reference/authorization.mdx).
 - A receiver endpoint or notification service credentials. See [Notification Service URLs](./notification-service-urls.mdx).
 
 ## Step 1: Enable Eventing
@@ -52,7 +52,7 @@ The quick-start installer explicitly selects `embedded` mode. Its in-memory bus 
 
 ## Step 2: Register a Destination
 
-![Events Destinations tab listing registered destinations with the Add destination button](../img/alerting/events-destinations-list.png)
+![Events Destinations tab listing registered destinations with the Add destination button](../../../assets/img/alerting/events-destinations-list.png)
 
 1. Select your organization in the Console and open **Events** in the sidebar.
 2. Open **Destinations** and click **Add destination**.
@@ -62,15 +62,15 @@ The quick-start installer explicitly selects `embedded` mode. Its in-memory bus 
 6. Under **Available to**, select **All projects**, **Selected projects**, or **Organization only**. For selected projects, select the projects that may use the destination.
 7. Click **Add destination**.
 
-![Add destination dialog with the More services list open](../img/alerting/destination-service-picker.png)
+![Add destination dialog with the More services list open](../../../assets/img/alerting/destination-service-picker.png)
 
-![Add destination form with the Name and Available to settings](../img/alerting/destination-form.png)
+![Add destination form with the Name and Available to settings](../../../assets/img/alerting/destination-form.png)
 
 Notification URLs contain credentials. Agent Manager encrypts them and does not return them when a destination is read. When editing a destination, leave the URL empty to retain the saved credential. If you change the service, enter the URL again.
 
 For webhooks, copy the signing secret when it is displayed. Verify incoming requests using the `webhook-id`, `webhook-timestamp`, and `webhook-signature` headers according to [Standard Webhooks](https://www.standardwebhooks.com/). Use `webhook-id` to deduplicate deliveries.
 
-![Webhook destination created with its signing secret displayed](../img/alerting/webhook-signing-secret.png)
+![Webhook destination created with its signing secret displayed](../../../assets/img/alerting/webhook-signing-secret.png)
 
 ## Step 3: Subscribe to Events
 
@@ -80,7 +80,7 @@ For webhooks, copy the signing secret when it is displayed. Verify incoming requ
 4. Select the event types to receive and any environment filter.
 5. Click **Create subscription**.
 
-![New subscription form with name, event types, and destination fields](../img/alerting/subscription-create-form.png)
+![New subscription form with name, event types, and destination fields](../../../assets/img/alerting/subscription-create-form.png)
 
 An organization subscription receives matching events from the organization and its projects and agents. A project subscription receives matching events from that project and its agents. An agent subscription receives matching events from that agent.
 
@@ -94,7 +94,7 @@ Open the destination's actions menu, select **Send test event**, and confirm tha
 
 Trigger a subscribed event, then open **Delivery Log** at the corresponding scope. Inspect its status and any delivery error. Delivery is at least once, so receivers must tolerate duplicates.
 
-![Delivery Log with delivered and failed monitor and project events](../img/alerting/delivery-log.png)
+![Delivery Log with delivered and failed monitor and project events](../../../assets/img/alerting/delivery-log.png)
 
 Delivery history is retained for 14 days by default. Operators can change `EVENTS_DELIVERY_RETENTION_DAYS` and `EVENTS_DELIVERY_MAX_ATTEMPTS` (six attempts by default).
 

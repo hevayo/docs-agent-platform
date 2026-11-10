@@ -1,8 +1,9 @@
 ---
 title: Platform Resources Extension
+description: Default platform resources for WSO2 AI Agent Management Platform on OpenChoreo  # generated from the first paragraph; a writer should improve it
+type: reference
+sidebar_position: 6
 ---
-
-# Platform Resources Extension
 
 Default platform resources for WSO2 AI Agent Management Platform on OpenChoreo
 
@@ -152,4 +153,3 @@ helm install amp-platform-resources-extension oci://ghcr.io/wso2/wso2-amp-platfo
 | `projectType` | ProjectType referenced by the default Project. OpenChoreo 1.2.0+ makes Project.spec.type a required reference to a (Cluster)ProjectType, which provides the per-environment resource template (here, the cell namespace). A namespaced ProjectType is used rather than a cluster-scoped ClusterProjectType so the type is not shared across tenants. The name is deliberately not configurable: it is a contract with the service, which references client.DefaultProjectTypeName. If the two diverged, every project created through the API would fail to reconcile with ProjectTypeNotFound. | object |  |
 | `projectType.displayName` | Display name for the project type | string | `"Default Project Type"` |
 | `projectType.description` | Description for the project type | string | `"Minimal project type that provisions only the cell namespace per environment."` |
-

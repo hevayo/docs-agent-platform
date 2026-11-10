@@ -1,9 +1,10 @@
 ---
-sidebar_position: 5
+title: amctl agent
+description: Manage agents in a project — create, build, deploy, inspect, and observe.  # generated from the first paragraph; a writer should improve it
+type: reference
 sidebar_label: Agent
+sidebar_position: 4
 ---
-
-# amctl agent
 
 Manage agents in a project — create, build, deploy, inspect, and observe. Runtime logs, metrics, and build logs are served by the observer, which the CLI discovers automatically from the agent-manager API — no separate endpoint to configure.
 
@@ -181,7 +182,7 @@ Pass the **handle** of a provider you created with [`amctl llm-provider create`]
 
 `--llm-url-env` and `--llm-api-key-env` only take effect alongside `--llm-provider`; setting either without it is rejected. The provider credential is never exposed to agent code directly — only these injected variables are available at runtime.
 
-The same binding can be expressed in a YAML manifest (`amctl agent create -f`) via the `modelConfig` block; run `amctl agent create --template` to print the scaffold. For the console-based workflow and the equivalent setup for external agents, see [Configure LLM Providers for an Agent](../../guides/configure-agent-llm-configuration.mdx).
+The same binding can be expressed in a YAML manifest (`amctl agent create -f`) via the `modelConfig` block; run `amctl agent create --template` to print the scaffold. For the console-based workflow and the equivalent setup for external agents, see [Configure LLM Providers for an Agent](../../guides/platform-administration/configure-agent-llm-configuration.mdx).
 
 ---
 

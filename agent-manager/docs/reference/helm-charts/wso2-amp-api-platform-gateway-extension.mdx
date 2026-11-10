@@ -1,8 +1,9 @@
 ---
 title: API Platform Gateway Extension
+description: A Helm chart to deploy and auto-register the unified API Platform Gateway for the Agent Management Platform.  # generated from the first paragraph; a writer should improve it
+type: reference
+sidebar_position: 2
 ---
-
-# API Platform Gateway Extension
 
 A Helm chart to deploy and auto-register the unified API Platform Gateway for the Agent Management Platform.
 
@@ -129,4 +130,3 @@ helm install amp-api-platform-gateway-extension oci://ghcr.io/wso2/wso2-amp-api-
 |---|---|---|---|
 | `kubectl` | Kubectl image used in bootstrap job | object |  |
 | `kubectl.image` | Image providing the `kubectl` binary for helper jobs | string | `"alpine/k8s:1.32.3"` |
-

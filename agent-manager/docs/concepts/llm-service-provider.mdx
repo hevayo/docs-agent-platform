@@ -1,8 +1,9 @@
 ---
-sidebar_position: 5
+title: LLM Service Provider
+description: LLM Service Providers are organization-level resources that represent connections to upstream LLM APIs (e.g., OpenAI, Anthropic, AWS Bedrock).  # generated from the first paragraph; a writer should improve it
+type: concept
+sidebar_position: 14
 ---
-
-# LLM Service Provider
 
 LLM Service Providers are organization-level resources that represent connections to upstream LLM APIs (e.g., OpenAI, Anthropic, AWS Bedrock). Once registered, they are exposed through an AI Gateway and can be attached to agents across any project in the organization.
 
@@ -54,13 +55,13 @@ They apply at three levels, which stack:
 
 1. **Global guardrails** on the provider which applied to every API resource under it.
 2. **Resource-wise guardrails** on the provider are scoped to individual operations, so you can constrain `POST /chat/completions` differently from the rest of the API.
-3. **Agent-level guardrails** on the agent-to-provider binding are attached when a provider is [configured on an agent](../guides/configure-agent-llm-configuration.mdx), and applied **in addition to** the provider's own, so one agent's stricter requirement doesn't have to become everyone's.
+3. **Agent-level guardrails** on the agent-to-provider binding are attached when a provider is [configured on an agent](../guides/platform-administration/configure-agent-llm-configuration.mdx), and applied **in addition to** the provider's own, so one agent's stricter requirement doesn't have to become everyone's.
 
 Which policies you can attach isn't fixed by Agent Manager: the available policy definitions are **reported by the active gateways in the organization**, each carrying its own parameter schema. The gateway is what enforces them, so the gateway is what determines the menu.
 
 The practical consequence is the one worth remembering, a guardrail can be added, tightened, or removed **without rebuilding or redeploying the agent**. Security tightening what the model may return is a provider-side configuration change, not a code change.
 
-For the console walkthrough of setting one up, see [Register an LLM Service Provider](../guides/register-llm-service-provider.mdx) and its [Guardrails](../guides/register-llm-service-provider.mdx#guardrails-tab) section.
+For the console walkthrough of setting one up, see [Register an LLM Service Provider](../guides/platform-administration/register-llm-service-provider.mdx) and its [Guardrails](../guides/platform-administration/register-llm-service-provider.mdx#guardrails-tab) section.
 
 ## Relationship to Other Concepts
 

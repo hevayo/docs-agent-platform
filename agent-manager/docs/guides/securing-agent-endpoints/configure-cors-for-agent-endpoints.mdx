@@ -1,8 +1,9 @@
 ---
-sidebar_position: 9
+title: Configure CORS for Agent Endpoints
+description: Cross-Origin Resource Sharing (CORS) controls which browser origins, HTTP methods, and request headers are allowed to access a platform-hosted API agent…  # generated from the first paragraph; a writer should improve it
+type: how-to
+sidebar_position: 5
 ---
-
-# Configure CORS for Agent Endpoints
 
 Cross-Origin Resource Sharing (CORS) controls which browser origins, HTTP methods, and request headers are allowed to access a platform-hosted API agent endpoint. CORS configuration is applied at the gateway and takes effect on every deployment.
 
@@ -79,4 +80,4 @@ If you configured specific origins, `Access-Control-Allow-Origin` will reflect t
 
 - CORS configuration applies to platform-hosted agents only.
 - Changes to CORS settings require a redeployment to take effect.
-- For an A2A agent, the `A2A-Version` header is always allowed, and the agent's public card has its own **Agent Card CORS** setting. See [Deploy an A2A Agent](./deploy-an-a2a-agent.mdx#agent-card-cors).
+- For an A2A agent, the `A2A-Version` header is always allowed, and the agent's public card has its own **Agent Card CORS** setting. See [Deploy an A2A Agent](../deploy-an-a2a-agent.mdx#agent-card-cors).

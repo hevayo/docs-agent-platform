@@ -1,8 +1,9 @@
 ---
+title: Kata Containers Isolation Tier
+description: Run agents in an environment under Kata Containers — each agent boots in a lightweight QEMU/KVM virtual machine with its own guest kernel, so there is no…  # generated from the first paragraph; a writer should improve it
+type: how-to
 sidebar_position: 2
 ---
-
-# Kata Containers Isolation Tier
 
 Run agents in an environment under [Kata Containers](https://katacontainers.io/) — each agent boots in a lightweight QEMU/KVM virtual machine with its **own guest kernel**, so there is no shared kernel with the host at all. This is the strongest isolation tier, intended for the most untrusted or multi-tenant agent workloads.
 
@@ -58,7 +59,7 @@ not already have it extracted, fetch it first and point `AMP_DIST` at it — the
 same bundle the install guides use:
 
 ```bash
-export VERSION="0.0.0-dev"
+export VERSION="{edition.version}"
 curl -fsSL -O "https://github.com/wso2/agent-manager/releases/download/amp/v${VERSION}/wso2-agent-manager-${VERSION}.tar.gz"
 tar xzf "wso2-agent-manager-${VERSION}.tar.gz"
 export AMP_DIST="$PWD"
@@ -135,7 +136,7 @@ ISOLATION_TIER=kata \
 
 The tier appears as a **Sandboxing T3** shield chip in the environment list, and as a shield icon next to the environment name on the agent's Deploy and Overview pages — hover over it to confirm *Sandboxing Tier 3 — Kata Containers*.
 
-A new environment is not part of any deployment pipeline yet. Add it to your project's pipeline ([Managing Deployment Pipelines](../environment-management.mdx#managing-deployment-pipelines)), then deploy or promote an agent to it as usual.
+A new environment is not part of any deployment pipeline yet. Add it to your project's pipeline ([Managing Deployment Pipelines](../../platform-administration/environment-management.mdx#managing-deployment-pipelines)), then deploy or promote an agent to it as usual.
 
 ## Verify VM Isolation
 
@@ -204,4 +205,4 @@ This is cross-node networking or log-collection scheduling, not Kata itself — 
 ## Next Steps
 
 - Lighter-weight syscall isolation without KVM: [gVisor isolation tier](./gvisor.mdx).
-- [Environment management](../environment-management.mdx) — pipelines, promotion, and environment settings.
+- [Environment management](../../platform-administration/environment-management.mdx) — pipelines, promotion, and environment settings.

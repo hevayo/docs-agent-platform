@@ -1,4 +1,9 @@
-# Sample Agents
+---
+title: Sample Agents
+description: The repository ships eight runnable agents under samples/, each demonstrating a different framework and a different way of getting traces into the Agent…  # generated from the first paragraph; a writer should improve it
+type: reference
+sidebar_position: 3
+---
 
 The repository ships eight runnable agents under [`samples/`](https://github.com/wso2/agent-manager/tree/main/samples), each demonstrating a different framework and a different way of getting traces into the Agent Manager. Start from whichever one is closest to what you are building rather than from an empty directory.
 
@@ -15,7 +20,7 @@ The repository ships eight runnable agents under [`samples/`](https://github.com
 | [it-helpdesk-agent](#it-helpdesk-agent) | LangChain | Zero-code | Evaluation monitors and guardrails on a governed workflow |
 | [manual-instrumentation-agent](#manual-instrumentation-agent) | None (plain Python) | Manual | Full control over every span your agent emits |
 
-**Zero-code** means the Agent Manager injects instrumentation at deploy time and the sample contains no tracing code. **Manual** and **native** samples emit their own spans. See [AMP Instrumentation](../guides/amp-instrumentation.mdx) for how the two paths differ.
+**Zero-code** means the Agent Manager injects instrumentation at deploy time and the sample contains no tracing code. **Manual** and **native** samples emit their own spans. See [AMP Instrumentation](../guides/platform-administration/amp-instrumentation.mdx) for how the two paths differ.
 
 :::note Two of the eight run in CI
 `customer-support-agent` and `crewai-agent` are deployed and trace-verified on every release by the instrumentation matrix ([`deployable_samples.py`](https://github.com/wso2/agent-manager/blob/main/test/instrumentation-matrix/harness/deployable_samples.py)). The other six are maintained by hand, so pin versions yourself if you build on them.
@@ -31,7 +36,7 @@ export OPENAI_API_KEY="your-key"
 
 Most samples are **Platform-Hosted**, meaning you point the Agent Manager at the sample's directory and it builds and runs the agent for you. Follow [Create Your First Agent](../tutorials/create-your-first-agent.mdx) and set **App Path** to the path given below for each sample. Two samples run on your own machine as **Externally-Hosted** agents instead, and say so.
 
-No sample uses MCP tools. To see those, follow [Configure Agent MCP Proxies](../guides/configure-agent-mcp-proxies.mdx) separately.
+No sample uses MCP tools. To see those, follow [Configure Agent MCP Proxies](../guides/agent-identity-and-access-management/configure-agent-mcp-proxies.mdx) separately.
 
 ---
 
@@ -165,9 +170,9 @@ Pick this one to explore governance. Its rules make agent behaviour easy to asse
 
 - **App Path** — `/samples/it-helpdesk-agent`
 - **Requires** — `OPENAI_API_KEY`. All data is JSON fixtures in the sample, so there is nothing external to set up
-- **Optional** — set `USE_LLM_PROVIDER=true` with `LLM_PROVIDER_URL` and `LLM_PROVIDER_KEY` to route through a [registered provider](../guides/register-llm-service-provider.mdx)
+- **Optional** — set `USE_LLM_PROVIDER=true` with `LLM_PROVIDER_URL` and `LLM_PROVIDER_KEY` to route through a [registered provider](../guides/platform-administration/register-llm-service-provider.mdx)
 
-See [Evaluation Monitors](../guides/evaluation-monitors.mdx) for the monitor side of this.
+See [Evaluation Monitors](../guides/evaluation-and-observability/evaluation-monitors.mdx) for the monitor side of this.
 
 ---
 
@@ -175,7 +180,7 @@ See [Evaluation Monitors](../guides/evaluation-monitors.mdx) for the monitor sid
 
 A small retrieval agent over a bundled knowledge base, written in plain Python with no agent framework, that emits every AMP span kind by hand.
 
-This is the executable reference for the [manual instrumentation contract](../guides/amp-instrumentation.mdx#manual-instrumentation). `instrumentation.py` has one helper per span kind, so if your framework is not covered by auto-instrumentation, this file shows exactly what to emit for the Console to render your traces correctly.
+This is the executable reference for the [manual instrumentation contract](../guides/platform-administration/amp-instrumentation.mdx#manual-instrumentation). `instrumentation.py` has one helper per span kind, so if your framework is not covered by auto-instrumentation, this file shows exactly what to emit for the Console to render your traces correctly.
 
 - **Runs** — either externally hosted or platform hosted
 - **Requires** — `OPENAI_API_KEY`, `AMP_OTEL_ENDPOINT`, and `AMP_AGENT_API_KEY`
@@ -201,5 +206,5 @@ Note there is no `amp-instrument` prefix here. That wrapper is for the automatic
 |---|---|
 | Deploy one of these into your own environment | [Create Your First Agent](../tutorials/create-your-first-agent.mdx) |
 | See the traces a sample produces | [Observe Your First Agent](../tutorials/observe-first-agent.mdx) |
-| Instrument an agent of your own | [AMP Instrumentation](../guides/amp-instrumentation.mdx) |
-| Score agent behaviour automatically | [Evaluation Monitors](../guides/evaluation-monitors.mdx) |
+| Instrument an agent of your own | [AMP Instrumentation](../guides/platform-administration/amp-instrumentation.mdx) |
+| Score agent behaviour automatically | [Evaluation Monitors](../guides/evaluation-and-observability/evaluation-monitors.mdx) |

@@ -1,12 +1,12 @@
 ---
-sidebar_position: 16
+title: Deploy an A2A Agent
 description: Deploy an agent that speaks the A2A protocol and expose its JSON-RPC and HTTP+JSON transports and agent card through the gateway.
+type: how-to
+sidebar_position: 2
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
-# Deploy an A2A Agent
 
 Deploy a platform-hosted agent that speaks the [Agent2Agent (A2A) protocol](https://a2a-protocol.org/) as an **A2A Agent**, so the gateway exposes both A2A transports and serves the agent's card under the agent's URL.
 
@@ -31,7 +31,7 @@ Clients reach the agent only through the gateway, so the gateway's CORS and auth
 - An agent that serves the A2A protocol on a single port, with JSON-RPC under `/rpc`, HTTP+JSON under `/rest`, and its card at `/.well-known/agent-card.json`. The [A2A Notes Agent sample](../tutorials/deploy-the-a2a-notes-agent-sample.mdx) is a working example built on the `a2a-sdk` Python package.
 - The agent's source in a GitHub repository.
 - A project to create the agent in.
-- To use the CLI: `amctl` installed and logged in. See [CLI Installation](./cli-installation.mdx).
+- To use the CLI: `amctl` installed and logged in. See [CLI Installation](./installation/cli-installation.mdx).
 
 ## Step 1: Create the Agent
 
@@ -43,7 +43,7 @@ Clients reach the agent only through the gateway, so the gateway's CORS and auth
 3. Fill in **Name**, **GitHub Repository**, **Branch**, and **Project Path** for your agent, and choose its language and build settings.
 4. Under **Agent Type**, choose **A2A Agent**.
 5. In **Port**, enter the port your agent's A2A server listens on.
-6. Optional: in the **Readiness check** section, set **Type** to **HTTP GET** and keep the **Path** as `/.well-known/agent-card.json`. The agent then gets traffic only once it serves its card. See [Configure Agent Health Checks](./configure-agent-health-checks.mdx).
+6. Optional: in the **Readiness check** section, set **Type** to **HTTP GET** and keep the **Path** as `/.well-known/agent-card.json`. The agent then gets traffic only once it serves its card. See [Configure Agent Health Checks](./platform-administration/configure-agent-health-checks.mdx).
 7. Add the agent's environment variables, then click **Deploy**.
 
 There is no **OpenAPI Spec Path** or **Base Path** field for an A2A agent. It needs only a port.
@@ -93,7 +93,7 @@ An A2A agent's deployment settings differ from a chat or custom API agent's in a
 
 ### CORS Configuration
 
-The `A2A-Version` request header is always allowed for an A2A agent, whatever you put under **Allowed headers**. A2A clients send it on every request. Configure the rest as described in [Configure CORS for Agent Endpoints](./configure-cors-for-agent-endpoints.mdx).
+The `A2A-Version` request header is always allowed for an A2A agent, whatever you put under **Allowed headers**. A2A clients send it on every request. Configure the rest as described in [Configure CORS for Agent Endpoints](./securing-agent-endpoints/configure-cors-for-agent-endpoints.mdx).
 
 ### Agent Card CORS
 
@@ -106,7 +106,7 @@ The card's **Allowed methods** are fixed at `GET, OPTIONS`. With **Custom** sele
 
 ### Endpoint Authentication
 
-Choose **No authentication**, **API key**, or **OAuth**, as for any other agent. See [Secure Agent Endpoints with API Keys](./secure-agent-endpoints-with-api-keys.mdx) and [Secure Agents with JWT Authentication](./secure-agents-with-jwt-authentication.mdx).
+Choose **No authentication**, **API key**, or **OAuth**, as for any other agent. See [Secure Agent Endpoints with API Keys](./securing-agent-endpoints/secure-agent-endpoints-with-api-keys.mdx) and [Secure Agents with JWT Authentication](./securing-agent-endpoints/secure-agents-with-jwt-authentication.mdx).
 
 :::warning No authentication leaves the agent open
 With **No authentication**, anyone who can reach the gateway can call the agent, and the extended agent card (`GetExtendedAgentCard`) always returns `401`. The gateway serves the extended card only to a caller it has authenticated.
@@ -163,5 +163,5 @@ An A2A client can instead fetch the card from `<invoke-url>/.well-known/agent-ca
 
 - [Deploy the A2A Notes Agent Sample](../tutorials/deploy-the-a2a-notes-agent-sample.mdx): deploy a working A2A agent end to end.
 - [Register an External A2A Agent](./register-an-external-a2a-agent.mdx): bring an A2A agent that runs outside Agent Manager, and route it through the gateway.
-- [Configure CORS for Agent Endpoints](./configure-cors-for-agent-endpoints.mdx)
-- [Secure Agent Endpoints with API Keys](./secure-agent-endpoints-with-api-keys.mdx)
+- [Configure CORS for Agent Endpoints](./securing-agent-endpoints/configure-cors-for-agent-endpoints.mdx)
+- [Secure Agent Endpoints with API Keys](./securing-agent-endpoints/secure-agent-endpoints-with-api-keys.mdx)

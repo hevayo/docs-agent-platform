@@ -1,8 +1,9 @@
 ---
 title: Evaluation Extension
+description: A Helm chart to add Evaluation functionality for the Agent Management Platform, by Deploying and Configuring Monitor evaluation workflows.  # generated from the first paragraph; a writer should improve it
+type: reference
+sidebar_position: 4
 ---
-
-# Evaluation Extension
 
 A Helm chart to add Evaluation functionality for the Agent Management Platform, by Deploying and Configuring Monitor evaluation workflows.
 
@@ -20,7 +21,7 @@ helm install amp-evaluation-extension oci://ghcr.io/wso2/wso2-amp-evaluation-ext
 | `ampEvaluation.workflowNamespace` | Namespace OpenChoreo runs this environment's Argo workflows in. The evaluation job namespace is derived from it as "workflows-&lt;value&gt;". | string | `"default"` |
 | `ampEvaluation.image` | Docker image configuration for monitor evaluation | object |  |
 | `ampEvaluation.image.repository` | Image repository For local development: will be pushed to local registry For production: ghcr.io/wso2/amp-evaluation-monitor | string | `"ghcr.io/wso2/amp-evaluation-monitor"` |
-| `ampEvaluation.image.tag` | Image tag IMPORTANT: For production, this should match the amp-evaluation SDK version used in dbMigration.evaluatorGenerator.image.tag in the wso2-agent-manager chart. Example: If using amp-evaluation==0.1.5, set this to "0.1.5" | string | `"0.0.0-dev"` |
+| `ampEvaluation.image.tag` | Image tag IMPORTANT: For production, this should match the amp-evaluation SDK version used in dbMigration.evaluatorGenerator.image.tag in the wso2-agent-manager chart. Example: If using amp-evaluation==0.1.5, set this to "0.1.5" | string | `"{edition.version}"` |
 | `ampEvaluation.image.pullPolicy` | Image pull policy | string | `"IfNotPresent"` |
 | `ampEvaluation.useLocalRegistry` | Whether to use local registry or external image When true, image will be prefixed with registry endpoint When false, uses repository:tag directly (for k3d imported images or external registries) | boolean | `false` |
 | `ampEvaluation.activeDeadlineSeconds` | Wall-clock budget for a single evaluation workflow, in seconds. Bounds a run whose pod can never start (for example a secret it mounts that never syncs), which would otherwise hold a pod slot indefinitely because neither ttlStrategy nor the Workflow's ttlAfterCompletion collects a workflow that never completes. | integer | `1800` |
@@ -73,4 +74,3 @@ helm install amp-evaluation-extension oci://ghcr.io/wso2/wso2-amp-evaluation-ext
 | `networkPolicy.evaluationJob.apiServer` | Node network of the kube-apiserver. Permissive default spans the pod and service CIDRs so any cluster works unconfigured; narrow to the control-plane subnet in production. | object |  |
 | `networkPolicy.evaluationJob.apiServer.cidrs` | Private ranges the API server may live in. | array | see `values.yaml` |
 | `networkPolicy.evaluationJob.apiServer.ports` | Ports the API server listens on. | array | see `values.yaml` |
-

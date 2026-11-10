@@ -1,9 +1,9 @@
 ---
-sidebar_position: 17
+title: Configure Agent Health Checks
 description: Configure the startup, readiness, and liveness checks that WSO2 Agent Manager runs on a platform-hosted agent, and roll them out with a build and promotion.
+type: how-to
+sidebar_position: 10
 ---
-
-# Configure Agent Health Checks
 
 WSO2 Agent Manager runs three health checks on every platform-hosted agent to decide when it has started, when it can take traffic, and when it is stuck. Configure them to match how your agent starts and what it serves.
 
@@ -32,7 +32,7 @@ Checks use plain HTTP, not HTTPS. Agents serve plain HTTP inside the platform, a
 
 Each build records the agent's health checks as they are when the build starts, the same way it records the agent's port. Wherever that build runs, it runs with its own checks:
 
-- When a build finishes, the platform deploys it to the first environment in the project's [deployment pipeline](../concepts/deployment-pipeline.mdx) with that build's checks.
+- When a build finishes, the platform deploys it to the first environment in the project's [deployment pipeline](../../concepts/deployment-pipeline.mdx) with that build's checks.
 - Promoting copies the checks the source environment runs to the next environment.
 - Deploying an older build again, for example to roll back, runs the checks that build recorded.
 
@@ -140,10 +140,10 @@ The deploy page shows the checks of the build the environment runs. Until a new 
 
 ## Health Checks for Agents from the Catalog
 
-When you publish a build of an agent to the [Agent Catalog](../concepts/agent-kind-and-catalog.mdx), the version uses the health checks that build recorded. An agent created from that version starts with those checks. A version published from a build made before health checks were configurable gives its agents the defaults.
+When you publish a build of an agent to the [Agent Catalog](../../concepts/agent-kind-and-catalog.mdx), the version uses the health checks that build recorded. An agent created from that version starts with those checks. A version published from a build made before health checks were configurable gives its agents the defaults.
 
 ## Next Steps
 
-- [Deploy an A2A Agent](./deploy-an-a2a-agent.mdx)
-- [Agent Kind & Agent Catalog](../concepts/agent-kind-and-catalog.mdx)
-- [Agent and Agent Life Cycle](../concepts/agent-lifecycle.mdx)
+- [Deploy an A2A Agent](../deploy-an-a2a-agent.mdx)
+- [Agent Kind & Agent Catalog](../../concepts/agent-kind-and-catalog.mdx)
+- [Agent and Agent Life Cycle](../../concepts/agent-lifecycle.mdx)

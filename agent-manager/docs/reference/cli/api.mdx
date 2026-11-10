@@ -1,9 +1,10 @@
 ---
-sidebar_position: 8
+title: amctl api
+description: Make an authenticated HTTP request to the Agent Manager API and print the response verbatim.  # generated from the first paragraph; a writer should improve it
+type: reference
 sidebar_label: API
+sidebar_position: 9
 ---
-
-# amctl api
 
 Make an authenticated HTTP request to the Agent Manager API and print the response verbatim. `amctl api` is the low-level escape hatch for endpoints that do not yet have a dedicated command, modeled on GitHub CLI's `gh api`.
 
@@ -45,7 +46,7 @@ Most Agent Manager resources are scoped to an organization and project, under pa
 2. The linked project for the working directory.
 3. The active org (`current_org`).
 
-From a [linked directory](./overview.mdx#linked-context), `amctl api /orgs/{org}/projects/{project}/agents` works without spelling out names.
+From a [linked directory](./index.mdx#linked-context), `amctl api /orgs/{org}/projects/{project}/agents` works without spelling out names.
 
 :::note
 An unknown placeholder (for example, a typo like `{proj}`) fails immediately with `unknown placeholder {proj} (supported: {org}, {project})` and makes no HTTP request. A known placeholder that resolves to empty also errors before any request is sent.

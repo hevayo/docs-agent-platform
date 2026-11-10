@@ -1,11 +1,12 @@
 ---
-sidebar_position: 4
+title: Production Recommendations
+description: Use this page to check a finished installation against production practice.  # generated from the first paragraph; a writer should improve it
+type: how-to
+sidebar_position: 3
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
-# Production Recommendations
 
 Use this page to check a finished [installation](./on-your-environment.mdx) against production practice. The install guide gives you a production baseline when you choose **Production** at each step. This page covers what is left to decide and operate: a checklist, identity, gateway hardening, build limits, scaling, and cluster security.
 
@@ -55,7 +56,7 @@ Do not delete the patched objects to force Helm to recreate them. The ClusterAut
 
 ### Identity and Access
 
-Thunder generates the console's `admin` password at install time. It is stored in the `amp-admin-credentials` Secret and is never a shipped default. Log in once, change the password from the profile menu, then create real users or connect your identity provider. See the ThunderID [Manage Users](https://thunderid.dev/docs/v1.0.x/guides/users/manage-users/) and [Manage Identity Providers](https://thunderid.dev/docs/v1.0.x/guides/identity-providers/manage-identity-providers/) guides. Gateway trust is covered separately in [Configure Identity Providers at the Gateway](./configure-identity-providers-at-the-gateway.mdx).
+Thunder generates the console's `admin` password at install time. It is stored in the `amp-admin-credentials` Secret and is never a shipped default. Log in once, change the password from the profile menu, then create real users or connect your identity provider. See the ThunderID [Manage Users](https://thunderid.dev/docs/v1.0.x/guides/users/manage-users/) and [Manage Identity Providers](https://thunderid.dev/docs/v1.0.x/guides/identity-providers/manage-identity-providers/) guides. Gateway trust is covered separately in [Configure Identity Providers at the Gateway](../securing-agent-endpoints/configure-identity-providers-at-the-gateway.mdx).
 
 Each environment's Thunder has its own admin password, generated at provisioning. Store it in your secret manager when it is printed.
 
@@ -153,7 +154,7 @@ The extension's bootstrap job also runs as a `pre-rollback` hook. If the Agent M
 
 #### Gateway roles and topology
 
-A gateway's role is `INGRESS`, `EGRESS`, or `BOTH`. The default environment uses `BOTH`. For independent scaling and hardening, create an environment with `GATEWAY_TOPOLOGY=split`. See [Gateway topology](./environment-management.mdx#gateway-topology).
+A gateway's role is `INGRESS`, `EGRESS`, or `BOTH`. The default environment uses `BOTH`. For independent scaling and hardening, create an environment with `GATEWAY_TOPOLOGY=split`. See [Gateway topology](../platform-administration/environment-management.mdx#gateway-topology).
 
 - An environment can have at most one ingress-capable gateway (`INGRESS` or `BOTH`). Egress gateways are uncapped.
 - A role is fixed at first registration. Changing topology later means deleting and recreating the environment.
@@ -230,5 +231,4 @@ Confirm that your CNI enforces NetworkPolicy. A CNI without a policy engine acce
 
 ### Agent Isolation
 
-Agents run under **runc** by default. For untrusted agent code, use [gVisor](./isolation-tiers/gvisor.mdx) or [Kata Containers](./isolation-tiers/kata.mdx). Both need dedicated nodes, so plan those alongside the build nodes.
-
+Agents run under **runc** by default. For untrusted agent code, use [gVisor](../securing-agent-endpoints/isolation-tiers/gvisor.mdx) or [Kata Containers](../securing-agent-endpoints/isolation-tiers/kata.mdx). Both need dedicated nodes, so plan those alongside the build nodes.

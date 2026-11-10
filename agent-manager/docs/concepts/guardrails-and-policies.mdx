@@ -1,8 +1,9 @@
 ---
 title: Guardrails and Policies
+description: A policy is a pluggable unit of behavior that runs in the gateway's request or response pipeline.  # generated from the first paragraph; a writer should improve it
+type: concept
+sidebar_position: 11
 ---
-
-# Guardrails and Policies
 
 A policy is a pluggable unit of behavior that runs in the gateway's request or response pipeline. Policies handle cross-cutting concerns: authentication, rate limiting, header manipulation, content moderation, and LLM-specific controls such as prompt decoration, semantic caching, and guardrails. Several policies can be chained on the same resource.
 
@@ -13,7 +14,7 @@ Policies are built into the gateway image, not installed at runtime. Which polic
 Every policy originates in one of two places:
 
 - **Hub policies** are published to the WSO2 API Platform Policy Hub and referenced by Go module path. These are the policies a stock gateway image ships with.
-- **Local policies** are your own implementations, referenced by file path when the image is built. See [Use a Custom Gateway Image](../guides/use-a-custom-gateway-image.mdx).
+- **Local policies** are your own implementations, referenced by file path when the image is built. See [Use a Custom Gateway Image](../guides/platform-administration/use-a-custom-gateway-image.mdx).
 
 Both kinds are compiled into the image by the same build. Once the gateway is running, nothing distinguishes them except where their source came from.
 
@@ -41,7 +42,7 @@ Most confusion about policies comes from conflating these. A policy can be prese
 
 **Build time** decides which policies exist at all.
 
-**System parameters** are the deployment-wide settings a policy needs to reach an external service, such as an endpoint, a region, or an API key. They are shared by every use of that policy and are supplied as Helm values, never through the console. A policy whose system parameters are missing is still offered in the console and still applies cleanly; it fails when a request reaches it. See [Configure Guardrail System Parameters](../guides/configure-guardrail-system-parameters.mdx).
+**System parameters** are the deployment-wide settings a policy needs to reach an external service, such as an endpoint, a region, or an API key. They are shared by every use of that policy and are supplied as Helm values, never through the console. A policy whose system parameters are missing is still offered in the console and still applies cleanly; it fails when a request reaches it. See [Configure Guardrail System Parameters](../guides/platform-administration/configure-guardrail-system-parameters.mdx).
 
 **Policy parameters** are the per-use settings you fill in when applying a policy to an LLM Service Provider or MCP Proxy, such as the regex to match, the token ceiling, or the categories to block.
 

@@ -1,4 +1,9 @@
-# Authorization
+---
+title: Authorization
+description: WSO2 Agent Manager (AMP) authorizes every action against a single, platform-wide permission model.  # generated from the first paragraph; a writer should improve it
+type: reference
+sidebar_position: 6
+---
 
 WSO2 Agent Manager (AMP) authorizes every action against a single, platform-wide permission model. Access is governed by OAuth 2.0 scopes issued by the bundled Thunder identity provider: each capability on the platform maps to one scope, and a caller can perform a capability only if its access token carries the matching scope.
 
@@ -248,7 +253,7 @@ The tables below list every scope the platform defines, grouped by resource. The
 | `amp:events:read` | View organization destinations, subscriptions, and delivery history |
 | `amp:events:manage` | Manage organization destinations and subscriptions, and send destination tests |
 
-Project-level subscriptions use `amp:project:read` and `amp:project:update`. Agent-level subscriptions use `amp:agent:read` and `amp:agent:update`. Shared monitor alerts use the monitor read and update scopes. See [Configure Event Alerts](../guides/configure-event-alerts.mdx).
+Project-level subscriptions use `amp:project:read` and `amp:project:update`. Agent-level subscriptions use `amp:agent:read` and `amp:agent:update`. Shared monitor alerts use the monitor read and update scopes. See [Configure Event Alerts](../guides/evaluation-and-observability/configure-event-alerts.mdx).
 
 </details>
 
@@ -386,5 +391,5 @@ A token obtained for one server therefore cannot be reused against the other. Se
 
 ## Next steps
 
-- [Authorize agent access to MCP tools](../guides/authorize-agent-access-to-mcp-tools.mdx) — define your own scopes on a resource and grant them to agents through roles.
+- [Authorize agent access to MCP tools](../guides/agent-identity-and-access-management/authorize-agent-access-to-mcp-tools.mdx) — define your own scopes on a resource and grant them to agents through roles.
 - [MCP Server](./mcp-server.mdx) and [Observer MCP Server](./observer-mcp-server.mdx) — the tools each scope unlocks.

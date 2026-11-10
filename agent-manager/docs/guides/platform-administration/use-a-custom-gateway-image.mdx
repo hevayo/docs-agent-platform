@@ -1,8 +1,9 @@
 ---
-sidebar_position: 15
+title: Use a Custom Gateway Image
+description: A gateway's policy set is fixed when its image is built.  # generated from the first paragraph; a writer should improve it
+type: how-to
+sidebar_position: 9
 ---
-
-# Use a Custom Gateway Image
 
 A gateway's policy set is fixed when its image is built. To add your own policy, you build a gateway image that includes it, then point your Agent Manager deployment at that image.
 
@@ -113,8 +114,8 @@ The gateway release lives in the same namespace as the environment's `APIGateway
 
 | Environment | Namespace |
 |---|---|
-| Default environment, installed by following [On Your Environment](./on-your-environment.mdx) | `openchoreo-data-plane` |
-| Default environment, installed by the quick-start or [k3d](./on-k3d.mdx) setup | `<org>-<env>`, for example `default-default` |
+| Default environment, installed by following [On Your Environment](../installation/on-your-environment.mdx) | `openchoreo-data-plane` |
+| Default environment, installed by the quick-start or [k3d](../installation/on-k3d.mdx) setup | `<org>-<env>`, for example `default-default` |
 | Environment added with `add-environment.sh` | `<org>-<env>` |
 
 Rather than assuming, find it and list the releases there:
@@ -127,7 +128,7 @@ helm list -n ${GATEWAY_NS}
 
 ```
 NAME                             NAMESPACE         REVISION  CHART
-api-platform-default-default     default-default   2         wso2-amp-api-platform-gateway-extension-0.0.0-dev
+api-platform-default-default     default-default   2         wso2-amp-api-platform-gateway-extension-{edition.version}
 api-platform-default-default-gw  default-default   1         gateway-2026.09.24
 ```
 
@@ -263,4 +264,4 @@ A custom MCP policy can still be applied through the API; it is only absent from
 ## Next Steps
 
 - [Configure Guardrail System Parameters](./configure-guardrail-system-parameters.mdx)
-- [Guardrails and Policies](../concepts/guardrails-and-policies.mdx)
+- [Guardrails and Policies](../../concepts/guardrails-and-policies.mdx)

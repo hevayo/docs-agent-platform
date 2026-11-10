@@ -1,9 +1,9 @@
 ---
-sidebar_position: 31
+title: Configure Monitor Alerts
 description: Notify shared destinations when an evaluation monitor fails, completes, or crosses a score threshold.
+type: how-to
+sidebar_position: 4
 ---
-
-# Configure Monitor Alerts
 
 Send WSO2 Agent Manager evaluation outcomes to shared organization destinations. Configure failure, completion, and score-threshold alerts for each monitor.
 
@@ -22,7 +22,7 @@ Send WSO2 Agent Manager evaluation outcomes to shared organization destinations.
 
 The settings apply to everyone managing the monitor. Destinations are shared organization resources; these alerts are not personal subscriptions.
 
-![Monitor form Alerting section with monitor alerts enabled and destinations selected](../img/alerting/monitor-alerting-section.png)
+![Monitor form Alerting section with monitor alerts enabled and destinations selected](../../../assets/img/alerting/monitor-alerting-section.png)
 
 ## Step 2: Select Run Notifications
 
@@ -33,7 +33,7 @@ Enable the run notifications you need:
 
 A failed run notification reports an execution failure. A score-threshold alert reports a completed evaluation whose score crosses the configured boundary.
 
-![Runs section with the failure and completion notification toggles](../img/alerting/monitor-run-notifications.png)
+![Runs section with the failure and completion notification toggles](../../../assets/img/alerting/monitor-run-notifications.png)
 
 ## Step 3: Set Score Thresholds
 
@@ -49,7 +49,7 @@ An alert is sent when the score first breaches the threshold, and a recovery not
 
 If the evaluator reports scores at several evaluation levels, any level that breaches the rule can trigger the alert. All relevant levels must return within the threshold for recovery.
 
-![Score threshold rule with an evaluator, Below or Above, and a value](../img/alerting/monitor-threshold-rule.png)
+![Score threshold rule with an evaluator, Below or Above, and a value](../../../assets/img/alerting/monitor-threshold-rule.png)
 
 ## Verify the Alert
 

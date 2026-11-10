@@ -1,10 +1,11 @@
 ---
-sidebar_position: 12
+title: Use AgentID in a Platform-Hosted Agent
+description: Every Platform-Hosted agent automatically receives its own AgentID credential in every environment.  # generated from the first paragraph; a writer should improve it
+type: how-to
+sidebar_position: 3
 ---
 
-# Use AgentID in a Platform-Hosted Agent
-
-Every Platform-Hosted agent automatically receives its own [AgentID](../concepts/agentid.mdx)
+Every Platform-Hosted agent automatically receives its own [AgentID](../../concepts/agentid.mdx)
 credential in every environment. Provisioning starts as soon as the agent is created, and happens
 again whenever you promote it to a new environment. This guide shows what gets injected into
 your agent's pod once it's running, and the code your agent needs to turn that injected
@@ -203,6 +204,6 @@ needed to restore access.
 
 | Symptom | Likely cause |
 |---|---|
-| The four environment variables are missing entirely | The agent's AgentID has not finished provisioning yet for this environment, or provisioning failed. Check the agent's identity status through the API described in [AgentID](../concepts/agentid.mdx#provisioning-and-retry). |
+| The four environment variables are missing entirely | The agent's AgentID has not finished provisioning yet for this environment, or provisioning failed. Check the agent's identity status through the API described in [AgentID](../../concepts/agentid.mdx#provisioning-and-retry). |
 | Token request returns `invalid_client` | The environment's ThunderID instance rotated its own internal state, or the injected secret is stale. Regenerate the agent's credential for this environment. |
 | Gateway rejects a valid token | The environment's gateway may not yet trust this environment's ThunderID instance. This is set up automatically when the environment is created, so this points to an environment configuration issue rather than your agent's code. |

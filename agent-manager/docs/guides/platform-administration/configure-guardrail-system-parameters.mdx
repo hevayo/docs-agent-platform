@@ -1,11 +1,12 @@
 ---
-sidebar_position: 14
+title: Configure Guardrail System Parameters
+description: Some guardrails call an external service to do their work, such as a content safety API, an embedding provider, or a vector database.  # generated from the first paragraph; a writer should improve it
+type: how-to
+sidebar_position: 8
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
-# Configure Guardrail System Parameters
 
 Some guardrails call an external service to do their work, such as a content safety API, an embedding provider, or a vector database. The endpoint and credentials those guardrails need are **system parameters**: deployment-wide settings supplied as Helm values on the gateway extension release, not per-policy settings you fill in when applying a guardrail.
 
@@ -18,7 +19,7 @@ Enabling one of these guardrails takes changes to **two** Helm releases:
 
 Do only the first and the guardrail works but nobody can select it. Do only the second and the guardrail appears in the Console and deploys without an error, but the gateway cannot build the policy chain for that LLM Service Provider. Every request through the provider then returns HTTP 500, including requests the guardrail would allow.
 
-See [Guardrails and Policies](../concepts/guardrails-and-policies.mdx) for how these layers relate.
+See [Guardrails and Policies](../../concepts/guardrails-and-policies.mdx) for how these layers relate.
 
 ## Which Guardrails Need This
 
@@ -50,7 +51,7 @@ Editing the rendered ConfigMap by hand is not a shortcut. The next `helm upgrade
 - A deployed environment with its API Platform Gateway. See [Environment Management](./environment-management.mdx).
 - `helm` and `kubectl` configured against the cluster.
 - The external service the guardrail calls, set up and tested. See [Prepare the External Service](#prepare-the-external-service).
-- The `VERSION` and `HELM_CHART_REGISTRY` variables you installed Agent Manager with. On a production install these are set in [On Your Environment](./on-your-environment.mdx).
+- The `VERSION` and `HELM_CHART_REGISTRY` variables you installed Agent Manager with. On a production install these are set in [On Your Environment](../installation/on-your-environment.mdx).
 
 ## Prepare the External Service
 
@@ -150,8 +151,8 @@ Each environment has its own gateway extension release, named `api-platform-<org
 
 | Environment | Namespace |
 |---|---|
-| Default environment, installed by following [On Your Environment](./on-your-environment.mdx) | `openchoreo-data-plane` |
-| Default environment, installed by the quick-start or [k3d](./on-k3d.mdx) setup | `<org>-<env>`, for example `default-default` |
+| Default environment, installed by following [On Your Environment](../installation/on-your-environment.mdx) | `openchoreo-data-plane` |
+| Default environment, installed by the quick-start or [k3d](../installation/on-k3d.mdx) setup | `<org>-<env>`, for example `default-default` |
 | Environment added with `add-environment.sh` | `<org>-<env>` |
 
 Rather than assuming, list the `APIGateway` resources. Each one carries the name of its extension release and lives in the same namespace:
@@ -330,7 +331,7 @@ helm upgrade ${GATEWAY_RELEASE} \
 - `--reuse-values` keeps the settings the environment was created with, including its control plane wiring and key managers. Without it they revert to chart defaults and the gateway loses its connection to Agent Manager.
 - `--no-hooks` skips the bootstrap job, which runs as a pre-upgrade hook and is not needed for a configuration change. If you leave it in and Agent Manager is unreachable, the upgrade fails and the release is left in `pending-upgrade`.
 
-The upgrade restarts the gateway controller. On a multi-node cluster the replacement pod can block on `Multi-Attach error for volume`. See [the controller restart note](./on-your-environment.mdx#point-the-gateway-at-the-environments-thunder) for the fix.
+The upgrade restarts the gateway controller. On a multi-node cluster the replacement pod can block on `Multi-Attach error for volume`. See [the controller restart note](../installation/on-your-environment.mdx#point-the-gateway-at-the-environments-thunder) for the fix.
 
 :::warning Re-apply the overlay after re-running `add-environment.sh`
 `add-environment.sh` installs the extension release with its own fixed set of values and does not reuse the existing ones. Re-running it, whether to repair an environment or to move it to a new chart version, removes `config_toml` and `systemExtraEnv`, and the guardrails stop working. Run Step 4 again afterwards.
@@ -395,10 +396,10 @@ Rate limiting and JWT authentication policies take their system parameters from 
 
 These are applied to the same extension release, the same way. Two cautions:
 
-- `jwtauth_v1.keymanagers` is a list. Setting one entry with `--set` replaces the whole list, so restate every key manager, as [On Your Environment](./on-your-environment.mdx#point-the-gateway-at-the-environments-thunder) does.
-- Rate limiting counters are held in memory by default and are not shared between gateway replicas. See [Gateway Hardening](./production-recommendations.mdx#gateway-hardening) for switching to Redis.
+- `jwtauth_v1.keymanagers` is a list. Setting one entry with `--set` replaces the whole list, so restate every key manager, as [On Your Environment](../installation/on-your-environment.mdx#point-the-gateway-at-the-environments-thunder) does.
+- Rate limiting counters are held in memory by default and are not shared between gateway replicas. See [Gateway Hardening](../installation/production-recommendations.mdx#gateway-hardening) for switching to Redis.
 
-For the full list of values, see the [gateway extension chart reference](../reference/helm-charts/wso2-amp-api-platform-gateway-extension.mdx).
+For the full list of values, see the [gateway extension chart reference](../../reference/helm-charts/wso2-amp-api-platform-gateway-extension.mdx).
 
 ## Troubleshooting
 
@@ -417,11 +418,11 @@ The capability flag only controls visibility; it does not supply credentials. Ru
 
 **The gateway runtime is crash-looping after an upgrade.** The injected TOML is invalid, most often a duplicate `[table]` the chart already emits, or a bare key placed after a table header. Check the runtime pod logs and `helm get values ${GATEWAY_RELEASE} -n ${GATEWAY_NS}`.
 
-**The `APIGateway` stays `Programmed=False` after the upgrade.** Check the controller pods for a `Multi-Attach error for volume` and delete the older pod, as described in [On Your Environment](./on-your-environment.mdx#point-the-gateway-at-the-environments-thunder).
+**The `APIGateway` stays `Programmed=False` after the upgrade.** Check the controller pods for a `Multi-Attach error for volume` and delete the older pod, as described in [On Your Environment](../installation/on-your-environment.mdx#point-the-gateway-at-the-environments-thunder).
 
 **The upgrade fails and the release is stuck in `pending-upgrade`.** The bootstrap job ran as a pre-upgrade hook and could not reach Agent Manager. Re-run with `--no-hooks`.
 
-**The gateway loses its connection to Agent Manager after an upgrade.** `--reuse-values` was omitted, so the control plane settings reverted to chart defaults. Restore them with the command that created the release: `add-environment.sh` with the same `ENV_NAME`, or for the default environment of a production install, the gateway extension step in [On Your Environment](./on-your-environment.mdx#phase-2-agent-manager-installation). Then run Step 4 again.
+**The gateway loses its connection to Agent Manager after an upgrade.** `--reuse-values` was omitted, so the control plane settings reverted to chart defaults. Restore them with the command that created the release: `add-environment.sh` with the same `ENV_NAME`, or for the default environment of a production install, the gateway extension step in [On Your Environment](../installation/on-your-environment.mdx#phase-2-agent-manager-installation). Then run Step 4 again.
 
 ## Next Steps
 

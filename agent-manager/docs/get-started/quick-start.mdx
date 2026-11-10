@@ -1,12 +1,14 @@
 ---
-sidebar_position: 1
+title: Quick Start Guide
+description: Get the Agent Manager running with a single command using a dev container!  # generated from the first paragraph; a writer should improve it
+type: quick-start
+sidebar_position: 2
 ---
-# Quick Start Guide
 
 Get the Agent Manager running with a single command using a dev container!
 
 :::info Stronger agent isolation tiers
-Agents run sandboxed under the standard **runc** runtime by default. Agent Manager also supports stronger per-environment isolation tiers — **gVisor** (userspace kernel) and **Kata Containers** (per-agent VM) — but they have hardware/OS requirements and need a dedicated node. For more information, see the [gVisor](../guides/isolation-tiers/gvisor.mdx) and [Kata Containers](../guides/isolation-tiers/kata.mdx) setup guides.
+Agents run sandboxed under the standard **runc** runtime by default. Agent Manager also supports stronger per-environment isolation tiers — **gVisor** (userspace kernel) and **Kata Containers** (per-agent VM) — but they have hardware/OS requirements and need a dedicated node. For more information, see the [gVisor](../guides/securing-agent-endpoints/isolation-tiers/gvisor.mdx) and [Kata Containers](../guides/securing-agent-endpoints/isolation-tiers/kata.mdx) setup guides.
 :::
 
 ## Prerequisites
@@ -27,7 +29,7 @@ Ensure the following before you begin:
   The `agent-manager` profile isolates this install from your default Colima instance, and `--network-address` gives the VM a stable IP so the cluster survives network changes.
 
   :::warning Set the VM size before you install, not after
-  Changing `--cpu` or `--memory` later requires restarting the Colima VM, which rebuilds the Docker networks underneath the `amp-local` cluster. The k3d server container can then crash-loop on every boot instead of starting, and `kubectl` stops responding. Recovering means deleting and recreating the cluster, so it is worth allocating enough up front. The [k3d installation guide](../guides/on-k3d.mdx#troubleshooting) has the recovery steps.
+  Changing `--cpu` or `--memory` later requires restarting the Colima VM, which rebuilds the Docker networks underneath the `amp-local` cluster. The k3d server container can then crash-loop on every boot instead of starting, and `kubectl` stops responding. Recovering means deleting and recreating the cluster, so it is worth allocating enough up front. The [k3d installation guide](../guides/installation/on-k3d.mdx#troubleshooting) has the recovery steps.
   :::
 
 ## 🚀 Installation Using Dev Container
@@ -39,7 +41,7 @@ The quick-start includes a dev container with all required tools pre-installed (
 `start.sh` checks your local prerequisites (Docker installed and running, free disk space, CPU architecture) and then launches the dev container for you:
 
 ```bash
-curl -fsSL https://github.com/wso2/agent-manager/releases/download/amp/v0.0.0-dev/start.sh -o start.sh
+curl -fsSL https://github.com/wso2/agent-manager/releases/download/amp/v{edition.version}/start.sh -o start.sh
 chmod +x start.sh
 ./start.sh
 ```
@@ -50,7 +52,7 @@ chmod +x start.sh
 docker run --rm -it --name amp-quick-start \
   -v /var/run/docker.sock:/var/run/docker.sock \
   --network=host \
-  ghcr.io/wso2/amp-quick-start:v0.0.0-dev
+  ghcr.io/wso2/amp-quick-start:v{edition.version}
 ```
 
 Either way, the container drops you into a shell once it starts. From there, run the installer yourself:

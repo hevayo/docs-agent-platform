@@ -1,8 +1,9 @@
 ---
 title: Monitor Your Agent
+description: So far you've judged the agent by sending it a few messages and reading the replies.  # generated from the first paragraph; a writer should improve it
+type: tutorial
+sidebar_position: 4
 ---
-
-# Monitor Your Agent
 
 So far you've judged the agent by sending it a few messages and reading the
 replies. That worked for three chapters. But in a production setting this setup would be problematic:
@@ -51,7 +52,7 @@ scores the share that completed without an error.
 4. Click **Create Monitor** at the bottom of the page.
 5. Point it at the traces you just generated and run it.
 
-Field-by-field detail is in [Evaluation Monitors](../guides/evaluation-monitors.mdx).
+Field-by-field detail is in [Evaluation Monitors](../guides/evaluation-and-observability/evaluation-monitors.mdx).
 
 Now read the individual results rather than the summary number:
 
@@ -86,7 +87,7 @@ no built-in evaluator knows them:
 
 An LLM-as-judge evaluator fits the admin rule well, because "did it escalate
 appropriately" is a judgment call rather than a string match. Create one,
-following [Custom Evaluators](../guides/custom-evaluators.mdx):
+following [Custom Evaluators](../guides/evaluation-and-observability/custom-evaluators.mdx):
 
 1. Go to the organization-level view in the Agent Manager console.
 2. In the sidebar, under the **Evaluation** section, click **Evaluators**, then click **Create Evaluator**.
@@ -152,7 +153,7 @@ identically.
 The only difference is upstream of this chapter: an externally-hosted agent has no
 init container, so its traces arrive via the `amp-instrument` prefix you set up in
 [Chapter 1](./create-your-first-agent.mdx). If no traces are showing, that's
-the thing to check. See [AMP Instrumentation](../guides/amp-instrumentation.mdx).
+the thing to check. See [AMP Instrumentation](../guides/platform-administration/amp-instrumentation.mdx).
 
 ## What You've Built
 

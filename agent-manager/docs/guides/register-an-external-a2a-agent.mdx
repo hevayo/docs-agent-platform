@@ -1,12 +1,12 @@
 ---
-sidebar_position: 17
+title: Register an External A2A Agent
 description: Register an A2A agent that runs outside Agent Manager, store its agent card per environment, and optionally route callers to it through the gateway.
+type: how-to
+sidebar_position: 3
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
-# Register an External A2A Agent
 
 Register an [Agent2Agent (A2A)](https://a2a-protocol.org/) agent that runs outside WSO2 Agent Manager, so the platform stores its agent card for each environment. You can also route the agent through an environment's gateway, which puts gateway API keys, CORS, and authentication in front of it.
 
@@ -27,7 +27,7 @@ When the agent is routed through the gateway, callers use the same paths as on t
 
 - An agent that serves A2A protocol version `1.0` and its agent card at a public `http` or `https` address.
 - A project to register the agent in.
-- To route the agent through the gateway: an ingress gateway mapped to the environment. See [Environment Management](./environment-management.mdx).
+- To route the agent through the gateway: an ingress gateway mapped to the environment. See [Environment Management](./platform-administration/environment-management.mdx).
 
 ## Step 1: Register the Agent
 
@@ -171,7 +171,7 @@ With **OAuth** selected, **Forward token to upstream** stays off: the gateway ch
 
 ## Step 5: Create an API Key
 
-With API key security on, callers need an agent API key for the environment. Once the environment is routed through the gateway, open the agent and, under **Security** in the left sidebar, click **Credentials**. Create the key as described in [Secure Agent Endpoints with API Keys](./secure-agent-endpoints-with-api-keys.mdx#step-2-create-an-agent-api-key).
+With API key security on, callers need an agent API key for the environment. Once the environment is routed through the gateway, open the agent and, under **Security** in the left sidebar, click **Credentials**. Create the key as described in [Secure Agent Endpoints with API Keys](./securing-agent-endpoints/secure-agent-endpoints-with-api-keys.mdx#step-2-create-an-agent-api-key).
 
 An externally-hosted agent has no deployment, so its keys work as soon as the environment is routed through the gateway.
 
@@ -209,4 +209,4 @@ Replace `<gateway-url>` with the URL under **Gateway routing**, `/a2a/jsonrpc` w
 
 - [Deploy an A2A Agent](./deploy-an-a2a-agent.mdx): run an A2A agent on the platform instead.
 - [Internal and External Agent](../concepts/internal-and-external-agent.mdx)
-- [Secure Agent Endpoints with API Keys](./secure-agent-endpoints-with-api-keys.mdx)
+- [Secure Agent Endpoints with API Keys](./securing-agent-endpoints/secure-agent-endpoints-with-api-keys.mdx)

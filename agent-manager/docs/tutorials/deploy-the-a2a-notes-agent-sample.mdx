@@ -1,12 +1,12 @@
 ---
-sidebar_position: 1
+title: Deploy the A2A Notes Agent Sample
 description: Deploy the A2A Notes Agent sample, a Python agent that summarizes meeting notes and extracts action items over the A2A protocol.
+type: tutorial
+sidebar_position: 7
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
-# Deploy the A2A Notes Agent Sample
 
 WSO2 Agent Manager includes a ready-to-deploy sample agent that speaks the [A2A protocol](https://a2a-protocol.org/), called the A2A Notes Agent. In this tutorial you deploy it as an **A2A Agent**, then call it through the gateway over both A2A transports. You do not need to write or change any code.
 
@@ -34,7 +34,7 @@ For how Agent Manager exposes A2A agents in general, see [Deploy an A2A Agent](.
 
 - WSO2 Agent Manager installed. See the [Quick Start Guide](../get-started/quick-start.mdx).
 - An OpenAI API key. Both skills call the model.
-- To use the CLI path: `amctl` installed and logged in. See [CLI Installation](../guides/cli-installation.mdx).
+- To use the CLI path: `amctl` installed and logged in. See [CLI Installation](../guides/installation/cli-installation.mdx).
 
 ## Step 1: Create and Deploy the Agent
 
@@ -109,7 +109,7 @@ The sample pins `a2a-sdk` to `1.1.5`, the first release that accepts `protobuf` 
     | `<invoke-url>/rpc` | The JSON-RPC transport |
     | `<invoke-url>/rest` | The HTTP+JSON transport |
 
-2. If the agent's **Endpoint Authentication** is **API key**, create a key as described in [Secure Agent Endpoints with API Keys](../guides/secure-agent-endpoints-with-api-keys.mdx).
+2. If the agent's **Endpoint Authentication** is **API key**, create a key as described in [Secure Agent Endpoints with API Keys](../guides/securing-agent-endpoints/secure-agent-endpoints-with-api-keys.mdx).
 
 The **Try It** page does not work for A2A agents, so the rest of this tutorial uses `curl`.
 
@@ -199,4 +199,4 @@ Any A2A client works. Point it at the agent's card through the gateway, `<invoke
 |---|---|
 | [Deploy an A2A Agent](../guides/deploy-an-a2a-agent.mdx) | Deploying your own A2A agent, Agent Card CORS, and endpoint settings |
 | [Sample Agents](../reference/sample-agents.mdx) | The other samples in the repository |
-| [Create Your First Agent](create-your-first-agent.mdx) | The general agent creation flow |
+| [Create Your First Agent](./create-your-first-agent.mdx) | The general agent creation flow |

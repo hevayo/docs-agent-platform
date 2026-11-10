@@ -1,8 +1,9 @@
 ---
 title: Agent Manager
+description: Helm chart for WSO2 Agent Management Platform - Deploy, manage, and govern AI agents at scale  # generated from the first paragraph; a writer should improve it
+type: reference
+sidebar_position: 1
 ---
-
-# Agent Manager
 
 Helm chart for WSO2 Agent Management Platform - Deploy, manage, and govern AI agents at scale
 
@@ -21,7 +22,7 @@ helm install agent-manager oci://ghcr.io/wso2/wso2-agent-manager \
 | `agentManagerService.replicaCount` | Number of pod replicas to run | integer | `1` |
 | `agentManagerService.image` | Container image for the control-plane API. | object |  |
 | `agentManagerService.image.repository` | Container image repository | string | `"ghcr.io/wso2/amp-api"` |
-| `agentManagerService.image.tag` | Container image tag. Defaults to the chart's appVersion when empty | string | `"0.0.0-dev"` |
+| `agentManagerService.image.tag` | Container image tag. Defaults to the chart's appVersion when empty | string | `"{edition.version}"` |
 | `agentManagerService.image.pullPolicy` | Image pull policy (`Always`, `IfNotPresent`, or `Never`) | string | `"IfNotPresent"` |
 | `agentManagerService.service` | Reachable externally via the control-plane gateway (see ocIngress); set type to LoadBalancer to restore a dedicated external endpoint. | object |  |
 | `agentManagerService.service.type` | Kubernetes Service type (`ClusterIP`, `NodePort`, or `LoadBalancer`) | string | `"ClusterIP"` |
@@ -202,7 +203,7 @@ helm install agent-manager oci://ghcr.io/wso2/wso2-agent-manager \
 | `console.replicaCount` | Number of pod replicas to run | integer | `1` |
 | `console.image` | Container image for the console. | object |  |
 | `console.image.repository` | Container image repository | string | `"ghcr.io/wso2/amp-console"` |
-| `console.image.tag` | Container image tag. Defaults to the chart's appVersion when empty | string | `"0.0.0-dev"` |
+| `console.image.tag` | Container image tag. Defaults to the chart's appVersion when empty | string | `"{edition.version}"` |
 | `console.image.pullPolicy` | Image pull policy (`Always`, `IfNotPresent`, or `Never`) | string | `"Always"` |
 | `console.service` | Reachable externally via the control-plane gateway (see ocIngress); set type to LoadBalancer to restore a dedicated external endpoint. | object |  |
 | `console.service.type` | Kubernetes Service type (`ClusterIP`, `NodePort`, or `LoadBalancer`) | string | `"ClusterIP"` |
@@ -228,7 +229,7 @@ helm install agent-manager oci://ghcr.io/wso2/wso2-agent-manager \
 | `console.config` | Frontend configuration | object |  |
 | `console.config.agentManagerInternalBaseUrl` | Cluster-internal URLs the API Platform Gateway uses to reach Agent Manager when add-environment.sh installs a new gateway. The Create Environment drawer pipes these into the rendered curl\|bash command so the gateway is configured for in-cluster service discovery. | string | `"http://amp-api.wso2-amp.svc.cluster.local:9000"` |
 | `console.config.agentManagerInternalCpHost` | In-cluster address the console's server-side calls use. | string | `"amp-api-gateway-manager.wso2-amp.svc.cluster.local:9243"` |
-| `console.config.ampVersion` | Agent Manager release version — pins the deployment-script git tag (amp/vX.Y.Z). Placeholder is substituted with the real release version by the release pipeline (.github/scripts/update-helm-charts.sh); dev builds fall back to main. | string | `"0.0.0-dev"` |
+| `console.config.ampVersion` | Agent Manager release version — pins the deployment-script git tag (amp/vX.Y.Z). Placeholder is substituted with the real release version by the release pipeline (.github/scripts/update-helm-charts.sh); dev builds fall back to main. | string | `"{edition.version}"` |
 | `console.config.apiBaseUrl` | Backend API URLs (will be auto-configured if empty) Routed through the OpenChoreo control-plane gateway (see ocIngress). | string | `"http://api.amp.localhost:8080"` |
 | `console.config.auth` | Authentication (set to "" to disable) | object |  |
 | `console.config.auth.clientId` | OAuth 2.0 client ID the console authenticates with. | string | `"amp-console-client"` |
@@ -278,7 +279,7 @@ helm install agent-manager oci://ghcr.io/wso2/wso2-agent-manager \
 | `dbMigration.enabled` | Run the migration job. | boolean | `true` |
 | `dbMigration.image` | Container image for the migration job. | object |  |
 | `dbMigration.image.repository` | Container image repository | string | `"ghcr.io/wso2/amp-api"` |
-| `dbMigration.image.tag` | Container image tag. Defaults to the chart's appVersion when empty | string | `"0.0.0-dev"` |
+| `dbMigration.image.tag` | Container image tag. Defaults to the chart's appVersion when empty | string | `"{edition.version}"` |
 | `dbMigration.image.pullPolicy` | Image pull policy (`Always`, `IfNotPresent`, or `Never`) | string | `"IfNotPresent"` |
 | `dbMigration.resources` | Compute resources for the migration job. | object |  |
 | `dbMigration.resources.requests` | Resources reserved at scheduling time. | object |  |
@@ -438,4 +439,3 @@ helm install agent-manager oci://ghcr.io/wso2/wso2-agent-manager \
 | Parameter | Description | Type | Default |
 |---|---|---|---|
 | `volumes` | Extra volumes mounted into the control-plane API, for example a private CA bundle. | array | `[]` |
-

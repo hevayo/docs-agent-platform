@@ -1,11 +1,12 @@
 ---
 title: Create Your First Agent
+description: AcmeCorp’s IT operations team spends countless hours managing repetitive L1 support requests, including password resets, application access grants, and…  # generated from the first paragraph; a writer should improve it
+type: tutorial
+sidebar_position: 1
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
-# Create Your First Agent
 
 AcmeCorp’s IT operations team spends countless hours managing repetitive L1 support requests, including password resets, application access grants, and system status inquiries.
 
@@ -130,7 +131,7 @@ what the sample's `app.py` serves. Picking **Custom API Agent** here would make
 the console expect an OpenAPI spec instead.
 
 Leave the **Readiness check** **Type** on **TCP**. It decides when the agent starts getting
-traffic; see [Configure Agent Health Checks](../guides/configure-agent-health-checks.mdx)
+traffic; see [Configure Agent Health Checks](../guides/platform-administration/configure-agent-health-checks.mdx)
 to change it later.
 
 ### Environment Variables
@@ -198,7 +199,7 @@ amp-instrument python main.py
 
 The `amp-instrument` prefix is the whole integration. No code changes needed.
 Full detail, including the Ballerina path and a manual `init_otel()` alternative, is in
-[AMP Instrumentation](../guides/amp-instrumentation.mdx).
+[AMP Instrumentation](../guides/platform-administration/amp-instrumentation.mdx).
 
 :::note AgentID arrives immediately
 Because there's no deploy step to wait for, [AgentID](../concepts/agentid.mdx)
@@ -264,7 +265,7 @@ call. It isn't open, though: **API key security is enabled by default** for
 platform-hosted API agents, so an external caller needs a key and sends it in the
 `X-API-Key` header.
 
-[Secure Agent Endpoints with API Keys](../guides/secure-agent-endpoints-with-api-keys.mdx)
+[Secure Agent Endpoints with API Keys](../guides/securing-agent-endpoints/secure-agent-endpoints-with-api-keys.mdx)
 covers creating, rotating, and revoking those keys, plus turning the
 protection off or swapping it for JWT. You'll need a key for
 [Chapter 4](./observe-first-agent.mdx), where the traffic seeding script calls

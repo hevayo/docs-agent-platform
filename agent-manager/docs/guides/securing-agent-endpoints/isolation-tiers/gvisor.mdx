@@ -1,15 +1,16 @@
 ---
+title: gVisor Isolation Tier
+description: Run agents in an environment under gVisor (runsc) — a userspace kernel that intercepts syscalls before they reach the host kernel — for stronger isolation…  # generated from the first paragraph; a writer should improve it
+type: how-to
 sidebar_position: 1
 ---
-
-# gVisor Isolation Tier
 
 Run agents in an environment under [gVisor](https://gvisor.dev/) (`runsc`) — a userspace kernel that intercepts syscalls before they reach the host kernel — for stronger isolation than the default runc sandbox, without any special hardware.
 
 By default, every agent already runs as a sandboxed pod (hardened security context, network policy, warm pool) under **runc**, the standard container runtime that shares the host kernel. The gVisor tier adds a second layer: the agent's syscalls are served by gVisor's own userspace kernel, so a compromised or misbehaving agent never talks to the host kernel directly.
 
 :::info Isolation tier is an environment-level setting
-You choose the tier once, when [creating an environment](../environment-management.mdx). Every agent deployed or promoted to that environment runs under that tier. Existing runc environments are never affected by adding a gVisor node — the setup below only touches the new node.
+You choose the tier once, when [creating an environment](../../platform-administration/environment-management.mdx). Every agent deployed or promoted to that environment runs under that tier. Existing runc environments are never affected by adding a gVisor node — the setup below only touches the new node.
 :::
 
 ## How It Works
@@ -49,7 +50,7 @@ not already have it extracted, fetch it first and point `AMP_DIST` at it — the
 same bundle the install guides use:
 
 ```bash
-export VERSION="0.0.0-dev"
+export VERSION="{edition.version}"
 curl -fsSL -O "https://github.com/wso2/agent-manager/releases/download/amp/v${VERSION}/wso2-agent-manager-${VERSION}.tar.gz"
 tar xzf "wso2-agent-manager-${VERSION}.tar.gz"
 export AMP_DIST="$PWD"
@@ -101,7 +102,7 @@ This step runs **on the node**, not on your workstation.
 
     ```bash
     cd /root
-    export VERSION="0.0.0-dev"
+    export VERSION="{edition.version}"
     curl -fsSL -O "https://github.com/wso2/agent-manager/releases/download/amp/v${VERSION}/wso2-agent-manager-${VERSION}.tar.gz"
     tar xzf "wso2-agent-manager-${VERSION}.tar.gz"
     export AMP_DIST="$PWD"
@@ -255,7 +256,7 @@ On a local k3d cluster created from this repository's dev setup, one command add
 make setup-gvisor
 ```
 
-If your cluster was created by the [installation guides](../on-k3d.mdx) (cluster name `amp-local`) rather than the dev Makefile, point the script at it:
+If your cluster was created by the [installation guides](../../installation/on-k3d.mdx) (cluster name `amp-local`) rather than the dev Makefile, point the script at it:
 
 ```bash
 CLUSTER_NAME=amp-local ./deployments/setup/setup-gvisor-node.sh
@@ -376,4 +377,4 @@ If no Fluent Bit pod is on the gVisor node, set the Fluent Bit toleration as des
 ## Next Steps
 
 - Need even stronger, VM-level isolation? See the [Kata Containers isolation tier](./kata.mdx).
-- [Environment management](../environment-management.mdx) — pipelines, promotion, and environment settings.
+- [Environment management](../../platform-administration/environment-management.mdx) — pipelines, promotion, and environment settings.
