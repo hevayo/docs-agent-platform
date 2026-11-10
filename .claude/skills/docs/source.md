@@ -27,7 +27,7 @@ Each Edition's pages live on their own branch of this repo, at the same `agent-m
 
 | Docs branch | Edition | Verify against |
 |---|---|---|
-| `docs-v2` (the main line), or a branch from it | Cloud, and the next Self-hosted version | `main` of `wso2/agent-manager` |
+| `agent-manager/docs-v2` (the main line), or a branch from it | Cloud, and the next Self-hosted version | `main` of `wso2/agent-manager` |
 | `agent-manager/release/<v>` (now `2026.11.0`, `1.0.0`), or a branch from it | Self-hosted version `<v>` | tag `amp/v<v>` |
 
 Content marked `<Edition only="cloud">` or `editions: cloud` describes the Cloud deployment, which may not run `main`: if a claim depends on that difference, ask the user which ref Cloud runs. Content marked `selfHostedFrom: next` is not in any release yet, so `main` is the only ref for it.

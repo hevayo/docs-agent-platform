@@ -85,7 +85,7 @@ If the file is under `agent-manager/docs/reference/helm-charts/` and the diff to
 
 ### 13. Editions and versions
 
-On the main line (`docs-v2`, which builds Cloud):
+On the main line (`agent-manager/docs-v2`, which builds Cloud):
 - Content that applies to only Cloud or only Self-hosted must carry an Edition marker (front matter `editions: cloud|self-hosted`, `selfHostedFrom: next` for a page new since the last release, or `<Edition only="cloud">…</Edition>` / `<Edition only="self-hosted">…</Edition>` inline or around a block). Self-hosted-only content (installation, Helm values, upgrades) with no marker, or wording like "on Cloud" / "in self-hosted deployments" that should be a marker → WARN, for `tech.md` to confirm. `wso2-docs check` validates the marker syntax; `wso2-docs components Edition` describes it.
 - A release version written literally (`1.0.0`, `v1.0.0`, `amp/v1.0.0`) where it should track the Edition → WARN: write `{edition.version}` (`v{edition.version}` for image tags and `amp/v…` refs). Link addresses are not filled, so a version inside a Markdown link address stays `v0.0.0-dev`; do not flag that.
 

@@ -18,10 +18,10 @@ Reviews every changed `.md`/`.mdx` file, including uncommitted work.
 
 ### Step 1: Base ref
 
-Default to the line the work branched from: `docs-v2` (the main line, which builds Cloud) or, for a fix to a released version, its release branch `agent-manager/release/<version>`. Use `origin/<branch>` if the local one is stale, and another branch if the user names one.
+Default to the line the work branched from: `agent-manager/docs-v2` (the main line, which builds Cloud) or, for a fix to a released version, its release branch `agent-manager/release/<version>`. Use `origin/<branch>` if the local one is stale, and another branch if the user names one.
 
 ```bash
-BASE_REF=docs-v2
+BASE_REF=agent-manager/docs-v2
 MERGE_BASE=$(git merge-base "$BASE_REF" HEAD)
 ```
 

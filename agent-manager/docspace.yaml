@@ -14,7 +14,7 @@ issues:
   repo: wso2/docs-agent-platform
 editions:
   - id: cloud
-    branch: docs-v2
+    branch: agent-manager/docs-v2
   - id: 2026.11.0
     branch: agent-manager/release/2026.11.0
   - id: 1.0.0

@@ -6,7 +6,7 @@ Not in scope: writing quality (`style.md`) and structure (`check.md`).
 
 ## Usage
 
-Read when the user asks to verify a page's technical accuracy, or before merging docs with new technical claims. Read `source.md` first: locate `AM_REPO` and choose the ref that matches the branch the page is on (`docs-v2`, the main line → `main`; `agent-manager/release/<v>` → tag `amp/v<v>`). If no path is given, ask which file.
+Read when the user asks to verify a page's technical accuracy, or before merging docs with new technical claims. Read `source.md` first: locate `AM_REPO` and choose the ref that matches the branch the page is on (`agent-manager/docs-v2`, the main line → `main`; `agent-manager/release/<v>` → tag `amp/v<v>`). If no path is given, ask which file.
 
 If the source repo cannot be reached, mark affected claims UNVERIFIED with that reason. Never mark them correct by assumption.
 

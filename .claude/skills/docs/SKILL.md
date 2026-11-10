@@ -22,7 +22,7 @@ The pages are the `agent-manager/` Doc space: pages in `agent-manager/docs/` (fo
 - `wso2-docs help` and `wso2-docs help <task>` (start with `write-a-page`) are the authority on WSO2 Docs authoring rules: page types, front matter, components, Edition markers, admonitions, and checks. Read the task help before changing anything. Where these files and the help disagree on a Platform rule, the help wins.
 - `wso2-docs preview agent-manager [--edition cloud|2026.11.0|1.0.0]` serves a live preview; `wso2-docs check agent-manager` runs the pull request's blocking checks (there is no `npm run build`).
 
-**Editions**: the `docs-v2` branch is the main line and builds the **Cloud** Edition. Each Self-hosted version is a release branch, `agent-manager/release/<version>` (now `2026.11.0` and `1.0.0`), holding that version's pages at the same `agent-manager/docs/` path. On the main line, content that applies to only one kind of Edition carries an Edition marker (`edit.md` → Editions).
+**Editions**: the `agent-manager/docs-v2` branch is the main line and builds the **Cloud** Edition. Each Self-hosted version is a release branch, `agent-manager/release/<version>` (now `2026.11.0` and `1.0.0`), holding that version's pages at the same `agent-manager/docs/` path. On the main line, content that applies to only one kind of Edition carries an Edition marker (`edit.md` → Editions).
 
 ## Step 1: Match the request to a reference file
 

@@ -4,9 +4,9 @@ A Content repo of WSO2 Docs (docs.wso2.com). It holds these Doc spaces, one dire
 
 | Directory | Doc space | Editions and branches |
 |---|---|---|
-| `agent-manager/` | Agent Manager | Cloud on `docs-v2`; 2026.11.0 on `agent-manager/release/2026.11.0`; 1.0.0 on `agent-manager/release/1.0.0` |
+| `agent-manager/` | Agent Manager | Cloud on `agent-manager/docs-v2`; 2026.11.0 on `agent-manager/release/2026.11.0`; 1.0.0 on `agent-manager/release/1.0.0` |
 
-**Until the cutover**, `main` still holds the legacy Docusaurus site (published at wso2.com/agent-platform/docs/), and the WSO2 Docs main line is the `docs-v2` branch. Fixes merged to `main` in the meantime are brought across with `git merge main` on `docs-v2`.
+**Until the cutover**, `main` still holds the legacy Docusaurus site (published at wso2.com/agent-platform/docs/), and the WSO2 Docs main line is the `agent-manager/docs-v2` branch. Fixes merged to `main` in the meantime are brought across with `git merge main` on `agent-manager/docs-v2`.
 
 Each Doc space directory holds `docspace.yaml` (the Doc space manifest), `editions.yaml` (per-Edition variables), `redirects.yaml` (page moves and legacy maps), `docs/` (pages; folders are the menu), `partials/` (snippets shared inside the Doc space) and `assets/` (with `cloud/` and `self-hosted/` for Edition-only files).
 

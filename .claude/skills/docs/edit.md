@@ -67,7 +67,7 @@ Do not add a diagram just because one could exist. If you think one would help a
 
 ### Editions and versions
 
-The main line (`docs-v2`) builds Cloud, and Self-hosted versions are cut from it. Before writing, decide which Editions the content applies to, using the source (`source.md` → Step 2), and mark anything that does not apply to both:
+The main line (`agent-manager/docs-v2`) builds Cloud, and Self-hosted versions are cut from it. Before writing, decide which Editions the content applies to, using the source (`source.md` → Step 2), and mark anything that does not apply to both:
 
 - **A whole page**: front matter `editions: cloud` or `editions: self-hosted`; `selfHostedFrom: next` for a page new since the last Self-hosted release.
 - **A block or a phrase**: `<Edition only="cloud">…</Edition>` or `<Edition only="self-hosted">…</Edition>`.
