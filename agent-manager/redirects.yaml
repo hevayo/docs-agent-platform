@@ -1,275 +1,171 @@
 # Page moves (from → to, both page paths) and legacy URL maps.
 moves: []
 legacy:
-  - from: https://wso2.com/agent-platform/docs/next/get-started/what-is-amp/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/get-started/what-is-amp/
     to: ''
-  - from: https://wso2.com/agent-platform/docs/next/get-started/quick-start/
-    to: get-started/quick-start
-  - from: https://wso2.com/agent-platform/docs/next/concepts/organization/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/concepts/organization/
     to: concepts/organization
-  - from: https://wso2.com/agent-platform/docs/next/concepts/environment/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/concepts/environment/
     to: concepts/environment
-  - from: https://wso2.com/agent-platform/docs/next/concepts/project/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/concepts/project/
     to: concepts/project
-  - from: https://wso2.com/agent-platform/docs/next/concepts/agent-lifecycle/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/concepts/agent-lifecycle/
     to: concepts/agent-lifecycle
-  - from: https://wso2.com/agent-platform/docs/next/concepts/internal-and-external-agent/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/concepts/internal-and-external-agent/
     to: concepts/internal-and-external-agent
-  - from: https://wso2.com/agent-platform/docs/next/concepts/agent-kind-and-catalog/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/concepts/agent-kind-and-catalog/
     to: concepts/agent-kind-and-catalog
-  - from: https://wso2.com/agent-platform/docs/next/concepts/observability/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/concepts/observability/
     to: concepts/observability
-  - from: https://wso2.com/agent-platform/docs/next/concepts/evaluation/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/concepts/evaluation/
     to: concepts/evaluation
-  - from: https://wso2.com/agent-platform/docs/next/concepts/agentid/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/concepts/agentid/
     to: concepts/agentid
-  - from: https://wso2.com/agent-platform/docs/next/concepts/gateway/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/concepts/gateway/
     to: concepts/gateway
-  - from: https://wso2.com/agent-platform/docs/next/concepts/guardrails-and-policies/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/concepts/guardrails-and-policies/
     to: concepts/guardrails-and-policies
-  - from: https://wso2.com/agent-platform/docs/next/concepts/deployment-pipeline/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/concepts/deployment-pipeline/
     to: concepts/deployment-pipeline
-  - from: https://wso2.com/agent-platform/docs/next/concepts/agent-sandboxing/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/concepts/agent-sandboxing/
     to: concepts/agent-sandboxing
-  - from: https://wso2.com/agent-platform/docs/next/concepts/llm-service-provider/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/concepts/llm-service-provider/
     to: concepts/llm-service-provider
-  - from: https://wso2.com/agent-platform/docs/next/concepts/mcp-proxy/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/concepts/mcp-proxy/
     to: concepts/mcp-proxy
-  - from: https://wso2.com/agent-platform/docs/next/guides/on-k3d/
-    to: guides/installation/on-k3d
-  - from: https://wso2.com/agent-platform/docs/next/guides/on-your-environment/
-    to: guides/installation/on-your-environment
-  - from: https://wso2.com/agent-platform/docs/next/guides/production-recommendations/
-    to: guides/installation/production-recommendations
-  - from: https://wso2.com/agent-platform/docs/next/guides/on-a-vm/
-    to: guides/installation/on-a-vm
-  - from: https://wso2.com/agent-platform/docs/next/guides/install-with-a-wso2-subscription/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/install-with-a-wso2-subscription/
     to: guides/installation/install-with-a-wso2-subscription
-  - from: https://wso2.com/agent-platform/docs/next/guides/cli-installation/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/on-k3d/
+    to: guides/installation/on-k3d
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/on-your-environment/
+    to: guides/installation/on-your-environment
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/production-recommendations/
+    to: guides/installation/production-recommendations
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/cli-installation/
     to: guides/installation/cli-installation
-  - from: https://wso2.com/agent-platform/docs/next/guides/deploy-an-a2a-agent/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/deploy-an-a2a-agent/
     to: guides/deploy-an-a2a-agent
-  - from: https://wso2.com/agent-platform/docs/next/guides/register-an-external-a2a-agent/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/register-an-external-a2a-agent/
     to: guides/register-an-external-a2a-agent
-  - from: https://wso2.com/agent-platform/docs/next/guides/custom-evaluators/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/custom-evaluators/
     to: guides/evaluation-and-observability/custom-evaluators
-  - from: https://wso2.com/agent-platform/docs/next/guides/evaluation-monitors/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/evaluation-monitors/
     to: guides/evaluation-and-observability/evaluation-monitors
-  - from: https://wso2.com/agent-platform/docs/next/guides/configure-event-alerts/
-    to: guides/evaluation-and-observability/configure-event-alerts
-  - from: https://wso2.com/agent-platform/docs/next/guides/configure-monitor-alerts/
-    to: guides/evaluation-and-observability/configure-monitor-alerts
-  - from: https://wso2.com/agent-platform/docs/next/guides/notification-service-urls/
-    to: guides/evaluation-and-observability/notification-service-urls
-  - from: https://wso2.com/agent-platform/docs/next/guides/configure-trace-sampling/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/configure-trace-sampling/
     to: guides/evaluation-and-observability/configure-trace-sampling
-  - from: https://wso2.com/agent-platform/docs/next/guides/observe-openclaw-agents/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/observe-openclaw-agents/
     to: guides/evaluation-and-observability/observe-openclaw-agents
-  - from: https://wso2.com/agent-platform/docs/next/guides/configure-identity-providers-at-the-gateway/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/configure-identity-providers-at-the-gateway/
     to: guides/securing-agent-endpoints/configure-identity-providers-at-the-gateway
-  - from: https://wso2.com/agent-platform/docs/next/guides/isolation-tiers/gvisor/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/isolation-tiers/gvisor/
     to: guides/securing-agent-endpoints/isolation-tiers/gvisor
-  - from: https://wso2.com/agent-platform/docs/next/guides/isolation-tiers/kata/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/isolation-tiers/kata/
     to: guides/securing-agent-endpoints/isolation-tiers/kata
-  - from: https://wso2.com/agent-platform/docs/next/guides/secure-agent-endpoints-with-api-keys/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/secure-agent-endpoints-with-api-keys/
     to: guides/securing-agent-endpoints/secure-agent-endpoints-with-api-keys
-  - from: https://wso2.com/agent-platform/docs/next/guides/secure-agents-with-jwt-authentication/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/secure-agents-with-jwt-authentication/
     to: guides/securing-agent-endpoints/secure-agents-with-jwt-authentication
-  - from: https://wso2.com/agent-platform/docs/next/guides/configure-cors-for-agent-endpoints/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/configure-cors-for-agent-endpoints/
     to: guides/securing-agent-endpoints/configure-cors-for-agent-endpoints
-  - from: https://wso2.com/agent-platform/docs/next/guides/upgrades/overview/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/upgrades/overview/
     to: guides/platform-administration/upgrades
-  - from: https://wso2.com/agent-platform/docs/next/guides/upgrades/from-v1-0-0/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/upgrades/from-v1-0-0/
     to: guides/platform-administration/upgrades/from-v1-0-0
-  - from: https://wso2.com/agent-platform/docs/next/guides/upgrades/platform-dependencies/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/upgrades/platform-dependencies/
     to: guides/platform-administration/upgrades/platform-dependencies
-  - from: https://wso2.com/agent-platform/docs/next/guides/register-llm-service-provider/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/register-llm-service-provider/
     to: guides/platform-administration/register-llm-service-provider
-  - from: https://wso2.com/agent-platform/docs/next/guides/configure-agent-llm-configuration/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/configure-agent-llm-configuration/
     to: guides/platform-administration/configure-agent-llm-configuration
-  - from: https://wso2.com/agent-platform/docs/next/guides/register-mcp-proxy/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/register-mcp-proxy/
     to: guides/platform-administration/register-mcp-proxy
-  - from: https://wso2.com/agent-platform/docs/next/guides/environment-management/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/environment-management/
     to: guides/platform-administration/environment-management
-  - from: https://wso2.com/agent-platform/docs/next/guides/instrumentation-catalog/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/instrumentation-catalog/
     to: guides/platform-administration/instrumentation-catalog
-  - from: https://wso2.com/agent-platform/docs/next/guides/amp-instrumentation/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/amp-instrumentation/
     to: guides/platform-administration/amp-instrumentation
-  - from: https://wso2.com/agent-platform/docs/next/guides/configure-guardrail-system-parameters/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/configure-guardrail-system-parameters/
     to: guides/platform-administration/configure-guardrail-system-parameters
-  - from: https://wso2.com/agent-platform/docs/next/guides/use-a-custom-gateway-image/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/use-a-custom-gateway-image/
     to: guides/platform-administration/use-a-custom-gateway-image
-  - from: https://wso2.com/agent-platform/docs/next/guides/configure-agent-health-checks/
-    to: guides/platform-administration/configure-agent-health-checks
-  - from: https://wso2.com/agent-platform/docs/next/guides/authorize-agent-access-to-mcp-tools/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/authorize-agent-access-to-mcp-tools/
     to: guides/agent-identity-and-access-management/authorize-agent-access-to-mcp-tools
-  - from: https://wso2.com/agent-platform/docs/next/guides/configure-agent-mcp-proxies/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/configure-agent-mcp-proxies/
     to: guides/agent-identity-and-access-management/configure-agent-mcp-proxies
-  - from: https://wso2.com/agent-platform/docs/next/guides/use-agentid-in-platform-hosted-agents/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/use-agentid-in-platform-hosted-agents/
     to: guides/agent-identity-and-access-management/use-agentid-in-platform-hosted-agents
-  - from: https://wso2.com/agent-platform/docs/next/guides/retrieve-agentid-for-externally-hosted-agents/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/guides/retrieve-agentid-for-externally-hosted-agents/
     to: guides/agent-identity-and-access-management/retrieve-agentid-for-externally-hosted-agents
-  - from: https://wso2.com/agent-platform/docs/next/tutorials/create-your-first-agent/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/tutorials/create-your-first-agent/
     to: tutorials/create-your-first-agent
-  - from: https://wso2.com/agent-platform/docs/next/tutorials/govern-the-model/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/tutorials/govern-the-model/
     to: tutorials/govern-the-model
-  - from: https://wso2.com/agent-platform/docs/next/tutorials/give-the-agent-real-tools/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/tutorials/give-the-agent-real-tools/
     to: tutorials/give-the-agent-real-tools
-  - from: https://wso2.com/agent-platform/docs/next/tutorials/observe-first-agent/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/tutorials/observe-first-agent/
     to: tutorials/observe-first-agent
-  - from: https://wso2.com/agent-platform/docs/next/tutorials/promote-your-agent/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/tutorials/promote-your-agent/
     to: tutorials/promote-your-agent
-  - from: https://wso2.com/agent-platform/docs/next/tutorials/build-a-ballerina-agent/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/tutorials/build-a-ballerina-agent/
     to: tutorials/build-a-ballerina-agent
-  - from: https://wso2.com/agent-platform/docs/next/tutorials/deploy-the-a2a-notes-agent-sample/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/tutorials/deploy-the-a2a-notes-agent-sample/
     to: tutorials/deploy-the-a2a-notes-agent-sample
-  - from: https://wso2.com/agent-platform/docs/next/reference/cli/overview/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/cli/overview/
     to: reference/cli
-  - from: https://wso2.com/agent-platform/docs/next/reference/cli/login/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/cli/login/
     to: reference/cli/login
-  - from: https://wso2.com/agent-platform/docs/next/reference/cli/context/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/cli/context/
     to: reference/cli/context
-  - from: https://wso2.com/agent-platform/docs/next/reference/cli/project/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/cli/project/
     to: reference/cli/project
-  - from: https://wso2.com/agent-platform/docs/next/reference/cli/agent/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/cli/agent/
     to: reference/cli/agent
-  - from: https://wso2.com/agent-platform/docs/next/reference/cli/llm-provider/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/cli/llm-provider/
     to: reference/cli/llm-provider
-  - from: https://wso2.com/agent-platform/docs/next/reference/cli/gateway/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/cli/gateway/
     to: reference/cli/gateway
-  - from: https://wso2.com/agent-platform/docs/next/reference/cli/skills/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/cli/skills/
     to: reference/cli/skills
-  - from: https://wso2.com/agent-platform/docs/next/reference/cli/version/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/cli/version/
     to: reference/cli/version
-  - from: https://wso2.com/agent-platform/docs/next/reference/cli/api/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/cli/api/
     to: reference/cli/api
-  - from: https://wso2.com/agent-platform/docs/next/reference/helm-charts/index/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/helm-charts/index/
     to: reference/helm-charts
-  - from: https://wso2.com/agent-platform/docs/next/reference/helm-charts/wso2-agent-manager/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/helm-charts/wso2-agent-manager/
     to: reference/helm-charts/wso2-agent-manager
-  - from: https://wso2.com/agent-platform/docs/next/reference/helm-charts/wso2-amp-api-platform-gateway-extension/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/helm-charts/wso2-amp-api-platform-gateway-extension/
     to: reference/helm-charts/wso2-amp-api-platform-gateway-extension
-  - from: https://wso2.com/agent-platform/docs/next/reference/helm-charts/wso2-amp-thunder-extension/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/helm-charts/wso2-amp-thunder-extension/
     to: reference/helm-charts/wso2-amp-thunder-extension
-  - from: https://wso2.com/agent-platform/docs/next/reference/helm-charts/wso2-amp-evaluation-extension/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/helm-charts/wso2-amp-evaluation-extension/
     to: reference/helm-charts/wso2-amp-evaluation-extension
-  - from: https://wso2.com/agent-platform/docs/next/reference/helm-charts/wso2-amp-observability-extension/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/helm-charts/wso2-amp-observability-extension/
     to: reference/helm-charts/wso2-amp-observability-extension
-  - from: https://wso2.com/agent-platform/docs/next/reference/helm-charts/wso2-amp-platform-resources-extension/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/helm-charts/wso2-amp-platform-resources-extension/
     to: reference/helm-charts/wso2-amp-platform-resources-extension
-  - from: https://wso2.com/agent-platform/docs/next/reference/sample-agents/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/sample-agents/
     to: reference/sample-agents
-  - from: https://wso2.com/agent-platform/docs/next/reference/mcp-server/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/mcp-server/
     to: reference/mcp-server
-  - from: https://wso2.com/agent-platform/docs/next/reference/observer-mcp-server/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/observer-mcp-server/
     to: reference/observer-mcp-server
-  - from: https://wso2.com/agent-platform/docs/next/reference/authorization/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/reference/authorization/
     to: reference/authorization
-  - from: https://wso2.com/agent-platform/docs/next/contributing/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/contributing/
     to: reference/contributing
-  - from: https://wso2.com/agent-platform/docs/next/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/
     to: ''
-  - from: https://wso2.com/agent-platform/docs/cloud/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/overview/what-is-amp/
     to: ''
-  - from: https://wso2.com/agent-platform/docs/next/overview/what-is-amp/
-    to: ''
-  - from: https://wso2.com/agent-platform/docs/cloud/overview/what-is-amp/
-    to: ''
-  - from: https://wso2.com/agent-platform/docs/next/getting-started/quick-start/
-    to: get-started/quick-start
-  - from: https://wso2.com/agent-platform/docs/cloud/getting-started/quick-start/
-    to: get-started/quick-start
-  - from: https://wso2.com/agent-platform/docs/next/getting-started/on-k3d/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/getting-started/on-k3d/
     to: guides/installation/on-k3d
-  - from: https://wso2.com/agent-platform/docs/cloud/getting-started/on-k3d/
-    to: guides/installation/on-k3d
-  - from: https://wso2.com/agent-platform/docs/next/getting-started/create-your-first-agent/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/getting-started/create-your-first-agent/
     to: tutorials/create-your-first-agent
-  - from: https://wso2.com/agent-platform/docs/cloud/getting-started/create-your-first-agent/
-    to: tutorials/create-your-first-agent
-  - from: https://wso2.com/agent-platform/docs/next/components/amp-instrumentation/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/components/amp-instrumentation/
     to: guides/platform-administration/amp-instrumentation
-  - from: https://wso2.com/agent-platform/docs/cloud/components/amp-instrumentation/
-    to: guides/platform-administration/amp-instrumentation
-  - from: https://wso2.com/agent-platform/docs/next/administration/isolation-tiers/gvisor/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/administration/isolation-tiers/gvisor/
     to: guides/securing-agent-endpoints/isolation-tiers/gvisor
-  - from: https://wso2.com/agent-platform/docs/cloud/administration/isolation-tiers/gvisor/
-    to: guides/securing-agent-endpoints/isolation-tiers/gvisor
-  - from: https://wso2.com/agent-platform/docs/next/administration/isolation-tiers/kata/
+  - from: https://wso2.com/agent-platform/docs/v2026.11.0/administration/isolation-tiers/kata/
     to: guides/securing-agent-endpoints/isolation-tiers/kata
-  - from: https://wso2.com/agent-platform/docs/cloud/administration/isolation-tiers/kata/
-    to: guides/securing-agent-endpoints/isolation-tiers/kata
-  - from: https://wso2.com/agent-platform/docs/cloud/tutorials/promote-your-agent/
-    to: tutorials/promote-your-agent
-  - from: https://wso2.com/agent-platform/docs/cloud/tutorials/observe-first-agent/
-    to: tutorials/observe-first-agent
-  - from: https://wso2.com/agent-platform/docs/cloud/tutorials/govern-the-model/
-    to: tutorials/govern-the-model
-  - from: https://wso2.com/agent-platform/docs/cloud/tutorials/give-the-agent-real-tools/
-    to: tutorials/give-the-agent-real-tools
-  - from: https://wso2.com/agent-platform/docs/cloud/tutorials/deploy-the-a2a-notes-agent-sample/
-    to: tutorials/deploy-the-a2a-notes-agent-sample
-  - from: https://wso2.com/agent-platform/docs/cloud/tutorials/create-your-first-agent/
-    to: tutorials/create-your-first-agent
-  - from: https://wso2.com/agent-platform/docs/cloud/tutorials/build-a-ballerina-agent/
-    to: tutorials/build-a-ballerina-agent
-  - from: https://wso2.com/agent-platform/docs/cloud/guides/use-agentid-in-platform-hosted-agents/
-    to: guides/agent-identity-and-access-management/use-agentid-in-platform-hosted-agents
-  - from: https://wso2.com/agent-platform/docs/cloud/guides/secure-agents-with-jwt-authentication/
-    to: guides/securing-agent-endpoints/secure-agents-with-jwt-authentication
-  - from: https://wso2.com/agent-platform/docs/cloud/guides/secure-agent-endpoints-with-api-keys/
-    to: guides/securing-agent-endpoints/secure-agent-endpoints-with-api-keys
-  - from: https://wso2.com/agent-platform/docs/cloud/guides/retrieve-agentid-for-externally-hosted-agents/
-    to: guides/agent-identity-and-access-management/retrieve-agentid-for-externally-hosted-agents
-  - from: https://wso2.com/agent-platform/docs/cloud/guides/register-mcp-proxy/
-    to: guides/platform-administration/register-mcp-proxy
-  - from: https://wso2.com/agent-platform/docs/cloud/guides/register-llm-service-provider/
-    to: guides/platform-administration/register-llm-service-provider
-  - from: https://wso2.com/agent-platform/docs/cloud/guides/evaluation-monitors/
-    to: guides/evaluation-and-observability/evaluation-monitors
-  - from: https://wso2.com/agent-platform/docs/cloud/guides/environment-management/
-    to: guides/platform-administration/environment-management
-  - from: https://wso2.com/agent-platform/docs/cloud/guides/deploy-an-a2a-agent/
-    to: guides/deploy-an-a2a-agent
-  - from: https://wso2.com/agent-platform/docs/cloud/guides/custom-evaluators/
-    to: guides/evaluation-and-observability/custom-evaluators
-  - from: https://wso2.com/agent-platform/docs/cloud/guides/configure-trace-sampling/
-    to: guides/evaluation-and-observability/configure-trace-sampling
-  - from: https://wso2.com/agent-platform/docs/cloud/guides/configure-cors-for-agent-endpoints/
-    to: guides/securing-agent-endpoints/configure-cors-for-agent-endpoints
-  - from: https://wso2.com/agent-platform/docs/cloud/guides/configure-agent-mcp-proxies/
-    to: guides/agent-identity-and-access-management/configure-agent-mcp-proxies
-  - from: https://wso2.com/agent-platform/docs/cloud/guides/configure-agent-llm-configuration/
-    to: guides/platform-administration/configure-agent-llm-configuration
-  - from: https://wso2.com/agent-platform/docs/cloud/guides/authorize-agent-access-to-mcp-tools/
-    to: guides/agent-identity-and-access-management/authorize-agent-access-to-mcp-tools
-  - from: https://wso2.com/agent-platform/docs/cloud/guides/amp-instrumentation/
-    to: guides/platform-administration/amp-instrumentation
-  - from: https://wso2.com/agent-platform/docs/cloud/get-started/what-is-amp/
-    to: ''
-  - from: https://wso2.com/agent-platform/docs/cloud/concepts/project/
-    to: concepts/project
-  - from: https://wso2.com/agent-platform/docs/cloud/concepts/organization/
-    to: concepts/organization
-  - from: https://wso2.com/agent-platform/docs/cloud/concepts/observability/
-    to: concepts/observability
-  - from: https://wso2.com/agent-platform/docs/cloud/concepts/mcp-proxy/
-    to: concepts/mcp-proxy
-  - from: https://wso2.com/agent-platform/docs/cloud/concepts/llm-service-provider/
-    to: concepts/llm-service-provider
-  - from: https://wso2.com/agent-platform/docs/cloud/concepts/internal-and-external-agent/
-    to: concepts/internal-and-external-agent
-  - from: https://wso2.com/agent-platform/docs/cloud/concepts/gateway/
-    to: concepts/gateway
-  - from: https://wso2.com/agent-platform/docs/cloud/concepts/evaluation/
-    to: concepts/evaluation
-  - from: https://wso2.com/agent-platform/docs/cloud/concepts/environment/
-    to: concepts/environment
-  - from: https://wso2.com/agent-platform/docs/cloud/concepts/deployment-pipeline/
-    to: concepts/deployment-pipeline
-  - from: https://wso2.com/agent-platform/docs/cloud/concepts/agentid/
-    to: concepts/agentid
-  - from: https://wso2.com/agent-platform/docs/cloud/concepts/agent-lifecycle/
-    to: concepts/agent-lifecycle
-  - from: https://wso2.com/agent-platform/docs/cloud/concepts/agent-kind-and-catalog/
-    to: concepts/agent-kind-and-catalog

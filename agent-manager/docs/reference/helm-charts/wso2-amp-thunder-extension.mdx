@@ -3,13 +3,12 @@ title: Thunder Extension
 description: A Helm chart to add Thunder Identity Provider functionality for the Agent Management Platform.  # generated from the first paragraph; a writer should improve it
 type: reference
 sidebar_position: 3
-editions: self-hosted
 ---
 
 A Helm chart to add Thunder Identity Provider functionality for the Agent Management Platform.
 
 ```bash
-helm install amp-thunder-extension oci://ghcr.io/wso2/wso2-amp-thunder-extension \
+helm install amp-thunder-extension oci://registry.wso2.com/<project>/sts/helm-charts/wso2-amp-thunder-extension \
   --namespace <namespace> --create-namespace \
   --values my-values.yaml
 ```
@@ -95,6 +94,7 @@ helm install amp-thunder-extension oci://ghcr.io/wso2/wso2-amp-thunder-extension
 | `thunder.bootstrap.amCliClient.clientId` | OAuth 2.0 client ID | string | `"amctl"` |
 | `thunder.bootstrap.amCliClient.name` | Internal name of the OAuth application | string | `"AMCTL"` |
 | `thunder.bootstrap.amCliClient.description` | Description of the OAuth application | string | `"AMP CLI application for interactive user login"` |
+| `thunder.bootstrap.amCliClient.logoUrl` | Logo shown on the login and consent screens. | string | `"https://wso2.cachefly.net/wso2/sites/all/image_resources/logos/WSO2-Pulse-Orange.webp"` |
 | `thunder.bootstrap.amCliClient.redirectUris` | Redirect URIs permitted for the authorization code flow | array | see `values.yaml` |
 | `thunder.bootstrap.amCliClient.grantTypes` | OAuth 2.0 grant types the client may use | array | see `values.yaml` |
 | `thunder.bootstrap.amCliClient.responseTypes` | OAuth 2.0 response types the client may request | array | see `values.yaml` |
@@ -104,11 +104,13 @@ helm install amp-thunder-extension oci://ghcr.io/wso2/wso2-amp-thunder-extension
 | `thunder.bootstrap.amCliClient.publicClient` | Treat as a public client, which authenticates without a secret | boolean | `true` |
 | `thunder.bootstrap.amCliClient.accessTokenValidityPeriod` | Access token lifetime in seconds | integer | `3600` |
 | `thunder.bootstrap.amCliClient.idTokenValidityPeriod` | ID token lifetime in seconds | integer | `3600` |
+| `thunder.bootstrap.amCliClient.refreshTokenValidityPeriod` | Refresh token lifetime in seconds; fixed from login, not renewed on use | integer | `2592000` |
 | `thunder.bootstrap.amCliClient.userAttributes` | User attributes released to the CLI after login. | array | see `values.yaml` |
 | `thunder.bootstrap.amMcpClient` | AMP MCP Client configuration (public PKCE client for interactive login) | object |  |
 | `thunder.bootstrap.amMcpClient.clientId` | OAuth 2.0 client ID | string | `"am-mcp"` |
 | `thunder.bootstrap.amMcpClient.name` | Internal name of the OAuth application | string | `"AMP MCP"` |
 | `thunder.bootstrap.amMcpClient.description` | Description of the OAuth application | string | `"AMP MCP application for interactive user login"` |
+| `thunder.bootstrap.amMcpClient.logoUrl` | Logo shown on the login and consent screens. | string | `"https://wso2.cachefly.net/wso2/sites/all/image_resources/logos/WSO2-Pulse-Orange.webp"` |
 | `thunder.bootstrap.amMcpClient.redirectUris` | Redirect URIs permitted for the authorization code flow | array | see `values.yaml` |
 | `thunder.bootstrap.amMcpClient.grantTypes` | OAuth 2.0 grant types the client may use | array | see `values.yaml` |
 | `thunder.bootstrap.amMcpClient.responseTypes` | OAuth 2.0 response types the client may request | array | see `values.yaml` |
@@ -118,11 +120,13 @@ helm install amp-thunder-extension oci://ghcr.io/wso2/wso2-amp-thunder-extension
 | `thunder.bootstrap.amMcpClient.publicClient` | Treat as a public client, which authenticates without a secret | boolean | `true` |
 | `thunder.bootstrap.amMcpClient.accessTokenValidityPeriod` | Access token lifetime in seconds | integer | `3600` |
 | `thunder.bootstrap.amMcpClient.idTokenValidityPeriod` | ID token lifetime in seconds | integer | `3600` |
+| `thunder.bootstrap.amMcpClient.refreshTokenValidityPeriod` | Refresh token lifetime in seconds; fixed from login, not renewed on use | integer | `2592000` |
 | `thunder.bootstrap.amMcpClient.userAttributes` | User attributes released to the MCP server after login. | array | see `values.yaml` |
 | `thunder.bootstrap.amObsMcpClient` | AMP Observer MCP Client configuration (public PKCE client for the observer MCP server's interactive login). Allowed ONLY the OIDC scopes plus the four observability data-read scopes; the am-service MCP client (amMcpClient above) is allowed the rest of the catalog. NOTE: pre-install bootstrap job only — see the upgrade note on mcpResourceServers below / docs/reference/mcp-server.mdx. | object |  |
 | `thunder.bootstrap.amObsMcpClient.clientId` | OAuth 2.0 client ID | string | `"am-obs-mcp"` |
 | `thunder.bootstrap.amObsMcpClient.name` | Internal name of the OAuth application | string | `"AMP Observer MCP"` |
 | `thunder.bootstrap.amObsMcpClient.description` | Description of the OAuth application | string | `"AMP Observer MCP application for interactive user login"` |
+| `thunder.bootstrap.amObsMcpClient.logoUrl` | Logo shown on the login and consent screens. | string | `"https://wso2.cachefly.net/wso2/sites/all/image_resources/logos/WSO2-Pulse-Orange.webp"` |
 | `thunder.bootstrap.amObsMcpClient.redirectUris` | Redirect URIs permitted for the authorization code flow | array | see `values.yaml` |
 | `thunder.bootstrap.amObsMcpClient.grantTypes` | OAuth 2.0 grant types the client may use | array | see `values.yaml` |
 | `thunder.bootstrap.amObsMcpClient.responseTypes` | OAuth 2.0 response types the client may request | array | see `values.yaml` |
@@ -132,6 +136,7 @@ helm install amp-thunder-extension oci://ghcr.io/wso2/wso2-amp-thunder-extension
 | `thunder.bootstrap.amObsMcpClient.publicClient` | Treat as a public client, which authenticates without a secret | boolean | `true` |
 | `thunder.bootstrap.amObsMcpClient.accessTokenValidityPeriod` | Access token lifetime in seconds | integer | `3600` |
 | `thunder.bootstrap.amObsMcpClient.idTokenValidityPeriod` | ID token lifetime in seconds | integer | `3600` |
+| `thunder.bootstrap.amObsMcpClient.refreshTokenValidityPeriod` | Refresh token lifetime in seconds; fixed from login, not renewed on use | integer | `2592000` |
 | `thunder.bootstrap.amObsMcpClient.scopes` | OIDC scopes only — the four observability data-read scopes are appended from observabilityScopes at template render time (73-am-obs-mcp-client.yaml). | array | see `values.yaml` |
 | `thunder.bootstrap.amObsMcpClient.userAttributes` | User attributes released to the Observer MCP server after login. | array | see `values.yaml` |
 | `thunder.bootstrap.agentManagerMcpBaseUrl` | RFC 8707 resource servers for the public MCP origins. The bootstrap renders these as separate resource servers; urn:wso2:amp remains the platform API resource identifier. baseUrlValue selects the deployment- specific origin — one scalar per MCP endpoint, overridden to whatever that install actually serves (docker-compose dev, k3d, a VM, or a real domain); there is no separate "dev" scalar to keep in sync, the same way observerMcpBaseUrl has never needed one. | string | `"http://api.amp.localhost:8080"` |
@@ -152,6 +157,7 @@ helm install amp-thunder-extension oci://ghcr.io/wso2/wso2-amp-thunder-extension
 | `thunder.bootstrap.ampConsoleClient.publicClient` | Treat as a public client, which authenticates without a secret | boolean | `true` |
 | `thunder.bootstrap.ampConsoleClient.accessTokenValidityPeriod` | Access token lifetime in seconds | integer | `3600` |
 | `thunder.bootstrap.ampConsoleClient.idTokenValidityPeriod` | ID token lifetime in seconds | integer | `3600` |
+| `thunder.bootstrap.ampConsoleClient.refreshTokenValidityPeriod` | Refresh token lifetime in seconds; fixed from login, not renewed on use | integer | `2592000` |
 | `thunder.bootstrap.ampConsoleClient.userAttributes` | User attributes released to the Console after login. | array | see `values.yaml` |
 | `thunder.bootstrap.ampConsoleTheme` | Agent Manager Console Theme (applied to amp-console-client sign-in page) | object |  |
 | `thunder.bootstrap.ampConsoleTheme.handle` | Unique handle identifying the Console theme. | string | `"wso2-agent-manager-console"` |
@@ -347,7 +353,7 @@ helm install amp-thunder-extension oci://ghcr.io/wso2/wso2-amp-thunder-extension
 | `thunder.deployment.image` | Container image for Thunder. | object |  |
 | `thunder.deployment.image.registry` | Registry the Thunder image is pulled from. | string | `"ghcr.io/thunder-id"` |
 | `thunder.deployment.image.repository` | Container image repository | string | `"thunderid"` |
-| `thunder.deployment.image.tag` | Container image tag. Define either tag or digest, not both. | string | `"1.0.0"` |
+| `thunder.deployment.image.tag` | Container image tag. Define either tag or digest, not both. | string | `"1.0.2"` |
 | `thunder.deployment.image.pullPolicy` | Image pull policy (`Always`, `IfNotPresent`, or `Never`) | string | `"Always"` |
 | `thunder.deployment.container` | Container-level settings such as ports. | object |  |
 | `thunder.deployment.container.port` | Port Thunder listens on inside the container. | integer | `8090` |

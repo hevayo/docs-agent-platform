@@ -2,8 +2,7 @@
 title: On k3d (Locally)
 description: Install the Agent Manager on a local Kubernetes cluster using k3d — a lightweight tool that runs Kubernetes inside Docker.  # generated from the first paragraph; a writer should improve it
 type: how-to
-sidebar_position: 1
-editions: self-hosted
+sidebar_position: 2
 ---
 
 import Tabs from '@theme/Tabs';
@@ -12,11 +11,11 @@ import TabItem from '@theme/TabItem';
 Install the Agent Manager on a local Kubernetes cluster using [k3d](https://k3d.io/) — a lightweight tool that runs Kubernetes inside Docker.
 
 :::tip Just want it running?
-Use the **Run One Command** tab under [Install](#install): one script creates the cluster and installs everything. Use the **Guided Install** tab when you want to understand the full setup or need to customize it. The [Quick Start Guide](../../get-started/quick-start.mdx) runs the same installer inside a dev container, if you'd rather not install k3d, kubectl and Helm on your machine.
+Use the **Run One Command** tab under [Install](#install): one script creates the cluster and installs everything. Use the **Guided Install** tab when you want to understand the full setup or need to customize it.
 :::
 
-:::info WSO2 subscription
-With a WSO2 subscription or evaluation, you install the WSO2-supported build from `registry.wso2.com`. Select the **WSO2 Subscription** tab wherever this guide shows one, and see [Install with a WSO2 Subscription](./install-with-a-wso2-subscription.mdx) for how to get your registry credentials.
+:::info Short-term support (STS) release
+2026.11.0 is a short-term support (STS) release available for evaluation. Agent Manager's charts and images, including the API Platform gateway, are hosted on `registry.wso2.com` and require registry credentials. To obtain these credentials, download Agent Manager from the [WSO2 website](https://wso2.com/products/downloads/?product=wso2agentmanager&package=quickstart) to receive them by email, or use the credentials provided with your WSO2 subscription. Other components, such as OpenChoreo and the Gateway Operator chart, are hosted on public registries such as `ghcr.io`. See [About the STS Release](./install-with-a-wso2-subscription.mdx) for more information.
 :::
 
 :::info Stronger agent isolation tiers
@@ -109,31 +108,19 @@ Pick how you want to install it:
 
 One script creates the cluster and installs every plane, plus Agent Manager:
 
-<Tabs groupId="distribution" queryString>
-<TabItem value="community" label="Community" default>
-
 ```bash
-curl -fsSL https://github.com/wso2/agent-manager/releases/download/amp/v{edition.version}/k3d-install.sh | bash
+curl -fsSL https://github.com/wso2/agent-manager/releases/download/amp/v2026.11.0/k3d-install-subscription.sh | bash -s -- --project <project>
 ```
 
-</TabItem>
-<TabItem value="subscription" label="WSO2 Subscription">
-
-```bash
-curl -fsSL https://github.com/wso2/agent-manager/releases/download/amp/v{edition.version}/k3d-install-subscription.sh | bash -s -- --project <project>
-```
-
-Replace `<project>` with `wso2-agent-manager` for a subscription, or `wso2-agent-manager-evaluations` for an evaluation. The script asks for your registry credentials and installs the newest published version. To install a particular version, add `--version`, for example `--version {edition.version}-u2`. See [Install with a WSO2 Subscription](./install-with-a-wso2-subscription.mdx#one-command) for its options.
-
-</TabItem>
-</Tabs>
+Replace `<project>` with `wso2-agent-manager` for a subscription, or `wso2-agent-manager-evaluations` for an evaluation. The script asks for your registry credentials and installs the newest published version. To install a particular version, add `--version`, for example `--version 2026.11.0-u2`. See [About the STS Release](./install-with-a-wso2-subscription.mdx#one-command) for its options.
 
 The script:
 
-1. Checks that Docker is running and that k3d, kubectl, Helm, curl and lsof are installed.
-2. Downloads the `{edition.version}` release bundle into `~/.wso2-agent-manager/{edition.version}/`.
-3. Creates the `amp-local` k3d cluster and installs the four OpenChoreo planes and Agent Manager. These are the same steps as the **Guided Install** tab.
-4. Prints the console URL and the `admin` login when it finishes.
+1. Checks that Docker is running and that k3d, kubectl, Helm, curl, tar, and lsof are installed.
+2. Signs in to `registry.wso2.com` with your registry credentials and finds your version: the one you named with `--version`, or the newest one published.
+3. Downloads the `2026.11.0` release bundle into `~/.wso2-agent-manager/subscription/<project>/<image tag>/`.
+4. Creates the `amp-local` k3d cluster and installs the four OpenChoreo planes and Agent Manager, pulling the Agent Manager charts and images and the API Platform gateway from the registry. These are the same steps as the **Guided Install** tab.
+5. Prints the console URL, the `admin` login, and the version it installed when it finishes.
 
 The install takes about 15-20 minutes, and it is safe to rerun if it stops part way. On Colima, the script sets `K3D_FIX_DNS=0` for you.
 
@@ -163,7 +150,7 @@ GitHub — which also sidesteps the per-IP rate limiting that makes
 `helm --values <url>` fail with HTTP 429 behind shared or corporate NAT.
 
 ```bash
-export VERSION="{edition.version}"
+export VERSION="2026.11.0"
 curl -fsSL -O "https://github.com/wso2/agent-manager/releases/download/amp/v${VERSION}/wso2-agent-manager-${VERSION}.tar.gz"
 tar xzf "wso2-agent-manager-${VERSION}.tar.gz"
 export AMP_DIST="$PWD"
@@ -311,9 +298,12 @@ EOF
 
 Set these variables before continuing. They are used by the remaining Phase 1 steps and all of Phase 2.
 
+Replace `<version>` and `<project>` with your values from [About the STS Release](./install-with-a-wso2-subscription.mdx). The version is `2026.11.0` for the release, or `2026.11.0-u<N>` for update N; the release bundle from Step 0 serves both. `GATEWAY_REGISTRY` is where Phase 2 pulls the API Platform gateway from.
+
 ```bash
-export VERSION="{edition.version}"
-export HELM_CHART_REGISTRY="ghcr.io/wso2"
+export VERSION="<version>"
+export HELM_CHART_REGISTRY="registry.wso2.com/<project>/sts/helm-charts"
+export GATEWAY_REGISTRY="registry.wso2.com/<project>/sts"
 export AMP_NS="wso2-amp"
 export BUILD_CI_NS="openchoreo-workflow-plane"
 export OBSERVABILITY_NS="openchoreo-observability-plane"
@@ -337,28 +327,13 @@ export INSTRUMENTATION_URL="http://default-default.gateway.localhost:19080/otel"
 In k3d, every management endpoint is accessed through a plane gateway using a hostname: Thunder, the Console, and the API via the Control Plane kgateway on port 8080 (`thunder.amp.localhost`, `console.amp.localhost`, `api.amp.localhost`), and the Agent Manager Observer via the Observability Plane kgateway on port 11080 (`traces.amp.localhost`). These match the chart defaults and the Control Plane / Observability Plane OIDC configuration. No port-forwarding is needed; `*.localhost` names resolve to the loopback address in browsers and curl.
 :::
 
-With a WSO2 subscription or evaluation, also point the charts at the registry and sign Helm in to `registry.wso2.com`:
-
-<Tabs groupId="distribution" queryString>
-<TabItem value="community" label="Community" default>
-
-Nothing to change. The charts come from `ghcr.io/wso2`.
-
-</TabItem>
-<TabItem value="subscription" label="WSO2 Subscription">
-
-Replace `<version>` and `<project>` with your values from [Install with a WSO2 Subscription](./install-with-a-wso2-subscription.mdx). The version is `{edition.version}` for the release, or `{edition.version}-u<N>` for update N. Phase 2 uses the same username and token to create the image pull secret.
+Sign Helm in to `registry.wso2.com` with your registry credentials. Phase 2 uses the same username and token to create the image pull secrets:
 
 ```bash
-export VERSION="<version>"
-export HELM_CHART_REGISTRY="registry.wso2.com/<project>/helm-charts"
 printf 'Registry username: ' && read -r AMP_REGISTRY_USERNAME
 printf 'Registry token: ' && stty -echo && read -r AMP_REGISTRY_PASSWORD; stty echo; echo
 printf '%s' "$AMP_REGISTRY_PASSWORD" | helm registry login registry.wso2.com --username "$AMP_REGISTRY_USERNAME" --password-stdin
 ```
-
-</TabItem>
-</Tabs>
 
 ### Step 6: Install Thunder Extension (Identity Provider)
 
@@ -710,7 +685,7 @@ helm upgrade --install observability-logs-opensearch \
   oci://ghcr.io/openchoreo/helm-charts/observability-logs-opensearch \
   --create-namespace \
   --namespace openchoreo-observability-plane \
-  --version 0.5.3 \
+  --version 0.5.5 \
   --set openSearchSetup.openSearchSecretName="opensearch-admin-credentials" \
   --set adapter.openSearchSecretName="opensearch-admin-credentials" \
   --timeout 10m
@@ -719,7 +694,7 @@ helm upgrade --install observability-logs-opensearch \
 helm upgrade observability-logs-opensearch \
   oci://ghcr.io/openchoreo/helm-charts/observability-logs-opensearch \
   --namespace openchoreo-observability-plane \
-  --version 0.5.3 \
+  --version 0.5.5 \
   --reuse-values \
   --set fluent-bit.enabled=true \
   --timeout 10m
@@ -729,7 +704,7 @@ helm upgrade --install observability-metrics-prometheus \
   oci://ghcr.io/openchoreo/helm-charts/observability-metrics-prometheus \
   --create-namespace \
   --namespace openchoreo-observability-plane \
-  --version 0.6.1 \
+  --version 0.8.1 \
   --timeout 10m
 
 # Tracing module (uses the custom OTel Collector ConfigMap)
@@ -737,7 +712,7 @@ helm upgrade --install observability-traces-opensearch \
   oci://ghcr.io/openchoreo/helm-charts/observability-tracing-opensearch \
   --create-namespace \
   --namespace openchoreo-observability-plane \
-  --version 0.6.0 \
+  --version 0.8.1 \
   --set openSearch.enabled=false \
   --set openSearchSetup.openSearchSecretName="opensearch-admin-credentials" \
   --set opentelemetry-collector.configMap.existingName="amp-opentelemetry-collector-config" \
@@ -819,15 +794,7 @@ The Agent Manager installs as a set of Helm charts on top of OpenChoreo. The com
 Thunder (identity provider) must be installed before proceeding — see the Thunder installation step in Phase 1. The variables `THUNDER_PUBLIC_URL`, `THUNDER_INTERNAL_URL`, `CONSOLE_PUBLIC_URL`, `API_PUBLIC_URL`, `OBS_API_PUBLIC_URL`, `CONSOLE_PUBLIC_HOST`, `API_PUBLIC_HOST`, `OBS_API_PUBLIC_HOST`, and `INSTRUMENTATION_URL` must be set from the Configuration Variables section. The production steps below additionally use `AGENTS_DOMAIN` — the domain deployed agents are served on, `agents.<your base domain>` — to build the gateway's hostname and virtual host. The `*_PUBLIC_HOST` variables carry the bare hostname (no scheme or port) and become the HTTPRoute hostnames on the plane gateways.
 :::
 
-<Tabs groupId="distribution" queryString>
-<TabItem value="community" label="Community" default>
-
-The community images are public, so no image pull secret is needed.
-
-</TabItem>
-<TabItem value="subscription" label="WSO2 Subscription">
-
-Create the `wso2-registry-credentials` image pull secret in the namespaces that run Agent Manager images, with the registry username and token from the earlier **WSO2 Subscription** tab:
+Create the `wso2-registry-credentials` image pull secret in the namespaces that run Agent Manager images, with the registry username and token from the Configuration Variables step:
 
 ```bash
 for ns in "${AMP_NS}" "${OBSERVABILITY_NS}" workflows-default; do
@@ -843,8 +810,18 @@ done
 
 Evaluation monitors run in `workflows-default`, the workflow namespace of the `default` organization.
 
-</TabItem>
-</Tabs>
+Create the gateway's own pull secret, `wso2-gateway-registry-credentials`, in `${DATA_PLANE_NS}`. The gateway operator reads it to pull the gateway chart, and every gateway pod lists it to pull the gateway images. Besides the usual `.dockerconfigjson`, it carries the credentials as plain `username` and `password` keys, which is the form the operator reads:
+
+```bash
+kubectl create namespace "${DATA_PLANE_NS}" --dry-run=client -o yaml | kubectl apply -f -
+kubectl create secret generic wso2-gateway-registry-credentials \
+  --namespace "${DATA_PLANE_NS}" \
+  --type=kubernetes.io/dockerconfigjson \
+  --from-literal=.dockerconfigjson="$(printf '{"auths":{"registry.wso2.com":{"auth":"%s"}}}' "$(printf '%s:%s' "$AMP_REGISTRY_USERNAME" "$AMP_REGISTRY_PASSWORD" | base64 | tr -d '\n')")" \
+  --from-literal=username="$AMP_REGISTRY_USERNAME" \
+  --from-literal=password="$AMP_REGISTRY_PASSWORD" \
+  --dry-run=client -o yaml | kubectl apply -f -
+```
 
 ---
 
@@ -880,6 +857,8 @@ This applies whatever `developmentMode` is set to. Earlier gateway releases auto
 Store the key with the rest of your platform secrets. It encrypts credentials the gateway holds, and losing it means those entries cannot be decrypted.
 :::
 
+The gateway for this release, `2026.10.0`, is published only to `registry.wso2.com`. The operator itself still comes from `ghcr.io`, and pulls the gateway chart and images from `GATEWAY_REGISTRY`, set in the Configuration Variables step, with the `wso2-gateway-registry-credentials` secret. The controller in this gateway release serves its health check on the `admin` port under `/api/admin/v1/health`, so the probes are set as well.
+
 
 <Tabs groupId="helm-version">
   <TabItem value="helm4" label="Helm 4" default>
@@ -887,17 +866,24 @@ Store the key with the rest of your platform secrets. It encrypts credentials th
 ```bash
 helm install --server-side=false gateway-operator \
   oci://ghcr.io/wso2/api-platform/helm-charts/gateway-operator \
-  --version 0.11.0 \
+  --version 0.11.3 \
   --namespace ${DATA_PLANE_NS} \
   --set logging.level=debug \
   --set gatewayApi.installStandardCRDs=false \
-  --set gateway.helm.chartVersion=1.2.2 \
-  --set gateway.values.gateway.controller.image.repository=ghcr.io/wso2/api-platform/gateway-controller \
-  --set gateway.values.gateway.controller.image.tag=1.2.1 \
-  --set gateway.values.gateway.gatewayRuntime.image.repository=ghcr.io/wso2/api-platform/gateway-runtime \
-  --set gateway.values.gateway.gatewayRuntime.image.tag=1.2.1 \
+  --set gateway.helm.chartName=oci://${GATEWAY_REGISTRY}/helm-charts/gateway \
+  --set gateway.helm.chartVersion=2026.10.0 \
+  --set gateway.helm.registryCredentialsSecret.name=wso2-gateway-registry-credentials \
+  --set "gateway.values.imagePullSecrets[0]=wso2-gateway-registry-credentials" \
+  --set gateway.values.gateway.controller.image.repository=${GATEWAY_REGISTRY}/gateway-controller \
+  --set gateway.values.gateway.controller.image.tag=2026.10.0 \
+  --set gateway.values.gateway.gatewayRuntime.image.repository=${GATEWAY_REGISTRY}/gateway-runtime \
+  --set gateway.values.gateway.gatewayRuntime.image.tag=2026.10.0 \
   --set gateway.values.gateway.controller.encryptionKeys.enabled=true \
   --set gateway.values.gateway.controller.encryptionKeys.secretName=gateway-encryption-keys \
+  --set gateway.values.gateway.controller.deployment.livenessProbe.httpGet.path=/api/admin/v1/health \
+  --set gateway.values.gateway.controller.deployment.livenessProbe.httpGet.port=admin \
+  --set gateway.values.gateway.controller.deployment.readinessProbe.httpGet.path=/api/admin/v1/health \
+  --set gateway.values.gateway.controller.deployment.readinessProbe.httpGet.port=admin \
   --timeout 600s
 ```
 
@@ -907,17 +893,24 @@ helm install --server-side=false gateway-operator \
 ```bash
 helm install gateway-operator \
   oci://ghcr.io/wso2/api-platform/helm-charts/gateway-operator \
-  --version 0.11.0 \
+  --version 0.11.3 \
   --namespace ${DATA_PLANE_NS} \
   --set logging.level=debug \
   --set gatewayApi.installStandardCRDs=false \
-  --set gateway.helm.chartVersion=1.2.2 \
-  --set gateway.values.gateway.controller.image.repository=ghcr.io/wso2/api-platform/gateway-controller \
-  --set gateway.values.gateway.controller.image.tag=1.2.1 \
-  --set gateway.values.gateway.gatewayRuntime.image.repository=ghcr.io/wso2/api-platform/gateway-runtime \
-  --set gateway.values.gateway.gatewayRuntime.image.tag=1.2.1 \
+  --set gateway.helm.chartName=oci://${GATEWAY_REGISTRY}/helm-charts/gateway \
+  --set gateway.helm.chartVersion=2026.10.0 \
+  --set gateway.helm.registryCredentialsSecret.name=wso2-gateway-registry-credentials \
+  --set "gateway.values.imagePullSecrets[0]=wso2-gateway-registry-credentials" \
+  --set gateway.values.gateway.controller.image.repository=${GATEWAY_REGISTRY}/gateway-controller \
+  --set gateway.values.gateway.controller.image.tag=2026.10.0 \
+  --set gateway.values.gateway.gatewayRuntime.image.repository=${GATEWAY_REGISTRY}/gateway-runtime \
+  --set gateway.values.gateway.gatewayRuntime.image.tag=2026.10.0 \
   --set gateway.values.gateway.controller.encryptionKeys.enabled=true \
   --set gateway.values.gateway.controller.encryptionKeys.secretName=gateway-encryption-keys \
+  --set gateway.values.gateway.controller.deployment.livenessProbe.httpGet.path=/api/admin/v1/health \
+  --set gateway.values.gateway.controller.deployment.livenessProbe.httpGet.port=admin \
+  --set gateway.values.gateway.controller.deployment.readinessProbe.httpGet.path=/api/admin/v1/health \
+  --set gateway.values.gateway.controller.deployment.readinessProbe.httpGet.port=admin \
   --timeout 600s
 ```
 
@@ -929,7 +922,13 @@ helm install gateway-operator \
 :::note Pin the gateway chart, do not inherit it
 `gateway.helm.chartVersion` decides which gateway chart the operator deploys, and it is the only thing that decides it — the `APIGateway` resource carries no chart version. Inheriting the operator's default has historically produced a chart whose templates do not render the controller's control-plane address, giving a gateway that installs, programs, and serves traffic while never registering with Agent Manager — so it never appears in the gateway list. Pin the chart explicitly, as above.
 
-Pin the container images too. The chart version and the image tags move independently: `1.2.2` is the newest published gateway chart and its defaults point at `1.2.0` images, while `1.2.1` controller and runtime images are published without a matching chart. Setting `chartVersion` alone would therefore leave you on `1.2.0` images, so the four `image.repository`/`image.tag` values above carry the runtime to `1.2.1`. Check the pod images after installing rather than trusting the chart version alone.
+Pin the container images too. The chart version and the image tags are set separately, so `chartVersion` alone can leave the gateway on the chart's default images, which point at a public registry that does not carry this release. The four `image.repository`/`image.tag` values above pull the controller and runtime at `2026.10.0` from the registry. Check the pod images after installing rather than trusting the chart version alone.
+
+These are the versions the gateway extension chart of your version is tested with. The chart records them in its `gatewayRelease` values, which the one-command installer reads, and an update can move them. To see them for your version:
+
+```bash
+helm show values "oci://${HELM_CHART_REGISTRY}/wso2-amp-api-platform-gateway-extension" --version "${VERSION}" | grep -A3 '^gatewayRelease:'
+```
 
 `gateway.values` is the operator's passthrough into that chart: anything set under it is merged into the values the gateway is deployed with, which is how the encryption keys above are wired.
 :::
@@ -982,7 +981,7 @@ The API Platform Gateway is deployed as an extension after Agent Manager is runn
 The core platform: a Go API server, a React web console, and a database.
 
 :::info Tell the Console where your registry is
-If you install from a private registry, such as `registry.wso2.com` with a WSO2 subscription, add `--set console.config.registry="registry.wso2.com/<project>"` to the install command below. The Console then generates registry-aware commands for adding environments: they run the scripts from the release bundle and pull from the registry, with your registry credentials. With the public community charts from `ghcr.io`, leave it unset.
+The charts and images for this release come from the private registry `registry.wso2.com`. Add `--set console.config.registry="registry.wso2.com/<project>/sts"` to the install command below. The Console then generates registry-aware commands for adding environments: they run the scripts from the release bundle and pull from the registry, with your registry credentials. Without it, the Console generates the public command, which fetches from GitHub and `ghcr.io` and fails for this release.
 :::
 
 
@@ -1539,7 +1538,7 @@ kubectl get secret amp-admin-credentials -n amp-thunder -o jsonpath='{.data.pass
 ```
 
 :::note HTTPS ingest is disabled by default on this setup, and enabling it doesn't cover the documented hosts
-[values-dp.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v0.0.0-dev/deployments/single-cluster/values-dp.yaml), installed in Step 8 of the guided install (the one-command installer applies the same file), sets `gateway.tls.enabled: false` even though it already configures `httpsPort: 19443` and a `certificateRefs` entry pointing at the `gateway-tls` Secret (created earlier by cert-manager). With TLS disabled, the Data Plane's `gateway-default` Gateway/Service only get an `http` listener — there is no 19443 listener to connect to, so an HTTPS OTLP endpoint is not reachable on a default install.
+[values-dp.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v2026.11.0/deployments/single-cluster/values-dp.yaml), installed in Step 8 of the guided install (the one-command installer applies the same file), sets `gateway.tls.enabled: false` even though it already configures `httpsPort: 19443` and a `certificateRefs` entry pointing at the `gateway-tls` Secret (created earlier by cert-manager). With TLS disabled, the Data Plane's `gateway-default` Gateway/Service only get an `http` listener — there is no 19443 listener to connect to, so an HTTPS OTLP endpoint is not reachable on a default install.
 
 Turning `gateway.tls.enabled` on would not make the OTLP host above reachable over HTTPS anyway: `gateway-tls`'s certificate only covers `*.agentmanager.localhost` and `*.am-gateway.localhost` (its configured `hostname` and SANs), not `*.gateway.localhost` — the domain `default-default.gateway.localhost` above actually uses. Reaching HTTPS on that specific host would additionally require reissuing the certificate with `*.gateway.localhost` in its `dnsNames` and pointing `gateway.tls.hostname` at it.
 
@@ -1561,7 +1560,7 @@ If you used the one-command installer, running the uninstall script it left behi
 To remove Agent Manager and OpenChoreo but keep the cluster, run the uninstall script without that flag:
 
 ```bash
-bash ~/.wso2-agent-manager/{edition.version}/deployments/quick-start/uninstall.sh
+bash ~/.wso2-agent-manager/subscription/<project>/<image tag>/deployments/quick-start/uninstall.sh
 ```
 
 :::warning
@@ -1663,7 +1662,7 @@ OpenBao, the secret store in this install, runs in dev mode and keeps its data i
 The lost secrets cannot be restored. Delete the cluster and install again:
 
 ```bash
-bash ~/.wso2-agent-manager/{edition.version}/deployments/quick-start/uninstall.sh --delete-cluster
+bash ~/.wso2-agent-manager/subscription/<project>/<image tag>/deployments/quick-start/uninstall.sh --delete-cluster
 ```
 
 If you used the guided install, run `k3d cluster delete amp-local` instead. Then rerun the one-command installer, or the guided install from Step 1: Create k3d Cluster onward.
@@ -1722,13 +1721,13 @@ All Agent Manager-specific configuration files used in this guide:
 
 | File | Purpose |
 |------|---------|
-| [k3d-config.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v0.0.0-dev/deployments/quick-start/k3d-config.yaml) | k3d cluster with all required port mappings |
-| [coredns-amp-custom.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v0.0.0-dev/deployments/k8s/coredns-amp-custom.yaml) | CoreDNS rewrites for `*.openchoreo.localhost`, `*.amp.localhost`, `*.agentmanager.localhost`, `*.am-gateway.localhost`, `*.gateway.localhost` |
-| [add-environment-thunder.sh](https://raw.githubusercontent.com/wso2/agent-manager/amp/v0.0.0-dev/deployments/scripts/add-environment-thunder.sh) | Provisions the per-environment Thunder identity provider |
-| [values-cp.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v0.0.0-dev/deployments/single-cluster/values-cp.yaml) | Control Plane — Backstage disabled, AMP Thunder OIDC |
-| [values-dp.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v0.0.0-dev/deployments/single-cluster/values-dp.yaml) | Data Plane — gateway ports, Fluent Bit config |
-| [values-op.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v0.0.0-dev/deployments/single-cluster/values-op.yaml) | Observability Plane — standalone OpenSearch, AMP Thunder OIDC |
-| [values-openbao.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v0.0.0-dev/deployments/single-cluster/values-openbao.yaml) | OpenBao — dev mode, Kubernetes auth, pre-seeded secrets |
-| [oc-collector-configmap.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v0.0.0-dev/deployments/values/oc-collector-configmap.yaml) | Custom OTel Collector ConfigMap for trace ingestion |
-| [wso2-amp-api-platform-gateway-extension](https://github.com/wso2/agent-manager/tree/amp/v0.0.0-dev/deployments/helm-charts/wso2-amp-api-platform-gateway-extension) | API Platform Gateway Helm chart (includes gateway config, bootstrap, CR) |
-| [otel-collector-rest-api.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v0.0.0-dev/deployments/values/otel-collector-rest-api.yaml) | OTel Collector REST API resource |
+| [k3d-config.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v2026.11.0/deployments/quick-start/k3d-config.yaml) | k3d cluster with all required port mappings |
+| [coredns-amp-custom.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v2026.11.0/deployments/k8s/coredns-amp-custom.yaml) | CoreDNS rewrites for `*.openchoreo.localhost`, `*.amp.localhost`, `*.agentmanager.localhost`, `*.am-gateway.localhost`, `*.gateway.localhost` |
+| [add-environment-thunder.sh](https://raw.githubusercontent.com/wso2/agent-manager/amp/v2026.11.0/deployments/scripts/add-environment-thunder.sh) | Provisions the per-environment Thunder identity provider |
+| [values-cp.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v2026.11.0/deployments/single-cluster/values-cp.yaml) | Control Plane — Backstage disabled, AMP Thunder OIDC |
+| [values-dp.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v2026.11.0/deployments/single-cluster/values-dp.yaml) | Data Plane — gateway ports, Fluent Bit config |
+| [values-op.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v2026.11.0/deployments/single-cluster/values-op.yaml) | Observability Plane — standalone OpenSearch, AMP Thunder OIDC |
+| [values-openbao.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v2026.11.0/deployments/single-cluster/values-openbao.yaml) | OpenBao — dev mode, Kubernetes auth, pre-seeded secrets |
+| [oc-collector-configmap.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v2026.11.0/deployments/values/oc-collector-configmap.yaml) | Custom OTel Collector ConfigMap for trace ingestion |
+| [wso2-amp-api-platform-gateway-extension](https://github.com/wso2/agent-manager/tree/amp/v2026.11.0/deployments/helm-charts/wso2-amp-api-platform-gateway-extension) | API Platform Gateway Helm chart (includes gateway config, bootstrap, CR) |
+| [otel-collector-rest-api.yaml](https://raw.githubusercontent.com/wso2/agent-manager/amp/v2026.11.0/deployments/values/otel-collector-rest-api.yaml) | OTel Collector REST API resource |

@@ -4,7 +4,6 @@ description: Plan an Agent Manager upgrade, review breaking changes, and protect
 type: how-to
 sidebar_label: Overview
 sidebar_position: 0
-editions: self-hosted
 ---
 
 Upgrading an existing WSO2 Agent Manager installation can require database migrations, configuration changes, and coordinated updates to its gateways and extensions. Read the guide for your source and target versions before changing the installation.
@@ -17,9 +16,9 @@ An upgrade can change database schemas, remove configuration fields, or require 
 
 | Source | Target | Guide |
 | --- | --- | --- |
-| v1.0.0 | v{edition.version} | [Upgrade from v1.0.0](./from-v1-0-0.mdx) |
+| v1.0.0 | v2026.11.0 | [Upgrade from v1.0.0](./from-v1-0-0.mdx) |
 
-The [platform dependency guide](./platform-dependencies.mdx) lists every standard chart and covers OpenChoreo 1.2.8, kgateway v2.3.11, platform and environment ThunderID 1.0.2, and Gateway Operator 0.11.3 as part of this transition. The v1.0.0 guide covers both the community release and a WSO2 subscription release.
+The [platform dependency guide](./platform-dependencies.mdx) lists every standard chart and covers OpenChoreo 1.2.8, kgateway v2.3.11, the OpenChoreo observability modules, platform and environment ThunderID 1.0.2, and Gateway Operator 0.11.3 as part of this transition. Release 2026.11.0 is a short-term support (STS) release, published only to `registry.wso2.com`, so the v1.0.0 guide installs it from there.
 
 Use only an upgrade path validated for the target release. Do not assume that you can skip releases or that a dependency can be upgraded independently. The version-specific guide takes precedence over this overview.
 

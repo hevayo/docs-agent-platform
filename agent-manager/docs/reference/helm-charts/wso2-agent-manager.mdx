@@ -3,13 +3,12 @@ title: Agent Manager
 description: Helm chart for WSO2 Agent Management Platform - Deploy, manage, and govern AI agents at scale  # generated from the first paragraph; a writer should improve it
 type: reference
 sidebar_position: 1
-editions: self-hosted
 ---
 
 Helm chart for WSO2 Agent Management Platform - Deploy, manage, and govern AI agents at scale
 
 ```bash
-helm install agent-manager oci://ghcr.io/wso2/wso2-agent-manager \
+helm install agent-manager oci://registry.wso2.com/<project>/sts/helm-charts/wso2-agent-manager \
   --namespace <namespace> --create-namespace \
   --values my-values.yaml
 ```
@@ -22,8 +21,8 @@ helm install agent-manager oci://ghcr.io/wso2/wso2-agent-manager \
 | `agentManagerService.enabled` | Install the control-plane API. | boolean | `true` |
 | `agentManagerService.replicaCount` | Number of pod replicas to run | integer | `1` |
 | `agentManagerService.image` | Container image for the control-plane API. | object |  |
-| `agentManagerService.image.repository` | Container image repository | string | `"ghcr.io/wso2/amp-api"` |
-| `agentManagerService.image.tag` | Container image tag. Defaults to the chart's appVersion when empty | string | `"{edition.version}"` |
+| `agentManagerService.image.repository` | Container image repository | string | `"registry.wso2.com/<project>/sts/amp-api"` |
+| `agentManagerService.image.tag` | Container image tag. Defaults to the chart's appVersion when empty | string | `"2026.11.0"` |
 | `agentManagerService.image.pullPolicy` | Image pull policy (`Always`, `IfNotPresent`, or `Never`) | string | `"IfNotPresent"` |
 | `agentManagerService.service` | Reachable externally via the control-plane gateway (see ocIngress); set type to LoadBalancer to restore a dedicated external endpoint. | object |  |
 | `agentManagerService.service.type` | Kubernetes Service type (`ClusterIP`, `NodePort`, or `LoadBalancer`) | string | `"ClusterIP"` |
@@ -99,8 +98,8 @@ helm install agent-manager oci://ghcr.io/wso2/wso2-agent-manager \
 | `agentManagerService.config.otel` | OpenTelemetry configuration | object |  |
 | `agentManagerService.config.otel.traceContent` | Record request and response bodies on spans. Disable where payloads may be sensitive. | string | `"true"` |
 | `agentManagerService.config.otel.exporterEndpoint` | kgateway-routed vhost ("&lt;env&gt;-&lt;org&gt;.gateway.localhost") — independent of the namespace the api-platform gateway runtime is deployed in. | string | `"http://default-default.gateway.localhost:19080/otel"` |
-| `agentManagerService.config.otel.defaultInstrumentationVersion` | Platform default AMP instrumentation version. Must exist in the effective catalog (embedded baseline ∪ additionalInstrumentationVersions); otherwise the server fails to start. | string | `"0.5.0"` |
-| `agentManagerService.config.otel.additionalInstrumentationVersions` | Operator-supplied catalog extension entries, added on top of the bundled baseline. For air-gapped installs, point imageRepository at the internal mirror. Example: - version: "0.6.0" traceloopSdk: "0.65.0" pythonVersions: ["3.10","3.11","3.12","3.13"] imageRepository: "my-mirror.example/amp-python-instrumentation-provider" | array | `[]` |
+| `agentManagerService.config.otel.defaultInstrumentationVersion` | Platform default AMP instrumentation version. Must exist in the effective catalog (embedded baseline ∪ additionalInstrumentationVersions); otherwise the server fails to start. | string | `"0.4.2"` |
+| `agentManagerService.config.otel.additionalInstrumentationVersions` | Operator-supplied catalog extension entries, added on top of the bundled baseline. For air-gapped installs, point imageRepository at the internal mirror. Example: - version: "0.5.0" traceloopSdk: "0.63.0" pythonVersions: ["3.10","3.11","3.12","3.13"] imageRepository: "my-mirror.example/amp-python-instrumentation-provider" | array | `[]` |
 | `agentManagerService.config.keyManager` | Key Manager configuration Token audiences accepted by this service. Console/CLI logins arrive with aud=urn:wso2:amp (the amp resource server's identifier — keep in sync with 60-amp-resource-server.yaml in the Thunder extension chart); MCP logins arrive with serverPublicURL plus "/mcp" (no trailing slash, per the MCP spec's canonical-URI guidance), which the chart appends automatically — list only client IDs here. | object |  |
 | `agentManagerService.config.keyManager.issuer` | Issuer claim that incoming tokens must carry. | string | `"http://thunder.amp.localhost:8080"` |
 | `agentManagerService.config.keyManager.audience` | Accepted token audiences, as a comma-separated list. | string | `"urn:wso2:amp,amp-console-client,amp-api-client,amp-publisher-*,amctl,am-mcp"` |
@@ -169,10 +168,22 @@ helm install agent-manager oci://ghcr.io/wso2/wso2-agent-manager \
 | `agentManagerService.config.thunder` | Thunder admin API configuration (for per-org publisher credential provisioning and the identity APIs: users, roles, groups). When baseURL is empty, the static amp-publisher-client credentials are used instead for publisher provisioning, and the identity APIs are unavailable. | object |  |
 | `agentManagerService.config.thunder.baseURL` | Must be the PUBLIC URL, same as keyManager.issuer above. Every admin API request asks for a token scoped to Thunder's System resource server via an RFC 8707 "resource" parameter derived from this value (client.go's SystemResourceIdentifier), and Thunder only recognizes the public URL as that resource server's registered identifier — any other value fails with invalid_target. This does NOT need to be directly dialable from the pod; see resolveToHost below for that. | string | `"http://thunder.amp.localhost:8080"` |
 | `agentManagerService.config.thunder.resolveToHost` | The host:port this service actually connects to for every Thunder request (baseURL's host is still sent as the HTTP Host header, and still drives the resource-identifier above). Needed here because baseURL is a *.localhost hostname that only resolves via the host machine's own DNS/hosts setup — it doesn't resolve from inside this pod. Leave empty only if baseURL is itself directly dialable from the pod (e.g. a real in-cluster DNS name). | string | `"amp-thunder-extension-service.amp-thunder.svc.cluster.local:8090"` |
+| `agentManagerService.config.thunder.useDefaultResourceServer` | Omit the OAuth resource parameter and let Thunder select its configured default resource server. Keep false when this Thunder instance registers its own &lt;baseURL&gt;/mcp System resource server. | boolean | `false` |
+| `agentManagerService.config.thunder.systemResourceIdentifier` | Optional absolute URI overriding the derived &lt;baseURL&gt;/mcp identifier. Cannot be set together with useDefaultResourceServer=true. | string | `""` |
 | `agentManagerService.config.thunder.clientId` | OAuth2 client ID of the system app (with Administrator role) | string | `"amp-system-client"` |
 | `agentManagerService.config.thunder.clientSecret` | OAuth2 client secret of the system app | string | `"amp-system-client-secret"` |
 | `agentManagerService.config.thunder.existingSecret` | Reference to an existing secret containing the Thunder client secret | string | `""` |
 | `agentManagerService.config.thunder.existingSecretKey` | Key within the existing Secret holding the client secret. | string | `"thunder-client-secret"` |
+| `agentManagerService.config.growthAnalytics` | Growth analytics (Moesif) export. Off unless enabled. | object |  |
+| `agentManagerService.config.growthAnalytics.enabled` | Master switch (MOESIF_ENABLED). | boolean | `false` |
+| `agentManagerService.config.growthAnalytics.consoleEnabled` | Console UI action stream (CONSOLE_ANALYTICS_ENABLED); also needs enabled. | boolean | `false` |
+| `agentManagerService.config.growthAnalytics.collectorBaseURL` | Collector or Moesif API base URL. Empty with an application ID means https://api.moesif.net. | string | `""` |
+| `agentManagerService.config.growthAnalytics.collectorHostHeader` | Host header override for port-forwarded proxies. | string | `""` |
+| `agentManagerService.config.growthAnalytics.applicationId` | Moesif Application ID set inline. Prefer existingSecret. | string | `""` |
+| `agentManagerService.config.growthAnalytics.existingSecret` | Secret holding the Moesif Application ID. | string | `""` |
+| `agentManagerService.config.growthAnalytics.existingSecretKey` | Key within that Secret. | string | `"moesif-application-id"` |
+| `agentManagerService.config.growthAnalytics.deploymentModel` | Reported as each event's deployment_model. | string | `"on-prem"` |
+| `agentManagerService.config.growthAnalytics.environment` | Reported as each event's environment. | string | `""` |
 | `agentManagerService.certificates` | Certificate configuration | object |  |
 | `agentManagerService.certificates.certificatesSecret` | REQUIRED: Kubernetes secret name containing TLS certificates Expected keys in secret: cert.pem (certificate), key.pem (private key) Example creation: kubectl create secret generic amp-tls-certs \ from-file=cert.pem=/path/to/cert.pem \ from-file=key.pem=/path/to/key.pem For development, leave empty to generate self-signed certs at runtime (insecure) | string | `""` |
 | `agentManagerService.agentWorkload` | Defaults applied to every agent workload the platform deploys. | object |  |
@@ -203,8 +214,8 @@ helm install agent-manager oci://ghcr.io/wso2/wso2-agent-manager \
 | `console.enabled` | Install the console. | boolean | `true` |
 | `console.replicaCount` | Number of pod replicas to run | integer | `1` |
 | `console.image` | Container image for the console. | object |  |
-| `console.image.repository` | Container image repository | string | `"ghcr.io/wso2/amp-console"` |
-| `console.image.tag` | Container image tag. Defaults to the chart's appVersion when empty | string | `"{edition.version}"` |
+| `console.image.repository` | Container image repository | string | `"registry.wso2.com/<project>/sts/amp-console"` |
+| `console.image.tag` | Container image tag. Defaults to the chart's appVersion when empty | string | `"2026.11.0"` |
 | `console.image.pullPolicy` | Image pull policy (`Always`, `IfNotPresent`, or `Never`) | string | `"Always"` |
 | `console.service` | Reachable externally via the control-plane gateway (see ocIngress); set type to LoadBalancer to restore a dedicated external endpoint. | object |  |
 | `console.service.type` | Kubernetes Service type (`ClusterIP`, `NodePort`, or `LoadBalancer`) | string | `"ClusterIP"` |
@@ -230,7 +241,7 @@ helm install agent-manager oci://ghcr.io/wso2/wso2-agent-manager \
 | `console.config` | Frontend configuration | object |  |
 | `console.config.agentManagerInternalBaseUrl` | Cluster-internal URLs the API Platform Gateway uses to reach Agent Manager when add-environment.sh installs a new gateway. The Create Environment drawer pipes these into the rendered curl\|bash command so the gateway is configured for in-cluster service discovery. | string | `"http://amp-api.wso2-amp.svc.cluster.local:9000"` |
 | `console.config.agentManagerInternalCpHost` | In-cluster address the console's server-side calls use. | string | `"amp-api-gateway-manager.wso2-amp.svc.cluster.local:9243"` |
-| `console.config.ampVersion` | Agent Manager release version — pins the deployment-script git tag (amp/vX.Y.Z). Placeholder is substituted with the real release version by the release pipeline (.github/scripts/update-helm-charts.sh); dev builds fall back to main. | string | `"{edition.version}"` |
+| `console.config.ampVersion` | Agent Manager release version — pins the deployment-script git tag (amp/vX.Y.Z). Placeholder is substituted with the real release version by the release pipeline (.github/scripts/update-helm-charts.sh); dev builds fall back to main. | string | `"2026.11.0"` |
 | `console.config.apiBaseUrl` | Backend API URLs (will be auto-configured if empty) Routed through the OpenChoreo control-plane gateway (see ocIngress). | string | `"http://api.amp.localhost:8080"` |
 | `console.config.auth` | Authentication (set to "" to disable) | object |  |
 | `console.config.auth.clientId` | OAuth 2.0 client ID the console authenticates with. | string | `"amp-console-client"` |
@@ -249,7 +260,7 @@ helm install agent-manager oci://ghcr.io/wso2/wso2-agent-manager \
 | `console.config.featureFlags.enableProfileManagement` | When false, the Profile Settings text fields and Save Changes button are hidden/disabled, and the Change Password tab is disabled. | boolean | `true` |
 | `console.config.featureFlags.enableUserManagement` | When false, the Add User, Invite User, Create Role, and Create Group buttons on the Settings page are disabled. | boolean | `true` |
 | `console.config.gatewayControlPlaneUrl` | Gateway control plane URL rendered into external-gateway setup commands. Routed through the OpenChoreo control-plane gateway (see agentManagerService.ocIngress.gatewayMgmt); host.docker.internal lets a gateway container on the same machine reach it. | string | `"http://host.docker.internal:8080"` |
-| `console.config.gatewayVersion` | Gateway version for setup commands (default: v1.0.0) | string | `"v1.0.0"` |
+| `console.config.gatewayVersion` | Gateway version for setup commands (default: v2026.09.24) | string | `"v2026.09.24"` |
 | `console.config.guardrailCapabilities` | Guardrail capability flags — enable policies that require external system configuration. OOTB policies are always shown regardless of these flags. | object |  |
 | `console.config.guardrailCapabilities.awsBedrock` | Offer AWS Bedrock guardrails. Allowed values: Unlocks: aws-bedrock-guardrail. | boolean | `false` |
 | `console.config.guardrailCapabilities.azureContentSafety` | Offer Azure AI Content Safety guardrails. Allowed values: Unlocks: azure-content-safety-content-moderation. | boolean | `false` |
@@ -260,10 +271,11 @@ helm install agent-manager oci://ghcr.io/wso2/wso2-agent-manager \
 | `console.config.guardrailsDefinitionBaseUrl` | Guardrails definition base URL for fetching policy definitions | string | `"https://db720294-98fd-40f4-85a1-cc6a3b65bc9a-prod.e1-us-east-azure.choreoapis.dev/api-platform/policy-hub-api/policy-hub-public/v1.0/policies"` |
 | `console.config.idpHostBaseDomain` | Base domain env-Thunder instances are hosted under, and whether this deployment serves them over TLS. Mirrors agentManagerService.config's own idpHostBaseDomain/tlsEnabled — kept in sync so the Create Environment drawer's rendered command matches this deployment. VM/production installs override both (see deployments/vm/lib-vm.sh). | string | `"amp.localhost"` |
 | `console.config.instrumentationUrl` | Trace-export URL shown to external agent developers. kgateway-routed vhost — independent of the gateway runtime's namespace; no port-forward. | string | `"http://default-default.gateway.localhost:19080/otel"` |
+| `console.config.promptsBaseUrl` | Base URL the evaluator AI Copilot prompt links the writing guide from. Empty derives the public raw.githubusercontent.com URL from ampVersion. Set it where external AI assistants cannot reach GitHub, to any public host serving the console's prompts/ directory. | string | `""` |
 | `console.config.scriptBaseUrl` | Base URL the console's generated commands fetch deployment scripts from, without a trailing slash. Empty derives the public raw.githubusercontent.com URL from ampVersion. Set it where that host is unreachable from the operator's machine, or where this build's scripts are served from somewhere else. | string | `""` |
 | `console.config.tlsEnabled` | Serve the console over HTTPS. | string | `"false"` |
-| `console.config.maxRequestBodyBytes` | Largest request body, in bytes, the console sends on a save. Bigger saves are refused with a readable error instead of reaching a WAF that would reject them with an opaque 403. The default suits a 64 KB WAF body limit; set 0 on deployments with no such limit. | integer | `57344` |
-| `console.config.fileMountMaxFileBytes` | Per-file cap, in bytes, on file-mount content in the console. 0 uses agentManagerService.config.fileMountLimits.maxFileBytes, keeping the two in step. The console also holds it under maxRequestBodyBytes (less 8 KB for the rest of the save), so with the defaults the effective cap is 48 KB; set maxRequestBodyBytes to 0 to allow files up to this value. | integer | `0` |
+| `console.config.maxRequestBodyBytes` | Largest request body, in bytes, the console sends on a save. 0 means no limit (the default). Set it on deployments behind a WAF that rejects bigger bodies with an opaque 403, e.g. 57344 (56 KB) under a 64 KB WAF limit, so the console refuses first with a readable error. | integer | `0` |
+| `console.config.fileMountMaxFileBytes` | Per-file cap, in bytes, on file-mount content in the console. 0 uses agentManagerService.config.fileMountLimits.maxFileBytes, keeping the two in step. When maxRequestBodyBytes is set, the console also holds it under that value (less 8 KB for the rest of the save), e.g. 48 KB with a 56 KB limit. | integer | `0` |
 | `console.podAnnotations` | Pod-level configurations | object | `{}` |
 | `console.podLabels` | Labels added to the pod | object | `{}` |
 | `console.podSecurityContext` | Pod security context - optional, no defaults to allow image to use its own user If you need to set fsGroup or other pod-level security settings, specify them here | object | `{}` |
@@ -279,8 +291,8 @@ helm install agent-manager oci://ghcr.io/wso2/wso2-agent-manager \
 | `dbMigration` | Database Migration Job Configuration | object |  |
 | `dbMigration.enabled` | Run the migration job. | boolean | `true` |
 | `dbMigration.image` | Container image for the migration job. | object |  |
-| `dbMigration.image.repository` | Container image repository | string | `"ghcr.io/wso2/amp-api"` |
-| `dbMigration.image.tag` | Container image tag. Defaults to the chart's appVersion when empty | string | `"{edition.version}"` |
+| `dbMigration.image.repository` | Container image repository | string | `"registry.wso2.com/<project>/sts/amp-api"` |
+| `dbMigration.image.tag` | Container image tag. Defaults to the chart's appVersion when empty | string | `"2026.11.0"` |
 | `dbMigration.image.pullPolicy` | Image pull policy (`Always`, `IfNotPresent`, or `Never`) | string | `"IfNotPresent"` |
 | `dbMigration.resources` | Compute resources for the migration job. | object |  |
 | `dbMigration.resources.requests` | Resources reserved at scheduling time. | object |  |

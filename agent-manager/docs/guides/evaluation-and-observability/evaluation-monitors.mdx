@@ -9,7 +9,7 @@ This guide walks you through creating an evaluation monitor, viewing results, an
 
 ## Prerequisites
 
-- <Edition only="cloud">An Agent Manager Cloud account (sign up at [console.agent-manager.cloud.wso2.com](https://console.agent-manager.cloud.wso2.com/))</Edition><Edition only="self-hosted">A running AMP instance (see [Quick Start](../../get-started/quick-start.mdx))</Edition>
+- A running AMP instance (see the [k3d guide](../installation/on-k3d.mdx))
 - An agent registered in AMP with an active environment
 - Agent traces being collected (see [Observe Your First Agent](../../tutorials/observe-first-agent.mdx))
 - For LLM-as-Judge evaluators: an API key for a [supported LLM provider](../../concepts/evaluation.mdx#supported-llm-providers)
@@ -81,13 +81,7 @@ You only need to add each provider once per monitor. All evaluators using that p
 
 ---
 
-### Step 5: Configure Alerts (Optional)
-
-For installations with eventing enabled, use **Alerting** to select shared destinations and run notifications or score thresholds. See [Configure Monitor Alerts](./configure-monitor-alerts.mdx) for prerequisites and threshold behavior.
-
----
-
-### Step 6: Create the Monitor
+### Step 5: Create the Monitor
 
 Review your configuration and click **Create Monitor**.
 

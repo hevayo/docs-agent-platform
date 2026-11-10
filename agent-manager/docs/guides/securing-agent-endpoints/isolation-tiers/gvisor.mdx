@@ -3,7 +3,6 @@ title: gVisor Isolation Tier
 description: Run agents in an environment under gVisor (runsc) — a userspace kernel that intercepts syscalls before they reach the host kernel — for stronger isolation…  # generated from the first paragraph; a writer should improve it
 type: how-to
 sidebar_position: 1
-editions: self-hosted
 ---
 
 Run agents in an environment under [gVisor](https://gvisor.dev/) (`runsc`) — a userspace kernel that intercepts syscalls before they reach the host kernel — for stronger isolation than the default runc sandbox, without any special hardware.
@@ -51,7 +50,7 @@ not already have it extracted, fetch it first and point `AMP_DIST` at it — the
 same bundle the install guides use:
 
 ```bash
-export VERSION="{edition.version}"
+export VERSION="2026.11.0"
 curl -fsSL -O "https://github.com/wso2/agent-manager/releases/download/amp/v${VERSION}/wso2-agent-manager-${VERSION}.tar.gz"
 tar xzf "wso2-agent-manager-${VERSION}.tar.gz"
 export AMP_DIST="$PWD"
@@ -103,7 +102,7 @@ This step runs **on the node**, not on your workstation.
 
     ```bash
     cd /root
-    export VERSION="{edition.version}"
+    export VERSION="2026.11.0"
     curl -fsSL -O "https://github.com/wso2/agent-manager/releases/download/amp/v${VERSION}/wso2-agent-manager-${VERSION}.tar.gz"
     tar xzf "wso2-agent-manager-${VERSION}.tar.gz"
     export AMP_DIST="$PWD"
@@ -217,7 +216,7 @@ If `fluent-bit.tolerations` does not list `- operator: Exists` with no `key` or 
 helm upgrade observability-logs-opensearch \
   oci://ghcr.io/openchoreo/helm-charts/observability-logs-opensearch \
   --namespace openchoreo-observability-plane \
-  --version 0.5.3 \
+  --version 0.5.5 \
   --reuse-values \
   --set "fluent-bit.tolerations[0].operator=Exists"
 ```
