@@ -128,7 +128,7 @@ has no way to instantly invalidate a token it has already handed out.
 
 :::note
 AgentID's per-environment ThunderID instances are separate from the
-[identity providers you configure on a gateway](../guides/securing-agent-endpoints/configure-identity-providers-at-the-gateway.mdx)
+<Edition only="self-hosted">[identity providers you configure on a gateway](../guides/securing-agent-endpoints/configure-identity-providers-at-the-gateway.mdx)</Edition><Edition only="cloud">identity providers you configure on a gateway</Edition>
 to secure an agent's own inbound endpoint. Those protect calls coming into an agent. AgentID is
 about the identity an agent presents when it calls out to the gateway.
 :::

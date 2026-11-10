@@ -1,7 +1,12 @@
-# Per-Edition variables ({edition.*} in pages).
+# Per-Edition variables ({edition.*} in pages). {edition.version} is the
+# Edition's own version, injected by the Platform (on Cloud it is "cloud"),
+# so pages Cloud shows use {edition.releaseVersion}: the newest Self-hosted
+# release on Cloud, the Edition's version elsewhere.
 cloud:
   displayName: Agent Manager Cloud
   productName: WSO2 Agent Manager
+  releaseVersion: 2026.11.0
 self-hosted:
   displayName: Agent Manager {version}
   productName: WSO2 Agent Manager
+  releaseVersion: "{version}"

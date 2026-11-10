@@ -13,7 +13,7 @@ The same scopes gate the same capabilities no matter how you reach the platform:
 
 - the **Console** (the web UI),
 - the **REST API** (`agent-manager-service` and `agent-manager-observer`), and
-- the **MCP servers** (the [main MCP server](./mcp-server.mdx) and the [Observer MCP server](./observer-mcp-server.mdx)).
+- the **MCP servers** (the <Edition only="self-hosted">[main MCP server](./mcp-server.mdx)</Edition><Edition only="cloud">main MCP server</Edition> and the <Edition only="self-hosted">[Observer MCP server](./observer-mcp-server.mdx)</Edition><Edition only="cloud">Observer MCP server</Edition>).
 
 Because the model is shared, an MCP tool and its equivalent REST route enforce the **identical** scope. Triggering a build through the `build_agent` MCP tool and calling `POST /orgs/{org}/.../builds` both require `amp:agent:build`; there is no separate "MCP permission" to reason about. Learn the scope once and it applies everywhere.
 
@@ -366,7 +366,7 @@ Rather than grant scopes one at a time, AMP ships four predefined roles. Each bu
 
 ## REST and MCP share the model
 
-Every MCP tool authorizes against the same scope its REST equivalent does. A few examples from the [main MCP server](./mcp-server.mdx):
+Every MCP tool authorizes against the same scope its REST equivalent does. A few examples from the <Edition only="self-hosted">[main MCP server](./mcp-server.mdx)</Edition><Edition only="cloud">main MCP server</Edition>:
 
 | MCP tool | Required scope |
 | --- | --- |
@@ -378,7 +378,7 @@ Every MCP tool authorizes against the same scope its REST equivalent does. A few
 | `create_external_agent` | `amp:agent:create` + `amp:agent:token-manage` |
 | `list_environments` | `amp:environment:read` |
 
-The observability tools on the [Observer MCP server](./observer-mcp-server.mdx) map the same way — the trace tools require `amp:observability:trace-read`, and `get_runtime_logs`, `get_build_logs`, and `get_metrics` require `amp:observability:log-read`, `amp:observability:build-log-read`, and `amp:observability:metric-read` respectively.
+The observability tools on the <Edition only="self-hosted">[Observer MCP server](./observer-mcp-server.mdx)</Edition><Edition only="cloud">Observer MCP server</Edition> map the same way — the trace tools require `amp:observability:trace-read`, and `get_runtime_logs`, `get_build_logs`, and `get_metrics` require `amp:observability:log-read`, `amp:observability:build-log-read`, and `amp:observability:metric-read` respectively.
 
 ### Two MCP OAuth clients, disjoint scopes
 
@@ -387,9 +387,9 @@ Because the two MCP servers are addressed separately, AMP ships two pre-register
 - **`am-mcp`** (main MCP server) is allowed every `amp:*` scope **except** the four `amp:observability:*-read` scopes.
 - **`am-obs-mcp`** (Observer MCP server) is allowed **only** the four `amp:observability:*-read` scopes (plus the OIDC scopes).
 
-A token obtained for one server therefore cannot be reused against the other. See [MCP Server](./mcp-server.mdx#default-oauth-client) and [Observer MCP Server](./observer-mcp-server.mdx#configuring-ai-assistants) for the client details.
+A token obtained for one server therefore cannot be reused against the other. See <Edition only="self-hosted">[MCP Server](./mcp-server.mdx#default-oauth-client)</Edition><Edition only="cloud">MCP Server</Edition> and <Edition only="self-hosted">[Observer MCP Server](./observer-mcp-server.mdx#configuring-ai-assistants)</Edition><Edition only="cloud">Observer MCP Server</Edition> for the client details.
 
 ## Next steps
 
 - [Authorize agent access to MCP tools](../guides/agent-identity-and-access-management/authorize-agent-access-to-mcp-tools.mdx) — define your own scopes on a resource and grant them to agents through roles.
-- [MCP Server](./mcp-server.mdx) and [Observer MCP Server](./observer-mcp-server.mdx) — the tools each scope unlocks.
+- <Edition only="self-hosted">[MCP Server](./mcp-server.mdx)</Edition><Edition only="cloud">MCP Server</Edition> and <Edition only="self-hosted">[Observer MCP Server](./observer-mcp-server.mdx)</Edition><Edition only="cloud">Observer MCP Server</Edition> — the tools each scope unlocks.
