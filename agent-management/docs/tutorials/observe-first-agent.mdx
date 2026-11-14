@@ -6,13 +6,16 @@ sidebar_position: 4
 ---
 
 So far you've judged the agent by sending it a few messages and reading the
-replies. That worked for three chapters. But in a production setting this setup would be problematic:
+replies. That was enough for three chapters, but it does not hold up in
+production, where no one reads every conversation. Reading replies cannot answer
+questions like these:
 
 - When a tool call fails, do you find out, or does a fluent reply hide it?
-- Does it actually refuse admin password resets, or did you get lucky?
-- When you change the guardrail in Chapter 2, does anything silently regress?
+- Does the agent refuse *every* admin password reset, or did you just get lucky
+  when you tried?
+- When you change the guardrail from Chapter 2, does anything silently regress?
 
-This chapter turns those from opinions into scores.
+This chapter turns each of those questions into a score.
 
 ## Step 1: Generate Some Traffic
 

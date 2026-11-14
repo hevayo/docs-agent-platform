@@ -3,7 +3,6 @@ title: Configure Identity Providers at the Gateway
 description: Identity providers are the token issuers your gateway trusts.  # generated from the first paragraph; a writer should improve it
 type: how-to
 sidebar_position: 1
-editions: self-hosted
 ---
 
 Identity providers are the token issuers your gateway trusts. When an agent endpoint is secured
@@ -20,7 +19,7 @@ An identity provider is any external issuer you add, such as an Auth0 tenant or 
 
 ## Environment-Specific Thunder Identity Providers
 
-When an environment is provisioned with its own [Thunder](https://thunderid.dev/) instance (the default in
+When an environment is provisioned with its own Thunder instance (the default in
 `add-environment.sh`), that instance is registered automatically as an identity provider on the
 environment's gateway, under the name `ThunderKeyManager`. Re-running the
 script re-seeds the provider idempotently; the `IDP_SKIP_TLS_VERIFY` variable (default `true`)

@@ -3,13 +3,12 @@ title: API Platform Gateway Extension
 description: A Helm chart to deploy and auto-register the unified API Platform Gateway for the Agent Management Platform.  # generated from the first paragraph; a writer should improve it
 type: reference
 sidebar_position: 2
-editions: self-hosted
 ---
 
 A Helm chart to deploy and auto-register the unified API Platform Gateway for the Agent Management Platform.
 
 ```bash
-helm install amp-api-platform-gateway-extension oci://ghcr.io/wso2/wso2-amp-api-platform-gateway-extension \
+helm install amp-api-platform-gateway-extension oci://ghcr.io/wso2/helm-charts/wso2-amp-api-platform-gateway-extension \
   --namespace <namespace> --create-namespace \
   --values my-values.yaml
 ```

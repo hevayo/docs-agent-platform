@@ -3,8 +3,6 @@ title: Quick Start Guide
 description: Get the Agent Manager running with a single command using a dev container!  # generated from the first paragraph; a writer should improve it
 type: quick-start
 sidebar_position: 2
-editions: self-hosted
-selfHostedFrom: next
 ---
 
 Get the Agent Manager running with a single command using a dev container!
@@ -43,24 +41,18 @@ The quick-start includes a dev container with all required tools pre-installed (
 `start.sh` checks your local prerequisites (Docker installed and running, free disk space, CPU architecture) and then launches the dev container for you:
 
 ```bash
-curl -fsSL https://github.com/wso2/agent-manager/releases/download/amp/v{edition.version}/start.sh -o start.sh
+curl -fsSL https://github.com/wso2/agent-manager/releases/download/amp/v1.0.0/start.sh -o start.sh
 chmod +x start.sh
 ./start.sh
 ```
 
 ### Option B: Run the Dev Container directly
 
-The container runs as a non-root user, so pass the Docker socket's group with `--group-add`. The first command reads that group from the Docker host.
-
 ```bash
-DOCKER_SOCKET_GID=$(docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-  --entrypoint stat ghcr.io/wso2/amp-quick-start:v{edition.version} -c '%g' /var/run/docker.sock)
-
 docker run --rm -it --name amp-quick-start \
-  --group-add "$DOCKER_SOCKET_GID" \
   -v /var/run/docker.sock:/var/run/docker.sock \
   --network=host \
-  ghcr.io/wso2/amp-quick-start:v{edition.version}
+  ghcr.io/wso2/amp-quick-start:v1.0.0
 ```
 
 Either way, the container drops you into a shell once it starts. From there, run the installer yourself:

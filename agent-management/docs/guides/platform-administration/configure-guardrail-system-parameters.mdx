@@ -2,8 +2,7 @@
 title: Configure Guardrail System Parameters
 description: Some guardrails call an external service to do their work, such as a content safety API, an embedding provider, or a vector database.  # generated from the first paragraph; a writer should improve it
 type: how-to
-sidebar_position: 8
-editions: self-hosted
+sidebar_position: 7
 ---
 
 import Tabs from '@theme/Tabs';
@@ -398,7 +397,7 @@ Rate limiting and JWT authentication policies take their system parameters from 
 These are applied to the same extension release, the same way. Two cautions:
 
 - `jwtauth_v1.keymanagers` is a list. Setting one entry with `--set` replaces the whole list, so restate every key manager, as [On Your Environment](../installation/on-your-environment.mdx#point-the-gateway-at-the-environments-thunder) does.
-- Rate limiting counters are held in memory by default and are not shared between gateway replicas. See [Gateway Hardening](../installation/production-recommendations.mdx#gateway-hardening) for switching to Redis.
+- Rate limiting counters are held in memory by default and are not shared between gateway replicas. See [Gateway Hardening](../installation/on-your-environment.mdx#gateway-hardening) for switching to Redis.
 
 For the full list of values, see the [gateway extension chart reference](../../reference/helm-charts/wso2-amp-api-platform-gateway-extension.mdx).
 
