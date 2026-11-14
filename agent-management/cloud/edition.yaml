@@ -1,0 +1,9 @@
+# Agent Management: cloud.
+# Written by tools/rebuild/edition-folders.mjs (Edition layout: folders).
+schemaVersion: 1
+docSpace: agent-management
+id: cloud
+name: Agent Manager Cloud
+variables:
+  productName: WSO2 Agent Manager
+  releaseVersion: 2026.11.0
