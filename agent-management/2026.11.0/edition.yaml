@@ -1,0 +1,9 @@
+# Agent Management 2026.11.0.
+# Written by tools/rebuild/edition-folders.mjs (Edition layout: folders).
+schemaVersion: 1
+docSpace: agent-management
+id: 2026.11.0
+name: Agent Manager 2026.11.0
+variables:
+  productName: WSO2 Agent Manager
+  releaseVersion: 2026.11.0
