@@ -4,7 +4,6 @@ description: Upgrade OpenChoreo, the observability modules, platform and environ
 type: how-to
 sidebar_label: Platform dependencies
 sidebar_position: 2
-editions: self-hosted
 ---
 
 This page is part of the [v1.0.0 upgrade guide](./from-v1-0-0.mdx). Run it from Step 3 of that guide, in the same shell.
@@ -22,16 +21,16 @@ The WSO2 Agent Manager version is not the version of every dependency. Set each 
 | `observability-logs-opensearch` | 0.5.3 | 0.5.5 | Moves OpenSearch from 3.3.0 to 3.9.0, which cannot be rolled back without a snapshot. |
 | `observability-tracing-opensearch` | 0.6.0 | 0.8.1 | The default release name is `observability-traces-opensearch`. |
 | `observability-metrics-prometheus` | 0.6.1 | 0.8.1 | Apply the Prometheus Operator CRDs first. Prometheus and Alertmanager move to PersistentVolumeClaims. |
-| `wso2-amp-thunder-extension` | v1.0.0 | {edition.version} | Its bundled ThunderID chart moves from 1.0.0 to 1.0.2. |
+| `wso2-amp-thunder-extension` | v1.0.0 | 2026.11.0 | Its bundled ThunderID chart moves from 1.0.0 to 1.0.2. |
 | Environment `thunderid` releases | 1.0.0 | 1.0.2 | Upgrade every environment instance separately. |
-| `wso2-amp-platform-resources-extension` | v1.0.0 | {edition.version} | Upgrade before `wso2-agent-manager`. |
-| `wso2-agent-manager` | v1.0.0 | {edition.version} | Applies database migrations 0044 to 0050. |
-| `wso2-amp-observability-extension` | v1.0.0 | {edition.version} | Upgrade after the Observability Plane. |
-| `wso2-amp-evaluation-extension` | v1.0.0 | {edition.version} | Upgrade after the Workflow Plane. |
-| `wso2-amp-api-platform-gateway-extension` | v1.0.0 | {edition.version} | Upgrade once for each gateway. |
+| `wso2-amp-platform-resources-extension` | v1.0.0 | 2026.11.0 | Upgrade before `wso2-agent-manager`. |
+| `wso2-agent-manager` | v1.0.0 | 2026.11.0 | Applies database migrations 0044 to 0050. |
+| `wso2-amp-observability-extension` | v1.0.0 | 2026.11.0 | Upgrade after the Observability Plane. |
+| `wso2-amp-evaluation-extension` | v1.0.0 | 2026.11.0 | Upgrade after the Workflow Plane. |
+| `wso2-amp-api-platform-gateway-extension` | v1.0.0 | 2026.11.0 | Upgrade once for each gateway. |
 | `kgateway-crds`, `kgateway` | v2.2.1 | v2.3.11 | Upgrade `kgateway-crds` first. This is separate from the WSO2 Gateway Operator. |
 | `gateway-operator` | 0.11.0 | 0.11.3 | Chart 0.11.3 runs operator image 0.11.1. |
-| Operator-managed API Platform gateway | Chart 1.2.2, images 1.2.1 | `GW_VERSION`: 2026.09.24 from `ghcr.io`, or the subscription release's gateway from the WSO2 registry | Pinned in the operator values. Existing gateways need an explicit redeploy. |
+| Operator-managed API Platform gateway | Chart 1.2.2, images 1.2.1 from `ghcr.io` | Chart and images 2026.10.0 from `registry.wso2.com/<project>/sts` | Pinned in the operator values. Existing gateways need an explicit redeploy. |
 
 The OpenChoreo CRDs are identical in 1.2.0 and 1.2.8, so the OpenChoreo upgrade needs no CRD step.
 
@@ -182,9 +181,9 @@ Fluent Bit now sends logs to OpenSearch through the Observability Plane gateway'
 
 ```bash
 curl -fsSL -o upgrade-backup/opensearch-tls-route.yaml \
-  https://raw.githubusercontent.com/wso2/agent-manager/amp/v{edition.version}/deployments/values/opensearch-tls-route.yaml
+  https://raw.githubusercontent.com/wso2/agent-manager/amp/v2026.11.0/deployments/values/opensearch-tls-route.yaml
 curl -fsSL -o upgrade-backup/observability-logs-opensearch.yaml \
-  https://raw.githubusercontent.com/wso2/agent-manager/amp/v{edition.version}/deployments/values/observability-logs-opensearch.yaml
+  https://raw.githubusercontent.com/wso2/agent-manager/amp/v2026.11.0/deployments/values/observability-logs-opensearch.yaml
 ```
 
 The values file sets the Fluent Bit OpenSearch host, port 11443, and the SNI hostname. If you changed the listener hostname in the previous step, edit both files now: set `spec.hostnames` in `opensearch-tls-route.yaml` and `fluent-bit.openSearchVHost` in `observability-logs-opensearch.yaml` to the same hostname.
@@ -330,9 +329,9 @@ A Helm rollback does not restore CRDs or persistent data. Recover a failed stage
 
 ## References
 
-- [Target Agent Manager installer](https://github.com/wso2/agent-manager/blob/amp/v0.0.0-dev/deployments/quick-start/install.sh)
+- [Target Agent Manager installer](https://github.com/wso2/agent-manager/blob/amp/v2026.11.0/deployments/quick-start/install.sh)
 - [Agent Manager v1.0.0 installer](https://github.com/wso2/agent-manager/blob/amp/v1.0.0/deployments/quick-start/install.sh)
-- [Environment Thunder installer](https://github.com/wso2/agent-manager/blob/amp/v0.0.0-dev/deployments/scripts/add-environment-thunder.sh)
+- [Environment Thunder installer](https://github.com/wso2/agent-manager/blob/amp/v2026.11.0/deployments/scripts/add-environment-thunder.sh)
 - [OpenChoreo 1.2.8 release](https://github.com/openchoreo/openchoreo/releases/tag/v1.2.8)
 - [OpenChoreo upgrade overview](https://openchoreo.dev/docs/platform-engineer-guide/upgrades/overview/)
 - [Logs module 0.5.5 upgrade notes](https://github.com/openchoreo/community-modules/blob/observability-logs-opensearch-0.5.5/observability-logs-opensearch/README.md#upgrading-to-055)
